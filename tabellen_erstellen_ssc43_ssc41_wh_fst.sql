@@ -13,6 +13,21 @@ SET SERVEROUTPUT ON
 DECLARE
   v_ddl     CLOB;
   v_exists  NUMBER;
+  v_len     NUMBER;
+  v_pos     NUMBER;
+  v_chunk   NUMBER := 2000;
+
+  -- Gibt eine CLOB in mehreren Zeilen aus (dbms_output.put_line begrenzt
+  -- die Zeilenlaenge, daher Aufteilung in handhabbare Stuecke)
+  PROCEDURE print_clob(p_clob CLOB) IS
+    v_len  NUMBER := DBMS_LOB.GETLENGTH(p_clob);
+    v_pos  NUMBER := 1;
+  BEGIN
+    WHILE v_pos <= v_len LOOP
+      DBMS_OUTPUT.PUT_LINE(DBMS_LOB.SUBSTR(p_clob, v_chunk, v_pos));
+      v_pos := v_pos + v_chunk;
+    END LOOP;
+  END;
 BEGIN
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'STORAGE', FALSE);
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SEGMENT_ATTRIBUTES', FALSE);
@@ -48,6 +63,9 @@ BEGIN
       EXCEPTION
         WHEN OTHERS THEN
           DBMS_OUTPUT.PUT_LINE('FEHLER :: ' || t.table_name || ' -> ' || SQLERRM);
+          DBMS_OUTPUT.PUT_LINE('--- generiertes DDL zur Fehlersuche ---');
+          print_clob(v_ddl);
+          DBMS_OUTPUT.PUT_LINE('--- Ende DDL ---');
       END;
     END IF;
 
