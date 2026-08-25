@@ -32,6 +32,14 @@ begin
                                     from dba_tables s
                                     where s.owner = v_target_user
                                     )
+                -- NEU: nur Spalten verwenden, die auch im Zielschema existieren
+                -- (vermeidet ORA-00904 bei abweichender Tabellenstruktur)
+                and tc.column_name in (
+                                    select tc2.column_name
+                                    from dba_tab_columns tc2
+                                    where tc2.owner = v_target_user
+                                          and tc2.table_name = t.table_name
+                                    )
           group by t.owner, v_target_user, t.table_name
           order by 1, 2, 3
     ) loop
