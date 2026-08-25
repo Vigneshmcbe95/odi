@@ -1,15 +1,17 @@
 SET FEEDBACK ON
 SET SERVEROUTPUT ON
 
--- Kopierskript: SSC43LL_FST -> SSC41LL_FST
--- Ziel ist leer, daher KEIN TRUNCATE/DROP, nur INSERT (Vollladung)
+-- Kopierskript: SSC43M_STAT_FST -> SSC41M_STAT_FST
+-- Ziel ist leer, daher KEIN TRUNCATE/DROP, nur INSERT
 -- Cap: max. 1000 Zeilen pro Tabelle (Test-/Entwicklungsdaten, keine Vollladung)
+-- Hintergrund: Vollladung fuehrte bei grossen Tabellen (Mio. Zeilen) zu
+-- ORA-01652 (TEMP-Tablespace STAT_DM_SCR voll) -- daher bewusst begrenzt.
 
 declare
 v_sql varchar(32000);
 
-v_source_user varchar(20) := 'SSC43LL_FST';
-v_target_user varchar(20) := 'SSC41LL_FST';
+v_source_user varchar(20) := 'SSC43M_STAT_FST';
+v_target_user varchar(20) := 'SSC41M_STAT_FST';
 
 begin
   -- Session fuer parallele Verarbeitung vorbereiten
