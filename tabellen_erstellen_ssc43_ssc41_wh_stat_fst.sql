@@ -3,29 +3,35 @@ SET SERVEROUTPUT ON SIZE UNLIMITED
 SET LONG 100000
 SET LINESIZE 200
 
--- Create ALL tables from SSC43WH_STAT_FST in SSC41WH_STAT_FST that don't already exist.
+-- Skript: Tabellenstrukturen (inkl. Primary Keys und Indizes) von
+-- SSC43WH_STAT_FST nach SSC41WH_STAT_FST anlegen.
 --
--- Same fixed approach as tabellen_erstellen_ssc43_ssc41_wh_fst.sql (root cause of
--- ORA-00922 was DBMS_METADATA's default trailing ';' via SQLTERMINATOR, now disabled):
---   * explicit DBMS_METADATA SQLTERMINATOR=FALSE
---   * defensive trailing ';'/newline strip on the generated DDL before EXECUTE IMMEDIATE
---   * per-table exception handling: one bad table is logged (with its full generated
---     DDL for debugging) and the loop continues instead of aborting the whole run
---
--- Logic: for every table in SSC43WH_STAT_FST -> if it already exists in
--- SSC41WH_STAT_FST, skip; otherwise clone its DDL (no STORAGE/SEGMENT_ATTRIBUTES/
--- TABLESPACE) and create it.
+-- WICHTIG (Ursache des ORA-00922 bei Tabellen mit Primary Key):
+-- DBMS_METADATA.GET_DDL('TABLE', ...) liefert bei Tabellen mit Primary Key
+-- NICHT nur das CREATE TABLE, sondern zusaetzlich ein separates
+-- "ALTER TABLE ... ADD PRIMARY KEY ... USING INDEX ENABLE" -- beides in
+-- einem CLOB, durch ';' getrennt. Die fruehere Loesung (SQLTERMINATOR=FALSE)
+-- entfernte genau diese Trennzeichen und verschmolz beide Anweisungen zu
+-- einer ungueltigen Anweisung.
+-- Fix: SQLTERMINATOR bleibt AN (Standard), der CLOB wird an jedem ';' in
+-- einzelne Anweisungen zerlegt, und jede Anweisung wird EINZELN ausgefuehrt.
+-- Zusaetzlich: separate Indizes (nicht Teil eines Primary/Unique Key)
+-- werden in einem zweiten Durchlauf ebenfalls geklont.
 
 DECLARE
   v_src_schema VARCHAR2(128) := 'SSC43WH_STAT_FST';
   v_tgt_schema VARCHAR2(128) := 'SSC41WH_STAT_FST';
 
-  v_ddl         CLOB;
-  v_exists_cnt  PLS_INTEGER;
+  v_ddl          CLOB;
+  v_exists_cnt   PLS_INTEGER;
 
-  v_created_cnt PLS_INTEGER := 0;
-  v_skipped_cnt PLS_INTEGER := 0;
-  v_failed_cnt  PLS_INTEGER := 0;
+  v_created_cnt  PLS_INTEGER := 0;
+  v_skipped_cnt  PLS_INTEGER := 0;
+  v_failed_cnt   PLS_INTEGER := 0;
+
+  v_idx_created_cnt PLS_INTEGER := 0;
+  v_idx_skipped_cnt PLS_INTEGER := 0;
+  v_idx_failed_cnt  PLS_INTEGER := 0;
 
   PROCEDURE print_clob(p_clob CLOB) IS
     v_len   PLS_INTEGER := DBMS_LOB.GETLENGTH(p_clob);
@@ -38,63 +44,147 @@ DECLARE
     END LOOP;
   END print_clob;
 
+  PROCEDURE run_statements(p_ddl CLOB, p_label VARCHAR2,
+                            p_ok_cnt IN OUT PLS_INTEGER,
+                            p_fail_cnt IN OUT PLS_INTEGER) IS
+    v_len     PLS_INTEGER := DBMS_LOB.GETLENGTH(p_ddl);
+    v_start   PLS_INTEGER := 1;
+    v_semipos PLS_INTEGER;
+    v_stmt    VARCHAR2(32000);
+  BEGIN
+    LOOP
+      v_semipos := DBMS_LOB.INSTR(p_ddl, ';', v_start);
+      EXIT WHEN v_semipos = 0;
+
+      v_stmt := TRIM(DBMS_LOB.SUBSTR(p_ddl, v_semipos - v_start, v_start));
+      v_start := v_semipos + 1;
+
+      IF v_stmt IS NOT NULL THEN
+        BEGIN
+          EXECUTE IMMEDIATE v_stmt;
+          DBMS_OUTPUT.PUT_LINE('  OK :: ' || SUBSTR(v_stmt, 1, 90));
+          p_ok_cnt := p_ok_cnt + 1;
+        EXCEPTION
+          WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('  TEILFEHLER (' || p_label || '): ' || SQLERRM);
+            DBMS_OUTPUT.PUT_LINE('  Anweisung: ' || v_stmt);
+            p_fail_cnt := p_fail_cnt + 1;
+        END;
+      END IF;
+    END LOOP;
+
+    IF v_start <= v_len THEN
+      v_stmt := TRIM(DBMS_LOB.SUBSTR(p_ddl, v_len - v_start + 1, v_start));
+      IF v_stmt IS NOT NULL THEN
+        BEGIN
+          EXECUTE IMMEDIATE v_stmt;
+          DBMS_OUTPUT.PUT_LINE('  OK :: ' || SUBSTR(v_stmt, 1, 90));
+          p_ok_cnt := p_ok_cnt + 1;
+        EXCEPTION
+          WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('  TEILFEHLER (' || p_label || '): ' || SQLERRM);
+            DBMS_OUTPUT.PUT_LINE('  Anweisung: ' || v_stmt);
+            p_fail_cnt := p_fail_cnt + 1;
+        END;
+      END IF;
+    END IF;
+  END run_statements;
+
 BEGIN
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'STORAGE', FALSE);
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SEGMENT_ATTRIBUTES', FALSE);
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'TABLESPACE', FALSE);
-  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SQLTERMINATOR', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SQLTERMINATOR', TRUE);  -- bewusst AN
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'PRETTY', TRUE);
+  -- CONSTRAINTS bleibt auf Standard (TRUE) -- Primary/Unique Keys werden mitgeklont
 
+  -- ===== Durchlauf 1: Tabellen (inkl. Primary/Unique Key Constraints) =====
   FOR t IN (
     SELECT table_name
     FROM all_tables
     WHERE owner = v_src_schema
-      AND (iot_type IS NULL OR iot_type != 'IOT_OVERFLOW')  -- skip IOT overflow segments
-      AND nested = 'NO'                                     -- skip nested-table storage tables
-      AND secondary = 'N'                                   -- skip domain-index secondary tables
+      AND (iot_type IS NULL OR iot_type != 'IOT_OVERFLOW')
+      AND nested = 'NO'
+      AND secondary = 'N'
     ORDER BY table_name
   ) LOOP
 
-    -- skip if it already exists in the target schema
     SELECT COUNT(*) INTO v_exists_cnt
     FROM all_tables
-    WHERE owner = v_tgt_schema
-      AND table_name = t.table_name;
+    WHERE owner = v_tgt_schema AND table_name = t.table_name;
 
     IF v_exists_cnt > 0 THEN
-      DBMS_OUTPUT.PUT_LINE('SKIP (already exists): ' || t.table_name);
+      DBMS_OUTPUT.PUT_LINE('SKIP (existiert bereits): ' || t.table_name);
       v_skipped_cnt := v_skipped_cnt + 1;
       CONTINUE;
     END IF;
+
+    DBMS_OUTPUT.PUT_LINE('=================================================');
+    DBMS_OUTPUT.PUT_LINE('Erstelle: ' || t.table_name);
 
     BEGIN
       v_ddl := DBMS_METADATA.GET_DDL('TABLE', t.table_name, v_src_schema);
       v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
 
-      -- defensive: strip trailing ; / newline if GET_DDL left one
-      v_ddl := RTRIM(v_ddl);
-      WHILE SUBSTR(v_ddl, LENGTH(v_ddl), 1) IN (';', CHR(10), CHR(13)) LOOP
-        v_ddl := RTRIM(SUBSTR(v_ddl, 1, LENGTH(v_ddl) - 1));
-      END LOOP;
-
-      EXECUTE IMMEDIATE v_ddl;
-      DBMS_OUTPUT.PUT_LINE('CREATED: ' || t.table_name);
-      v_created_cnt := v_created_cnt + 1;
+      run_statements(v_ddl, t.table_name, v_created_cnt, v_failed_cnt);
 
     EXCEPTION
       WHEN OTHERS THEN
         v_failed_cnt := v_failed_cnt + 1;
-        DBMS_OUTPUT.PUT_LINE('FAILED: ' || t.table_name || ' - ' || SQLERRM);
-        DBMS_OUTPUT.PUT_LINE('--- Generated DDL for ' || t.table_name || ' (for debugging) ---');
-        print_clob(v_ddl);
-        DBMS_OUTPUT.PUT_LINE('--- end DDL ---');
+        DBMS_OUTPUT.PUT_LINE('FEHLER (GET_DDL) :: ' || t.table_name || ' - ' || SQLERRM);
+        IF v_ddl IS NOT NULL THEN
+          print_clob(v_ddl);
+        END IF;
+    END;
+
+  END LOOP;
+
+  -- ===== Durchlauf 2: Indizes, die NICHT zu einem Primary/Unique Key gehoeren =====
+  FOR ix IN (
+    SELECT DISTINCT i.index_name, i.table_name
+    FROM dba_indexes i
+    WHERE i.owner = v_src_schema
+      AND i.table_owner = v_src_schema
+      AND EXISTS (SELECT 1 FROM dba_tables tt WHERE tt.owner = v_tgt_schema AND tt.table_name = i.table_name)
+      AND NOT EXISTS (
+        SELECT 1 FROM dba_constraints c
+        WHERE c.owner = v_src_schema
+          AND c.index_name = i.index_name
+          AND c.constraint_type IN ('P', 'U')
+      )
+    ORDER BY i.table_name, i.index_name
+  ) LOOP
+
+    SELECT COUNT(*) INTO v_exists_cnt
+    FROM dba_indexes
+    WHERE owner = v_tgt_schema AND index_name = ix.index_name;
+
+    IF v_exists_cnt > 0 THEN
+      DBMS_OUTPUT.PUT_LINE('SKIP INDEX (existiert bereits): ' || ix.index_name);
+      v_idx_skipped_cnt := v_idx_skipped_cnt + 1;
+      CONTINUE;
+    END IF;
+
+    BEGIN
+      v_ddl := DBMS_METADATA.GET_DDL('INDEX', ix.index_name, v_src_schema);
+      v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
+
+      run_statements(v_ddl, ix.index_name, v_idx_created_cnt, v_idx_failed_cnt);
+
+    EXCEPTION
+      WHEN OTHERS THEN
+        v_idx_failed_cnt := v_idx_failed_cnt + 1;
+        DBMS_OUTPUT.PUT_LINE('FEHLER (INDEX) :: ' || ix.index_name || ' - ' || SQLERRM);
     END;
 
   END LOOP;
 
   DBMS_OUTPUT.PUT_LINE('=================================================');
-  DBMS_OUTPUT.PUT_LINE('Done. Created: ' || v_created_cnt
-                        || ', Skipped (already existed): ' || v_skipped_cnt
-                        || ', Failed: ' || v_failed_cnt);
+  DBMS_OUTPUT.PUT_LINE('Tabellen  -- erfolgreiche Anweisungen: ' || v_created_cnt
+                        || ', uebersprungen (Tabelle existierte bereits): ' || v_skipped_cnt
+                        || ', fehlgeschlagene Anweisungen: ' || v_failed_cnt);
+  DBMS_OUTPUT.PUT_LINE('Indizes   -- erstellt: ' || v_idx_created_cnt
+                        || ', uebersprungen: ' || v_idx_skipped_cnt
+                        || ', fehlgeschlagen: ' || v_idx_failed_cnt);
 END;
 /
