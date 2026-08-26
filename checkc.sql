@@ -76,6 +76,10 @@ DECLARE
   v_missing_cnt PLS_INTEGER := 0;
   v_nosrc_cnt   PLS_INTEGER := 0;
 
+  -- Copy-Paste-fertige Listen fuer Folgeskripte
+  v_missing_list CLOB;
+  v_nosrc_list   CLOB;
+
 BEGIN
   FOR i IN 1 .. v_tables.COUNT LOOP
 
@@ -93,9 +97,15 @@ BEGIN
     ELSIF v_in_source > 0 THEN
       DBMS_OUTPUT.PUT_LINE('FEHLT IM ZIEL (in Quelle vorhanden): ' || v_tables(i));
       v_missing_cnt := v_missing_cnt + 1;
+      v_missing_list := v_missing_list
+                        || CASE WHEN v_missing_list IS NOT NULL THEN ',' END
+                        || '''' || v_tables(i) || '''';
     ELSE
       DBMS_OUTPUT.PUT_LINE('NICHT GEFUNDEN (weder Ziel noch Quelle): ' || v_tables(i));
       v_nosrc_cnt := v_nosrc_cnt + 1;
+      v_nosrc_list := v_nosrc_list
+                      || CASE WHEN v_nosrc_list IS NOT NULL THEN ',' END
+                      || '''' || v_tables(i) || '''';
     END IF;
 
   END LOOP;
@@ -106,5 +116,13 @@ BEGIN
                         || '  |  Fehlt im Ziel (Quelle vorhanden): ' || v_missing_cnt
                         || '  |  Nirgends gefunden: ' || v_nosrc_cnt);
   DBMS_OUTPUT.PUT_LINE('(Reiner Lesezugriff -- keine Tabelle wurde angelegt oder geaendert.)');
+
+  DBMS_OUTPUT.PUT_LINE('=================================================');
+  DBMS_OUTPUT.PUT_LINE('-- Fehlt im Ziel, in Quelle vorhanden (zum Klonen bereit) --');
+  DBMS_OUTPUT.PUT_LINE(NVL(v_missing_list, '(keine)'));
+
+  DBMS_OUTPUT.PUT_LINE('=================================================');
+  DBMS_OUTPUT.PUT_LINE('-- Nirgends gefunden (zu pruefen) --');
+  DBMS_OUTPUT.PUT_LINE(NVL(v_nosrc_list, '(keine)'));
 END;
 /
