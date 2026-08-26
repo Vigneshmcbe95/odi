@@ -1,15 +1,20 @@
+SET DEFINE OFF
 SET SERVEROUTPUT ON SIZE UNLIMITED
 SET LONG 100000
 SET LINESIZE 200
 
 -- Test harness: create ONE table via DBMS_METADATA.GET_DDL, SSC43WH_FST -> SSC41WH_FST
--- Usage: @test_create_one_table.sql YOUR_TABLE_NAME
+-- Usage: edit v_table_name below to a real table that exists in SSC43WH_FST and
+--        does not yet exist in SSC41WH_FST, then just run the script (no arguments).
+--        SET DEFINE OFF turns off '&' substitution entirely so no "Ersetzung
+--        abgebrochen" / substitution prompt can happen, in any client (SQL*Plus,
+--        SQL Developer, Toad, ...).
 -- Debugging ORA-00922 (100% failure rate on tabellen_erstellen_ssc43_ssc41_wh_fst.sql):
 -- adds explicit SQLTERMINATOR=FALSE + defensive trailing-';' strip before EXECUTE IMMEDIATE.
 
 DECLARE
   v_ddl        CLOB;
-  v_table_name VARCHAR2(128) := UPPER('&&1');
+  v_table_name VARCHAR2(128) := 'YOUR_TABLE_NAME_HERE';  -- <<< EDIT THIS, then run
   v_src_schema VARCHAR2(128) := 'SSC43WH_FST';
   v_tgt_schema VARCHAR2(128) := 'SSC41WH_FST';
 
