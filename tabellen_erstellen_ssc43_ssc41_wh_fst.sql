@@ -1,77 +1,98 @@
-SET SERVEROUTPUT ON
+SET DEFINE OFF
+SET SERVEROUTPUT ON SIZE UNLIMITED
+SET LONG 100000
+SET LINESIZE 200
 
--- Skript: Tabellenstrukturen von SSC43WH_FST nach SSC41WH_FST anlegen
--- Ziel-Schema ist aktuell leer -- Struktur wird 1:1 vom bestehenden
--- Schema 43 uebernommen (DBMS_METADATA.GET_DDL), nur der Schema-Name
--- wird im generierten DDL-Text umgesetzt.
+-- Create ALL tables from SSC43WH_FST in SSC41WH_FST that don't already exist.
 --
--- Speicher-/Tablespace-Klauseln werden bewusst entfernt: das Zielschema
--- hat sein eigenes Standard-Tablespace, und Storage-Angaben sollen laut
--- Konvention ohnehin nie hartcodiert werden (nur Partitionierung bleibt
--- explizit erhalten).
+-- Fixes applied vs. previous version (root cause of the 100%-failure ORA-00922):
+--   * explicit DBMS_METADATA SQLTERMINATOR=FALSE
+--   * defensive trailing ';'/newline strip on the generated DDL before EXECUTE IMMEDIATE
+--   * per-table exception handling: one bad table is logged (with its full generated
+--     DDL for debugging) and the loop continues instead of aborting the whole run
+--
+-- Logic: for every table in SSC43WH_FST -> if it already exists in SSC41WH_FST, skip;
+-- otherwise clone its DDL (no STORAGE/SEGMENT_ATTRIBUTES/TABLESPACE) and create it.
 
 DECLARE
-  v_ddl     CLOB;
-  v_exists  NUMBER;
-  v_len     NUMBER;
-  v_pos     NUMBER;
-  v_chunk   NUMBER := 2000;
+  v_src_schema VARCHAR2(128) := 'SSC43WH_FST';
+  v_tgt_schema VARCHAR2(128) := 'SSC41WH_FST';
 
-  -- Gibt eine CLOB in mehreren Zeilen aus (dbms_output.put_line begrenzt
-  -- die Zeilenlaenge, daher Aufteilung in handhabbare Stuecke)
+  v_ddl         CLOB;
+  v_exists_cnt  PLS_INTEGER;
+
+  v_created_cnt PLS_INTEGER := 0;
+  v_skipped_cnt PLS_INTEGER := 0;
+  v_failed_cnt  PLS_INTEGER := 0;
+
   PROCEDURE print_clob(p_clob CLOB) IS
-    v_len  NUMBER := DBMS_LOB.GETLENGTH(p_clob);
-    v_pos  NUMBER := 1;
+    v_len   PLS_INTEGER := DBMS_LOB.GETLENGTH(p_clob);
+    v_pos   PLS_INTEGER := 1;
+    v_chunk PLS_INTEGER := 250;
   BEGIN
     WHILE v_pos <= v_len LOOP
       DBMS_OUTPUT.PUT_LINE(DBMS_LOB.SUBSTR(p_clob, v_chunk, v_pos));
       v_pos := v_pos + v_chunk;
     END LOOP;
-  END;
+  END print_clob;
+
 BEGIN
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'STORAGE', FALSE);
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SEGMENT_ATTRIBUTES', FALSE);
   DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'TABLESPACE', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SQLTERMINATOR', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'PRETTY', TRUE);
 
   FOR t IN (
     SELECT table_name
-    FROM dba_tables
-    WHERE owner = 'SSC43WH_FST'
+    FROM all_tables
+    WHERE owner = v_src_schema
+      AND (iot_type IS NULL OR iot_type != 'IOT_OVERFLOW')  -- skip IOT overflow segments
+      AND nested = 'NO'                                     -- skip nested-table storage tables
+      AND secondary = 'N'                                   -- skip domain-index secondary tables
     ORDER BY table_name
   ) LOOP
 
-    DBMS_OUTPUT.PUT_LINE('=========================================================================');
+    -- skip if it already exists in the target schema
+    SELECT COUNT(*) INTO v_exists_cnt
+    FROM all_tables
+    WHERE owner = v_tgt_schema
+      AND table_name = t.table_name;
 
-    -- Pruefen, ob die Tabelle im Zielschema schon existiert
-    SELECT COUNT(*) INTO v_exists
-    FROM dba_tables
-    WHERE owner = 'SSC41WH_FST'
-          AND table_name = t.table_name;
-
-    IF v_exists > 0 THEN
-      DBMS_OUTPUT.PUT_LINE('UEBERSPRUNGEN :: ' || t.table_name || ' existiert bereits im Zielschema.');
-    ELSE
-      -- DDL fuer diese Tabelle erzeugen und Schema-Namen auf Ziel umsetzen
-      v_ddl := DBMS_METADATA.GET_DDL('TABLE', t.table_name, 'SSC43WH_FST');
-      v_ddl := REPLACE(v_ddl, 'SSC43WH_FST', 'SSC41WH_FST');
-
-      DBMS_OUTPUT.PUT_LINE('Erstelle Tabelle: SSC41WH_FST.' || t.table_name);
-
-      BEGIN
-        EXECUTE IMMEDIATE v_ddl;
-        DBMS_OUTPUT.PUT_LINE('OK :: ' || t.table_name || ' erstellt.');
-      EXCEPTION
-        WHEN OTHERS THEN
-          DBMS_OUTPUT.PUT_LINE('FEHLER :: ' || t.table_name || ' -> ' || SQLERRM);
-          DBMS_OUTPUT.PUT_LINE('--- generiertes DDL zur Fehlersuche ---');
-          print_clob(v_ddl);
-          DBMS_OUTPUT.PUT_LINE('--- Ende DDL ---');
-      END;
+    IF v_exists_cnt > 0 THEN
+      DBMS_OUTPUT.PUT_LINE('SKIP (already exists): ' || t.table_name);
+      v_skipped_cnt := v_skipped_cnt + 1;
+      CONTINUE;
     END IF;
+
+    BEGIN
+      v_ddl := DBMS_METADATA.GET_DDL('TABLE', t.table_name, v_src_schema);
+      v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
+
+      -- defensive: strip trailing ; / newline if GET_DDL left one
+      v_ddl := RTRIM(v_ddl);
+      WHILE SUBSTR(v_ddl, LENGTH(v_ddl), 1) IN (';', CHR(10), CHR(13)) LOOP
+        v_ddl := RTRIM(SUBSTR(v_ddl, 1, LENGTH(v_ddl) - 1));
+      END LOOP;
+
+      EXECUTE IMMEDIATE v_ddl;
+      DBMS_OUTPUT.PUT_LINE('CREATED: ' || t.table_name);
+      v_created_cnt := v_created_cnt + 1;
+
+    EXCEPTION
+      WHEN OTHERS THEN
+        v_failed_cnt := v_failed_cnt + 1;
+        DBMS_OUTPUT.PUT_LINE('FAILED: ' || t.table_name || ' - ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('--- Generated DDL for ' || t.table_name || ' (for debugging) ---');
+        print_clob(v_ddl);
+        DBMS_OUTPUT.PUT_LINE('--- end DDL ---');
+    END;
 
   END LOOP;
 
-  DBMS_OUTPUT.PUT_LINE('=========================================================================');
-  DBMS_OUTPUT.PUT_LINE('Alle Tabellen verarbeitet.');
+  DBMS_OUTPUT.PUT_LINE('=================================================');
+  DBMS_OUTPUT.PUT_LINE('Done. Created: ' || v_created_cnt
+                        || ', Skipped (already existed): ' || v_skipped_cnt
+                        || ', Failed: ' || v_failed_cnt);
 END;
 /
