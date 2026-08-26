@@ -1,0 +1,104 @@
+SET DEFINE OFF
+SET SERVEROUTPUT ON SIZE UNLIMITED
+SET LONG 100000
+SET LINESIZE 200
+
+-- Erstellt NUR die unten gelistete, gezielte Tabellenmenge in SVS41M_STAT_FST,
+-- geklont aus SVS43M_STAT_FST (nicht das ganze Schema).
+--
+-- Gleicher fixer Ansatz wie tabellen_erstellen_ssc43_ssc41_wh_fst.sql:
+--   * DBMS_METADATA SQLTERMINATOR=FALSE (Ursache des ORA-00922 war das
+--     standardmaessig angehaengte ';')
+--   * defensives Entfernen von trailing ';'/Zeilenumbruch vor EXECUTE IMMEDIATE
+--   * pro Tabelle eigene Exception-Behandlung -- eine fehlerhafte Tabelle
+--     stoppt nicht den ganzen Lauf
+
+DECLARE
+  v_src_schema VARCHAR2(128) := 'THM_DWH_FST';
+  v_tgt_schema VARCHAR2(128) := 'SVS41WH_FST';
+
+  v_ddl         CLOB;
+  v_exists_cnt  PLS_INTEGER;
+
+  v_created_cnt PLS_INTEGER := 0;
+  v_skipped_cnt PLS_INTEGER := 0;
+  v_failed_cnt  PLS_INTEGER := 0;
+
+  -- Nur diese Tabellen werden angelegt -- strikt begrenzt
+  TYPE t_table_list IS TABLE OF VARCHAR2(128);
+  v_tables t_table_list := t_table_list(
+ 'TD_DWH_FST_ZSK_ID','TD_DWH_MASSNAHME_DFO','TD_DWH_MASSNAHME_FBW_SO','TD_DWH_TEILNAHME_DFZ','TD_DWH_TEILNAHME_FBW_SOZ','TD_DWH_TEILNAHME_TAM_NB','TH_DWH_TEILNAHME_BNF_KOOP','TH_DWH_TEILNAHME_TAM_NB');
+
+  PROCEDURE print_clob(p_clob CLOB) IS
+    v_len   PLS_INTEGER := DBMS_LOB.GETLENGTH(p_clob);
+    v_pos   PLS_INTEGER := 1;
+    v_chunk PLS_INTEGER := 250;
+  BEGIN
+    WHILE v_pos <= v_len LOOP
+      DBMS_OUTPUT.PUT_LINE(DBMS_LOB.SUBSTR(p_clob, v_chunk, v_pos));
+      v_pos := v_pos + v_chunk;
+    END LOOP;
+  END print_clob;
+
+BEGIN
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'STORAGE', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SEGMENT_ATTRIBUTES', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'TABLESPACE', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'SQLTERMINATOR', FALSE);
+  DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM, 'PRETTY', TRUE);
+
+  FOR i IN 1 .. v_tables.COUNT LOOP
+
+    -- Existiert die Quelltabelle ueberhaupt? (Tippfehler-Schutz)
+    SELECT COUNT(*) INTO v_exists_cnt
+    FROM all_tables
+    WHERE owner = v_src_schema
+      AND table_name = v_tables(i);
+
+    IF v_exists_cnt = 0 THEN
+      DBMS_OUTPUT.PUT_LINE('WARNUNG (nicht in Quelle gefunden): ' || v_tables(i));
+      CONTINUE;
+    END IF;
+
+    -- Existiert die Tabelle bereits im Zielschema? -> ueberspringen
+    SELECT COUNT(*) INTO v_exists_cnt
+    FROM all_tables
+    WHERE owner = v_tgt_schema
+      AND table_name = v_tables(i);
+
+    IF v_exists_cnt > 0 THEN
+      DBMS_OUTPUT.PUT_LINE('SKIP (existiert bereits): ' || v_tables(i));
+      v_skipped_cnt := v_skipped_cnt + 1;
+      CONTINUE;
+    END IF;
+
+    BEGIN
+      v_ddl := DBMS_METADATA.GET_DDL('TABLE', v_tables(i), v_src_schema);
+      v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
+
+      v_ddl := RTRIM(v_ddl);
+      WHILE SUBSTR(v_ddl, LENGTH(v_ddl), 1) IN (';', CHR(10), CHR(13)) LOOP
+        v_ddl := RTRIM(SUBSTR(v_ddl, 1, LENGTH(v_ddl) - 1));
+      END LOOP;
+
+      EXECUTE IMMEDIATE v_ddl;
+      DBMS_OUTPUT.PUT_LINE('CREATED: ' || v_tables(i));
+      v_created_cnt := v_created_cnt + 1;
+
+    EXCEPTION
+      WHEN OTHERS THEN
+        v_failed_cnt := v_failed_cnt + 1;
+        DBMS_OUTPUT.PUT_LINE('FAILED: ' || v_tables(i) || ' - ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('--- Generiertes DDL fuer ' || v_tables(i) || ' (zur Fehlersuche) ---');
+        print_clob(v_ddl);
+        DBMS_OUTPUT.PUT_LINE('--- Ende DDL ---');
+    END;
+
+  END LOOP;
+
+  DBMS_OUTPUT.PUT_LINE('=================================================');
+  DBMS_OUTPUT.PUT_LINE('Fertig. Erstellt: ' || v_created_cnt
+                        || ', Uebersprungen: ' || v_skipped_cnt
+                        || ', Fehlgeschlagen: ' || v_failed_cnt);
+END;
+/
