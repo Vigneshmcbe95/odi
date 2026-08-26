@@ -150,44 +150,50 @@ BEGIN
   END LOOP;
 
   -- ===== Durchlauf 2: Indizes, die NICHT zu einem Primary/Unique Key gehoeren =====
-  -- (nur fuer die oben gelisteten Tabellen)
-  FOR ix IN (
-    SELECT DISTINCT i.index_name, i.table_name
-    FROM dba_indexes i
-    WHERE i.owner = v_src_schema
-      AND i.table_owner = v_src_schema
-      AND i.table_name IN (SELECT COLUMN_VALUE FROM TABLE(v_tables))
-      AND EXISTS (SELECT 1 FROM dba_tables tt WHERE tt.owner = v_tgt_schema AND tt.table_name = i.table_name)
-      AND NOT EXISTS (
-        SELECT 1 FROM dba_constraints c
-        WHERE c.owner = v_src_schema
-          AND c.index_name = i.index_name
-          AND c.constraint_type IN ('P', 'U')
-      )
-    ORDER BY i.table_name, i.index_name
-  ) LOOP
+  -- (nur fuer die oben gelisteten Tabellen -- pro Tabelle einzeln abgefragt,
+  --  da ein lokal deklarierter Collection-Typ (v_tables) nicht per TABLE()
+  --  in einer SQL-Anweisung verwendet werden darf: PLS-00642)
+  FOR i IN 1 .. v_tables.COUNT LOOP
 
-    SELECT COUNT(*) INTO v_exists_cnt
-    FROM dba_indexes
-    WHERE owner = v_tgt_schema AND index_name = ix.index_name;
+    FOR ix IN (
+      SELECT DISTINCT idx.index_name
+      FROM dba_indexes idx
+      WHERE idx.owner = v_src_schema
+        AND idx.table_owner = v_src_schema
+        AND idx.table_name = v_tables(i)
+        AND EXISTS (SELECT 1 FROM dba_tables tt WHERE tt.owner = v_tgt_schema AND tt.table_name = idx.table_name)
+        AND NOT EXISTS (
+          SELECT 1 FROM dba_constraints c
+          WHERE c.owner = v_src_schema
+            AND c.index_name = idx.index_name
+            AND c.constraint_type IN ('P', 'U')
+        )
+      ORDER BY idx.index_name
+    ) LOOP
 
-    IF v_exists_cnt > 0 THEN
-      DBMS_OUTPUT.PUT_LINE('SKIP INDEX (existiert bereits): ' || ix.index_name);
-      v_idx_skipped_cnt := v_idx_skipped_cnt + 1;
-      CONTINUE;
-    END IF;
+      SELECT COUNT(*) INTO v_exists_cnt
+      FROM dba_indexes
+      WHERE owner = v_tgt_schema AND index_name = ix.index_name;
 
-    BEGIN
-      v_ddl := DBMS_METADATA.GET_DDL('INDEX', ix.index_name, v_src_schema);
-      v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
+      IF v_exists_cnt > 0 THEN
+        DBMS_OUTPUT.PUT_LINE('SKIP INDEX (existiert bereits): ' || ix.index_name);
+        v_idx_skipped_cnt := v_idx_skipped_cnt + 1;
+        CONTINUE;
+      END IF;
 
-      run_statements(v_ddl, ix.index_name, v_idx_created_cnt, v_idx_failed_cnt);
+      BEGIN
+        v_ddl := DBMS_METADATA.GET_DDL('INDEX', ix.index_name, v_src_schema);
+        v_ddl := REPLACE(v_ddl, v_src_schema, v_tgt_schema);
 
-    EXCEPTION
-      WHEN OTHERS THEN
-        v_idx_failed_cnt := v_idx_failed_cnt + 1;
-        DBMS_OUTPUT.PUT_LINE('FEHLER (INDEX) :: ' || ix.index_name || ' - ' || SQLERRM);
-    END;
+        run_statements(v_ddl, ix.index_name, v_idx_created_cnt, v_idx_failed_cnt);
+
+      EXCEPTION
+        WHEN OTHERS THEN
+          v_idx_failed_cnt := v_idx_failed_cnt + 1;
+          DBMS_OUTPUT.PUT_LINE('FEHLER (INDEX) :: ' || ix.index_name || ' - ' || SQLERRM);
+      END;
+
+    END LOOP;
 
   END LOOP;
 
