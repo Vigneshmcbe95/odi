@@ -1,0 +1,127 @@
+SET FEEDBACK ON
+SET SERVEROUTPUT ON
+
+-- Retargeted von tabellen_kopieren_xro_thm_dm_stat_fst.sql
+-- Quelle bleibt XRO_DM_STAT_FST, Ziel neu: SVS41M_STAT_FST
+-- Cap: max. 1000 Zeilen pro Partition/Monat (statt Volladung).
+-- Spalten-Schnittmenge (Quelle UND Ziel) war hier schon im Original enthalten.
+-- Partitionslogik unveraendert uebernommen (legt pro MON_ID eine Partition an
+-- und kopiert die Daten dieser Monatsscheibe).
+
+declare
+v_sql         VARCHAR(32000);
+v_ddl         VARCHAR(32000);
+
+v_execute     BOOLEAN := TRUE;
+v_col_names   CLOB;
+
+v_part_count  INTEGER :=0;
+v_part_names  CLOB;
+
+v_source_user VARCHAR(20) := 'XRO_DM_STAT_FST';
+v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
+
+v_mon_id_next NUMBER;
+a_mon_id      DBMS_SQL.NUMBER_TABLE;
+
+v_rowcnt      INTEGER := 0;
+
+begin
+  execute immediate 'alter session enable parallel ddl';
+  execute immediate 'alter session enable parallel dml';
+  execute immediate 'alter session enable parallel query';
+  execute immediate 'alter session set parallel_degree_limit = 16';
+  execute immediate 'alter session set parallel_degree_policy = auto';
+
+  for c in (
+         select t.owner source_owner
+               , v_target_user target_owner
+               , t.table_name
+          from dba_tables t
+          where t.owner = v_source_user
+                and t.table_name in (
+                                    select s.table_name
+                                    from dba_tables s
+                                    where s.owner = v_target_user
+                                    )
+                and t.table_name not like 'FST_DM_VOR_INPUT%'
+                and t.table_name not like 'TT_DM_FST_META'
+                and t.table_name not like 'TE%'
+                and t.table_name not like 'TP_FST%'
+                and t.table_name not like 'TG_FST_FF%'
+                and t.table_name not like 'TG_FST_TRG%'
+
+                and t.table_name not like 'TF_FST_AFOEAN%'
+
+                and t.table_name not like 'TF_FST_%BAK'
+                and t.table_name not like 'TF_FST_%OLD'
+                and t.table_name not like 'TF_FST_%SAV'
+                and t.table_name not like 'TF_FST_%SICH'
+                and t.table_name not like 'TF_FST_%TEMP'
+
+          group by t.owner, v_target_user, t.table_name
+          order by 1,2,3
+    ) loop
+
+        dbms_output.put_line('=========================================================================');
+
+        dbms_output.put_line('00 :: '||c.target_owner||'.'||c.table_name);
+
+        v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
+        dbms_output.put_line('01 :: '||v_ddl);
+
+        if v_execute then
+          execute immediate v_ddl;
+        end if;
+		SELECT LISTAGG (COLUMN_NAME, ',') within group (order by COLUMN_NAME) COLS into v_col_names from DBA_TAB_COLUMNS WHERE OWNER=v_source_user AND TABLE_NAME=c.table_name AND COLUMN_NAME IN (SELECT COLUMN_NAME from DBA_TAB_COLUMNS WHERE OWNER=v_target_user AND TABLE_NAME=c.table_name) group by TABLE_NAME;
+-- Beginn Partitionierung
+        select count(*) into v_part_count from dba_tab_partitions where table_owner = c.target_owner and table_name = c.table_name;
+		if v_part_count > 0 then
+           v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
+ 	       EXECUTE IMMEDIATE (v_sql);
+           if v_part_count > 1 then
+	          select LISTAGG (PARTITION_NAME, ',') within group (order by PARTITION_NAME) COLS into v_part_names from DBA_TAB_PARTITIONS WHERE TABLE_OWNER=c.target_owner AND TABLE_NAME=c.table_name AND PARTITION_NAME != 'P_FIRST' group by TABLE_NAME;
+		      v_ddl := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' DROP PARTITIONS ' || v_part_names;
+		      EXECUTE IMMEDIATE (v_ddl);
+		   end if;
+		   v_sql := 'select distinct mon_id from ' || c.source_owner || '.' || c.table_name || ' order by mon_id';
+	       execute immediate v_sql bulk collect into a_mon_id;
+	       FOR i in a_mon_id.FIRST .. a_mon_id.LAST
+   	       LOOP
+		   	  IF substr(a_mon_id(i),5,2) = 12
+		   		THEN
+		   		v_mon_id_next := a_mon_id(i) + 89;
+		   		ELSE
+		   		v_mon_id_next := a_mon_id(i) + 1;
+		   	  END IF;
+--          Partition hinzufügen
+		   	v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' ADD PARTITION P' || a_mon_id(i) || ' VALUES LESS THAN (' || v_mon_id_next || ')' ;
+		   	EXECUTE IMMEDIATE (v_sql);
+--          Daten der Monatsscheibe kopieren (max. 1000 Zeilen pro Monat)
+            v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
+                 'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name || ' WHERE MON_ID = ' || a_mon_id(i) ||
+                 ' FETCH FIRST 1000 ROWS ONLY';
+            EXECUTE IMMEDIATE (v_sql);
+			v_rowcnt := v_rowcnt + sql%rowcount;
+            COMMIT;
+		   END LOOP;
+		   dbms_output.put_line('02 :: PARTITIONS FOR ' || c.table_name || ' CREATED AND DATA COPIED');
+		   v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL(1)';
+                   execute immediate v_sql;
+		else
+           v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
+           'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name||
+           ' FETCH FIRST 1000 ROWS ONLY';
+           if v_execute then
+              execute immediate v_sql;
+		      v_rowcnt := sql%rowcount;
+			  commit;
+			  dbms_output.put_line('02 :: '||v_sql);
+		   end if;
+		end if;
+-- Beginn Daten kopieren
+     dbms_output.put_line('===');
+     dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||v_rowcnt||' rows.');
+    end loop;
+end;
+/
