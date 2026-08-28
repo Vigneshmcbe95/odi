@@ -1,0 +1,59 @@
+Tag 1 (4 Punkte)
+1. Sandbox-41-Schemaliste sorgfältig geprüft
+2. Logische Schemas auf physische gemappt
+3. Kontext-Schema-Zuordnungen gründlich bestätigt
+4. Objekterstellungsreihenfolge ordentlich geplant
+
+Tag 2 (4 Punkte)
+1. Objekte für SSC41WH_FST erstellt
+2. ORA-00922-Fehler schnell gefunden und gelöst
+3. Primärschlüsselerstellung erfolgreich hinzugefügt
+4. Indizes für SSC41WH_FST erstellt
+
+Tag 3 (4 Punkte)
+1. Objekte für SSC41WH_STAT_FST erstellt
+2. PLS-00642-Fehler unerwartet aufgetreten
+3. Objekterstellung vollständig korrigiert und getestet
+4. Wiederholbare Objekterstellungslogik verifiziert
+
+Tag 4 (4 Punkte)
+1. Objekte für SVS41WH_FST erstellt
+2. ORA-00904-Spaltenkonflikt gelöst
+3. Primärschlüssel für SVS41WH_FST erstellt
+4. Indizes für SVS41WH_FST erstellt
+
+Tag 5 (4 Punkte)
+1. Objekte für SVS41WH_BA_TRS erstellt
+2. Objekte für SVS41M_STAT_FST erstellt
+3. Partitionierte Objekterstellung korrekt verifiziert
+4. Objekte für STAT_BA_TRS erstellt
+
+Tag 6 (4 Punkte)
+1. ORA-01652-Tablespace-Fehler erneut aufgetreten
+2. Einstellungen angepasst und Erstellung erneut getestet
+3. ORA-01918-Namensfehler sorgfältig gelöst
+4. Doppelte Objekterstellung behoben
+
+Tag 7 (4 Punkte)
+1. ORA-12812-Fehler doppelte Klausel gelöst
+2. ORA-00955-Fehler Objekt existiert gelöst
+3. Objekte über alle Schemas verifiziert
+4. Tabellenlisten je Schema bestätigt
+
+Tag 8 (4 Punkte)
+1. Fehlende Objekte in SVS41WH_STAT_FST untersucht
+2. Basisschema-Zuordnung SSC41LL_FST bestätigt
+3. Gefundene Schema-Namensfehler korrigiert
+4. Ausnahme SVS41EB_ODIKM-Schema dokumentiert
+
+Tag 9 (4 Punkte)
+1. Vollständigen Schemaüberblicksbericht erstellt
+2. Partitionierte Objekte über alle Schemas geprüft
+3. Indizierte Objekte über alle Schemas geprüft
+4. Vollständigen Objektzusammenfassungsbericht exportiert
+
+Tag 10 (4 Punkte)
+1. Vollständige Prüfungen über alle Schemas durchgeführt
+2. Erstellte Objekte gegen geforderte Tabellenlisten abgeglichen
+3. Verbleibende Indexlücken schnell gefunden und behoben
+4. Alle Schemas für Datenladen endgültig freigegeben
