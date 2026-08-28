@@ -8,13 +8,17 @@
 -- Liste bereits, taucht also automatisch auf) als auch Schemata ohne
 -- Liste ab (komplette Quelle wurde geklont -- Quelle taucht automatisch
 -- auf, auch wenn im Ziel noch nicht angelegt).
+--
+-- Quelle je Schema-Typ:
+--   SSC* (Scratch) -> Basis-/Referenzschema SCR_* (nicht der 43er-Sandbox-Peer)
+--   SVS* (persistent) -> 43er-Sandbox-Peer (SVS43*)
 
 WITH
 schema_pairs (target_schema, source_schema) AS (
-  SELECT 'SSC41LL_FST',         'SSC43LL_FST'         FROM dual UNION ALL
-  SELECT 'SSC41M_STAT_FST',     'SSC43M_STAT_FST'     FROM dual UNION ALL
-  SELECT 'SSC41WH_FST',         'SSC43WH_FST'         FROM dual UNION ALL
-  SELECT 'SSC41WH_STAT_FST',    'SSC43WH_STAT_FST'    FROM dual UNION ALL
+  SELECT 'SSC41LL_FST',         'SCR_ALL_FST'         FROM dual UNION ALL
+  SELECT 'SSC41M_STAT_FST',     'SCR_DM_STAT_FST'     FROM dual UNION ALL
+  SELECT 'SSC41WH_FST',         'SCR_DWH_FST'         FROM dual UNION ALL
+  SELECT 'SSC41WH_STAT_FST',    'SCR_DWH_STAT_FST'    FROM dual UNION ALL
   SELECT 'SVS41LL_FST',         'SVS43LL_FST'         FROM dual UNION ALL
   SELECT 'SVS41M_STAT_FST',     'SVS43M_STAT_FST'     FROM dual UNION ALL
   SELECT 'SVS41WH_BA_TRS',      'SVS43WH_BA_TRS'      FROM dual UNION ALL
@@ -38,7 +42,7 @@ all_relevant_tables AS (
 )
 SELECT
   art.target_schema        AS ziel_schema,
-  art.source_schema         AS quell_schema_43,
+  art.source_schema        AS quell_schema,
   art.table_name,
 
   CASE WHEN src.table_name IS NOT NULL THEN 'JA' ELSE 'NEIN' END AS existiert_in_quelle,
