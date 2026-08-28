@@ -44,13 +44,20 @@ SELECT
   CASE WHEN src.table_name IS NOT NULL THEN 'JA' ELSE 'NEIN' END AS existiert_in_quelle,
   CASE WHEN tgt.table_name IS NOT NULL THEN 'JA' ELSE 'NEIN' END AS existiert_im_ziel,
 
-  COALESCE(tgt.partitioned, src.partitioned)          AS partitioniert,
+  src.partitioned                                     AS partitioniert_quelle,
+  tgt.partitioned                                     AS partitioniert_ziel,
+  CASE WHEN src.table_name IS NOT NULL AND tgt.table_name IS NOT NULL
+            AND NVL(src.partitioned,'X') != NVL(tgt.partitioned,'X')
+       THEN 'ABWEICHUNG' ELSE '' END                  AS partition_abweichung,
 
-  CASE WHEN tgt_idx.idx_cnt > 0
-       THEN 'JA (' || tgt_idx.idx_cnt || ')'
-       ELSE 'NEIN' END                                AS indiziert_im_ziel,
+  NVL(src_idx.idx_cnt, 0)                             AS indizes_quelle,
+  NVL(tgt_idx.idx_cnt, 0)                             AS indizes_ziel,
+  CASE WHEN src.table_name IS NOT NULL AND tgt.table_name IS NOT NULL
+            AND NVL(src_idx.idx_cnt,0) != NVL(tgt_idx.idx_cnt,0)
+       THEN 'ABWEICHUNG' ELSE '' END                  AS index_abweichung,
 
-  CASE WHEN tgt_pk.pk_cnt > 0 THEN 'JA' ELSE 'NEIN' END AS primary_key_im_ziel
+  CASE WHEN src_pk.pk_cnt > 0 THEN 'JA' ELSE 'NEIN' END AS primary_key_quelle,
+  CASE WHEN tgt_pk.pk_cnt > 0 THEN 'JA' ELSE 'NEIN' END AS primary_key_ziel
 
 FROM all_relevant_tables art
 
@@ -63,8 +70,23 @@ LEFT JOIN (
   SELECT owner, table_name, COUNT(*) AS idx_cnt
   FROM dba_indexes
   GROUP BY owner, table_name
+) src_idx
+       ON src_idx.owner = art.source_schema AND src_idx.table_name = art.table_name
+
+LEFT JOIN (
+  SELECT owner, table_name, COUNT(*) AS idx_cnt
+  FROM dba_indexes
+  GROUP BY owner, table_name
 ) tgt_idx
        ON tgt_idx.owner = art.target_schema AND tgt_idx.table_name = art.table_name
+
+LEFT JOIN (
+  SELECT owner, table_name, COUNT(*) AS pk_cnt
+  FROM dba_constraints
+  WHERE constraint_type = 'P'
+  GROUP BY owner, table_name
+) src_pk
+       ON src_pk.owner = art.source_schema AND src_pk.table_name = art.table_name
 
 LEFT JOIN (
   SELECT owner, table_name, COUNT(*) AS pk_cnt
