@@ -45,7 +45,6 @@ SELECT
   CASE WHEN tgt.table_name IS NOT NULL THEN 'JA' ELSE 'NEIN' END AS existiert_im_ziel,
 
   COALESCE(tgt.partitioned, src.partitioned)          AS partitioniert,
-  NVL(tgt_part.part_cnt, 0)                           AS anzahl_partitionen_ziel,
 
   CASE WHEN tgt_idx.idx_cnt > 0
        THEN 'JA (' || tgt_idx.idx_cnt || ')'
@@ -59,13 +58,6 @@ LEFT JOIN dba_tables src
        ON src.owner = art.source_schema AND src.table_name = art.table_name
 LEFT JOIN dba_tables tgt
        ON tgt.owner = art.target_schema AND tgt.table_name = art.table_name
-
-LEFT JOIN (
-  SELECT table_owner, table_name, COUNT(*) AS part_cnt
-  FROM dba_tab_partitions
-  GROUP BY table_owner, table_name
-) tgt_part
-       ON tgt_part.table_owner = art.target_schema AND tgt_part.table_name = art.table_name
 
 LEFT JOIN (
   SELECT owner, table_name, COUNT(*) AS idx_cnt
