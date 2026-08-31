@@ -17,6 +17,7 @@ v_col_names   CLOB;
 
 v_part_count  INTEGER :=0;
 v_part_names  CLOB;
+v_is_interval VARCHAR2(3);
 
 v_source_user VARCHAR(20) := 'THM_DM_STAT_FST';
 v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
@@ -70,12 +71,31 @@ begin
         if v_execute then
           execute immediate v_ddl;
         end if;
+	BEGIN
 		SELECT LISTAGG (COLUMN_NAME, ',') within group (order by COLUMN_NAME) COLS into v_col_names from DBA_TAB_COLUMNS WHERE OWNER=v_source_user AND TABLE_NAME=c.table_name AND COLUMN_NAME IN (SELECT COLUMN_NAME from DBA_TAB_COLUMNS WHERE OWNER=v_target_user AND TABLE_NAME=c.table_name) group by TABLE_NAME;
 -- Beginn Partitionierung
         select count(*) into v_part_count from dba_tab_partitions where table_owner = c.target_owner and table_name = c.table_name;
+
+        -- Nur bei INTERVAL-partitionierten Tabellen ist SET INTERVAL() noetig/gueltig;
+        -- bei normalen RANGE-partitionierten Tabellen wuerde das ORA-14757 auslösen.
+        v_is_interval := 'NO';
+        if v_part_count > 0 then
+          select interval into v_is_interval from dba_part_tables
+          where owner = c.target_owner and table_name = c.table_name;
+        end if;
+
+		v_rowcnt := 0;
+
 		if v_part_count > 0 then
-           v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
- 	       EXECUTE IMMEDIATE (v_sql);
+
+		   -- SET INTERVAL()/SET INTERVAL(1) nur bei echten INTERVAL-Tabellen
+		   -- noetig (sonst ORA-14757). Bei reinen RANGE-partitionierten
+		   -- Tabellen wird direkt ADD PARTITION verwendet.
+		   if v_is_interval = 'YES' then
+              v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
+ 	          EXECUTE IMMEDIATE (v_sql);
+           end if;
+
            if v_part_count > 1 then
 	          select LISTAGG (PARTITION_NAME, ',') within group (order by PARTITION_NAME) COLS into v_part_names from DBA_TAB_PARTITIONS WHERE TABLE_OWNER=c.target_owner AND TABLE_NAME=c.table_name AND PARTITION_NAME != 'P_FIRST' group by TABLE_NAME;
 		      v_ddl := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' DROP PARTITIONS ' || v_part_names;
@@ -103,8 +123,11 @@ begin
             COMMIT;
 		   END LOOP;
 		   dbms_output.put_line('02 :: PARTITIONS FOR ' || c.table_name || ' CREATED AND DATA COPIED');
-		   v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL(1)';
-                   execute immediate v_sql;
+
+		   if v_is_interval = 'YES' then
+		      v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL(1)';
+              execute immediate v_sql;
+           end if;
 		else
            v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
            'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name||
@@ -117,6 +140,11 @@ begin
 		end if;
 -- Beginn Daten kopieren
      dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||v_rowcnt||' rows.');
+
+	EXCEPTION
+	  WHEN OTHERS THEN
+	    dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
+	END;
     end loop;
 end;
 /
