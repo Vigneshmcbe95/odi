@@ -1,5 +1,5 @@
 SET FEEDBACK ON
-SET SERVEROUTPUT ON
+SET SERVEROUTPUT ON SIZE UNLIMITED
 
 -- Scratch-Schema Datenladen: SSC41M_STAT_FST
 -- Quelle: SCR_DM_STAT_FST (Basisschema, nicht der 43er-Sandbox-Peer)

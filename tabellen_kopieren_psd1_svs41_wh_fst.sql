@@ -1,5 +1,5 @@
 SET FEEDBACK ON
-SET SERVEROUTPUT ON
+SET SERVEROUTPUT ON SIZE UNLIMITED
 
 -- Retargeted von tabellen_kopieren_psd1_svs44_dwh.sql
 -- Quelle bleibt PSD1_DWH_FST, Ziel neu: SVS41WH_FST

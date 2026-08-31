@@ -1,5 +1,5 @@
 SET FEEDBACK ON
-SET SERVEROUTPUT ON
+SET SERVEROUTPUT ON SIZE UNLIMITED
 
 -- Retargeted von tabellen_kopieren_xro_svs46_dwh_ba_trs.sql
 -- Quelle bleibt XRO_DWH_BA_TRS, Ziel neu: SVS41WH_BA_TRS

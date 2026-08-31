@@ -1,5 +1,5 @@
 SET FEEDBACK ON
-SET SERVEROUTPUT ON
+SET SERVEROUTPUT ON SIZE UNLIMITED
 
 -- Retargeted von tabellen_kopieren_xro_thm_dm_stat_fst.sql
 -- Quelle bleibt XRO_DM_STAT_FST, Ziel neu: SVS41M_STAT_FST
