@@ -83,39 +83,17 @@ freigegeben werden kann.
 
 Aufgaben (Tasks):
 
-1. Objektprüfung je Schema
-   - Für jedes der 13 Zielschemata: Tabellen, Primary Keys und
-     Indizes gegen die jeweilige Basis-/Quellschema prüfen
-     (Existenz, Partitionierung, Index-Anzahl).
-   - Abweichungen dokumentieren und nachziehen.
+1. Objektprüfung
+   - Alle erstellten Objekte je Schema prüfen.
 
-2. Synonym-Erstellung für verbleibende UEB-/geteilte Bereiche
-   - Prüfen, ob SVS41LL_FST, SVS41WL_FST, SVS41EB_ODIKM Tabellen
-     oder Synonyme benötigen (Rückfrage Thorsten).
-   - Synonyme anlegen, wo erforderlich (analog SVS41WH_UEB_DIM,
-     inkl. SELECT-Rechte).
+2. Synonyme prüfen (nur UEB)
+   - Synonyme für UEB-Bereich prüfen.
 
-3. Verifizierung der Synonyme (SVS41WH_UEB_DIM)
-   - Stichprobenartig Zeilenzahlen und Beispieldaten über Synonym
-     gegen Basistabelle vergleichen.
-   - Bestätigen, dass alle 1537 Synonyme tatsächlich nutzbar sind.
+3. Datenladen verifizieren
+   - Datenladen testen und Ergebnisse prüfen.
 
-4. Datenladen-Test für alle SVS-Schemata
-   - Datenladen-Skripte (max. 1000 Zeilen/Tabelle) für alle
-     SVS41-Schemata ausführen.
-   - Fehlerhafte Tabellen einzeln nachverfolgen und Ursache klären.
-   - Fehlendes Datenladen-Skript für SVS41WH_STAT_FST erstellen und
-     ausführen, sobald Quelle final bestätigt ist.
+4. Prozessablauf dokumentieren
+   - Sandbox-Prozessablauf als Confluence-Seite dokumentieren.
 
-5. Gesamtprüfung und Abschluss
-   - Übersichtsbericht über alle 13 Schemata (Objekte, Synonyme,
-     Datenladen-Status) final erzeugen und exportieren.
-   - Offene Punkte mit Thorsten/Jörn final klären.
-
-6. Dokumentation
-   - Sandbox-Aufbauprozess (Repository-Klon, Context-Erstellung,
-     Objekterstellung, Synonym-Erstellung, Datenladen) in Confluence
-     dokumentieren, als Vorlage für zukünftige Sandbox-Aufbauten.
-
-Story Points: 13
+Story Points: 8
 Sprint: nächste Woche
