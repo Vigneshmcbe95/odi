@@ -1,34 +1,25 @@
 SET FEEDBACK ON
 SET SERVEROUTPUT ON SIZE UNLIMITED
 
--- Retargeted von tabellen_kopieren_xro_thm_dm_stat_fst.sql
--- Quelle bleibt XRO_DM_STAT_FST, Ziel neu: SVS41M_STAT_FST
--- Cap: max. 1000 Zeilen pro Partition/Monat (statt Volladung).
--- Spalten-Schnittmenge (Quelle UND Ziel) war hier schon im Original enthalten.
--- Partitionslogik unveraendert uebernommen (legt pro MON_ID eine Partition an
--- und kopiert die Daten dieser Monatsscheibe).
+-- Ziel: SVS41M_STAT_FST, Quelle: THM_DM_STAT_FST
+-- Vereinfacht: kein manuelles ADD PARTITION/SET INTERVAL mehr -- die
+-- urspruengliche Monats-Partitionslogik brach auf vielen Tabellen mit
+-- ORA-06502/ORA-14760. Stattdessen einfacher INSERT mit Zeilenlimit,
+-- gleiches Muster wie bei den Scratch-Schemata: Partitionen, die beim
+-- Klonen der Struktur bereits uebernommen wurden, werden von Oracle
+-- automatisch beim INSERT getroffen. Fehlt eine Partition wirklich,
+-- kommt ein klarer ORA-14400 fuer genau diese Tabelle statt eines
+-- verwirrenden Fehlers in der Monats-Arithmetik.
+-- Cap: max. 1000 Zeilen pro Tabelle. Nur Spalten, die in Quelle UND Ziel
+-- existieren (vermeidet ORA-00904 bei abweichender Tabellenstruktur).
 
 declare
-v_sql         VARCHAR(32000);
-v_ddl         VARCHAR(32000);
+v_sql varchar(32000);
 
-v_execute     BOOLEAN := TRUE;
-v_col_names   CLOB;
-
-v_part_count  INTEGER :=0;
-v_part_names  CLOB;
-v_is_interval VARCHAR2(3);
-
-v_source_user VARCHAR(20) := 'THM_DM_STAT_FST';
-v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
-
-v_mon_id_next NUMBER;
-a_mon_id      DBMS_SQL.NUMBER_TABLE;
-
-v_rowcnt      INTEGER := 0;
+v_source_user varchar(30) := 'THM_DM_STAT_FST';
+v_target_user varchar(30) := 'SVS41M_STAT_FST';
 
 begin
-  execute immediate 'alter session enable parallel ddl';
   execute immediate 'alter session enable parallel dml';
   execute immediate 'alter session enable parallel query';
   execute immediate 'alter session set parallel_degree_limit = 16';
@@ -38,7 +29,9 @@ begin
          select t.owner source_owner
                , v_target_user target_owner
                , t.table_name
+               , listagg(tc.column_name, ', ') within group (order by tc.column_id) attr_list
           from dba_tables t
+               join dba_tab_columns tc on t.owner = tc.owner and t.table_name = tc.table_name
           where t.owner = v_source_user
                 and t.table_name in (
                                     select s.table_name
@@ -51,100 +44,41 @@ begin
                 and t.table_name not like 'TP_FST%'
                 and t.table_name not like 'TG_FST_FF%'
                 and t.table_name not like 'TG_FST_TRG%'
-
                 and t.table_name not like 'TF_FST_AFOEAN%'
-
                 and t.table_name not like 'TF_FST_%BAK'
                 and t.table_name not like 'TF_FST_%OLD'
                 and t.table_name not like 'TF_FST_%SAV'
                 and t.table_name not like 'TF_FST_%SICH'
                 and t.table_name not like 'TF_FST_%TEMP'
-
+                and tc.column_name in (
+                                    select tc2.column_name
+                                    from dba_tab_columns tc2
+                                    where tc2.owner = v_target_user
+                                          and tc2.table_name = t.table_name
+                                    )
           group by t.owner, v_target_user, t.table_name
-          order by 1,2,3
+          order by 1, 2, 3
     ) loop
 
+        begin
+          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO ' || c.target_owner || '.' || c.table_name ||
+                   ' (' || c.attr_list || ') ' ||
+                   'SELECT ' || c.attr_list || ' FROM ' || c.source_owner || '.' || c.table_name ||
+                   ' FETCH FIRST 1000 ROWS ONLY';
 
+          execute immediate v_sql;
+          dbms_output.put_line('03 :: ' || c.target_owner || '.' || c.table_name ||
+                                ' -> ' || to_char(sql%rowcount) || ' Zeilen eingefuegt.');
+          commit;
 
-        v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
+        exception
+          when others then
+            dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
+        end;
 
-        if v_execute then
-          execute immediate v_ddl;
-        end if;
-	BEGIN
-		SELECT LISTAGG (COLUMN_NAME, ',') within group (order by COLUMN_NAME) COLS into v_col_names from DBA_TAB_COLUMNS WHERE OWNER=v_source_user AND TABLE_NAME=c.table_name AND COLUMN_NAME IN (SELECT COLUMN_NAME from DBA_TAB_COLUMNS WHERE OWNER=v_target_user AND TABLE_NAME=c.table_name) group by TABLE_NAME;
--- Beginn Partitionierung
-        select count(*) into v_part_count from dba_tab_partitions where table_owner = c.target_owner and table_name = c.table_name;
-
-        -- Nur bei INTERVAL-partitionierten Tabellen ist SET INTERVAL() noetig/gueltig;
-        -- bei normalen RANGE-partitionierten Tabellen wuerde das ORA-14757 auslösen.
-        v_is_interval := 'NO';
-        if v_part_count > 0 then
-          select interval into v_is_interval from dba_part_tables
-          where owner = c.target_owner and table_name = c.table_name;
-        end if;
-
-		v_rowcnt := 0;
-
-		if v_part_count > 0 then
-
-		   -- SET INTERVAL()/SET INTERVAL(1) nur bei echten INTERVAL-Tabellen
-		   -- noetig (sonst ORA-14757). Bei reinen RANGE-partitionierten
-		   -- Tabellen wird direkt ADD PARTITION verwendet.
-		   if v_is_interval = 'YES' then
-              v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
- 	          EXECUTE IMMEDIATE (v_sql);
-           end if;
-
-           if v_part_count > 1 then
-	          select LISTAGG (PARTITION_NAME, ',') within group (order by PARTITION_NAME) COLS into v_part_names from DBA_TAB_PARTITIONS WHERE TABLE_OWNER=c.target_owner AND TABLE_NAME=c.table_name AND PARTITION_NAME != 'P_FIRST' group by TABLE_NAME;
-		      v_ddl := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' DROP PARTITIONS ' || v_part_names;
-		      EXECUTE IMMEDIATE (v_ddl);
-		   end if;
-		   v_sql := 'select distinct mon_id from ' || c.source_owner || '.' || c.table_name || ' order by mon_id';
-	       execute immediate v_sql bulk collect into a_mon_id;
-	       FOR i in a_mon_id.FIRST .. a_mon_id.LAST
-   	       LOOP
-		   	  IF substr(a_mon_id(i),5,2) = 12
-		   		THEN
-		   		v_mon_id_next := a_mon_id(i) + 89;
-		   		ELSE
-		   		v_mon_id_next := a_mon_id(i) + 1;
-		   	  END IF;
---          Partition hinzufügen
-		   	v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' ADD PARTITION P' || a_mon_id(i) || ' VALUES LESS THAN (' || v_mon_id_next || ')' ;
-		   	EXECUTE IMMEDIATE (v_sql);
---          Daten der Monatsscheibe kopieren (max. 1000 Zeilen pro Monat)
-            v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
-                 'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name || ' WHERE MON_ID = ' || a_mon_id(i) ||
-                 ' FETCH FIRST 1000 ROWS ONLY';
-            EXECUTE IMMEDIATE (v_sql);
-			v_rowcnt := v_rowcnt + sql%rowcount;
-            COMMIT;
-		   END LOOP;
-		   dbms_output.put_line('02 :: PARTITIONS FOR ' || c.table_name || ' CREATED AND DATA COPIED');
-
-		   if v_is_interval = 'YES' then
-		      v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL(1)';
-              execute immediate v_sql;
-           end if;
-		else
-           v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
-           'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name||
-           ' FETCH FIRST 1000 ROWS ONLY';
-           if v_execute then
-              execute immediate v_sql;
-		      v_rowcnt := sql%rowcount;
-			  commit;
-		   end if;
-		end if;
--- Beginn Daten kopieren
-     dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||v_rowcnt||' rows.');
-
-	EXCEPTION
-	  WHEN OTHERS THEN
-	    dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
-	END;
     end loop;
+
+  dbms_output.put_line('Kopiervorgang abgeschlossen.');
+
 end;
 /
