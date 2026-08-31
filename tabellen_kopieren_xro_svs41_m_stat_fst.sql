@@ -63,12 +63,9 @@ begin
           order by 1,2,3
     ) loop
 
-        dbms_output.put_line('=========================================================================');
 
-        dbms_output.put_line('00 :: '||c.target_owner||'.'||c.table_name);
 
         v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
-        dbms_output.put_line('01 :: '||v_ddl);
 
         if v_execute then
           execute immediate v_ddl;
@@ -116,11 +113,9 @@ begin
               execute immediate v_sql;
 		      v_rowcnt := sql%rowcount;
 			  commit;
-			  dbms_output.put_line('02 :: '||v_sql);
 		   end if;
 		end if;
 -- Beginn Daten kopieren
-     dbms_output.put_line('===');
      dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||v_rowcnt||' rows.');
     end loop;
 end;

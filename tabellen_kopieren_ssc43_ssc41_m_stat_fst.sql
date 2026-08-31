@@ -46,8 +46,6 @@ begin
           order by 1, 2, 3
     ) loop
 
-        dbms_output.put_line('=========================================================================');
-        dbms_output.put_line('00 :: ' || c.target_owner || '.' || c.table_name);
 
         -- Max. 1000 Zeilen aus Quelltabelle in Zieltabelle einfuegen (kein Loeschen vorher!)
         v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO ' || c.target_owner || '.' || c.table_name ||
@@ -55,7 +53,6 @@ begin
                  'SELECT ' || c.attr_list || ' FROM ' || c.source_owner || '.' || c.table_name ||
                  ' FETCH FIRST 1000 ROWS ONLY';
 
-        dbms_output.put_line('01 :: ' || v_sql);
 
         execute immediate v_sql;
         dbms_output.put_line('02 :: ' || c.target_owner || '.' || c.table_name ||
@@ -64,7 +61,6 @@ begin
 
     end loop;
 
-  dbms_output.put_line('=========================================================================');
   dbms_output.put_line('Kopiervorgang abgeschlossen.');
 
 end;
