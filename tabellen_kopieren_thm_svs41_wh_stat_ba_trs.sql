@@ -49,21 +49,27 @@ begin
 
 
 
-        v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
+        begin
+          v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
 
-        if v_execute then
-          execute immediate v_ddl;
-        end if;
+          if v_execute then
+            execute immediate v_ddl;
+          end if;
 
-        v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||c.attr_list||') '||
-                 'SELECT '||c.attr_list||' FROM '||c.source_owner||'.'||c.table_name||
-                 ' FETCH FIRST 1000 ROWS ONLY';
+          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||c.attr_list||') '||
+                   'SELECT '||c.attr_list||' FROM '||c.source_owner||'.'||c.table_name||
+                   ' FETCH FIRST 1000 ROWS ONLY';
 
-        if v_execute then
-          execute immediate v_sql;
-          dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(sql%rowcount)||' rows.');
-          commit;
-        end if;
+          if v_execute then
+            execute immediate v_sql;
+            dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(sql%rowcount)||' rows.');
+            commit;
+          end if;
+
+        exception
+          when others then
+            dbms_output.put_line('FEHLER bei '||c.target_owner||'.'||c.table_name||' - '||SQLERRM);
+        end;
 
     end loop;
 end;
