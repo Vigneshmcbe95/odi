@@ -1,18 +1,18 @@
-Schema                  | Completed
+Schema                  | Erledigt
 ------------------------|--------------------------------------------------
-SSC41LL_FST             | Objects created, load script ready
-SSC41M_STAT_FST         | Objects created, load script ready
-SSC41WH_FST             | Objects created, load script ready
-SSC41WH_STAT_FST        | Objects created, load script ready
-SVS41WH_FST             | Objects created, load script ready
-SVS41WH_BA_TRS          | Objects created, load script ready
-SVS41WH_STAT_BA_TRS     | Objects created, load script ready
-SVS41WH_STAT_FST        | Objects created, load script missing
-SVS41M_STAT_FST         | Objects partial, load script ready (simplified)
-SVS41WH_UEB_DIM         | 1537 synonyms created (synonym approach applies here only)
-SVS41LL_FST             | Not started
-SVS41WL_FST             | Not started
-SVS41EB_ODIKM           | Not started
+SSC41LL_FST             | Objekte erstellt, Ladeskript bereit
+SSC41M_STAT_FST         | Objekte erstellt, Ladeskript bereit
+SSC41WH_FST             | Objekte erstellt, Ladeskript bereit
+SSC41WH_STAT_FST        | Objekte erstellt, Ladeskript bereit
+SVS41WH_FST             | Objekte erstellt, Ladeskript bereit
+SVS41WH_BA_TRS          | Objekte erstellt, Ladeskript bereit
+SVS41WH_STAT_BA_TRS     | Objekte erstellt, Ladeskript bereit
+SVS41WH_STAT_FST        | Objekte erstellt, Ladeskript fehlt
+SVS41M_STAT_FST         | Objekte teilweise, Ladeskript bereit (vereinfacht)
+SVS41WH_UEB_DIM         | 1537 Synonyme erstellt (Synonym-Ansatz nur hier)
+SVS41LL_FST             | Nicht begonnen
+SVS41WL_FST             | Nicht begonnen
+SVS41EB_ODIKM           | Nicht begonnen
 
-Note: Synonym creation is specific to SVS41WH_UEB_DIM only -- every
-other schema uses real table objects, not synonyms.
+Hinweis: Die Synonym-Erstellung betrifft ausschließlich SVS41WH_UEB_DIM --
+alle anderen Schemata verwenden echte Tabellenobjekte, keine Synonyme.
