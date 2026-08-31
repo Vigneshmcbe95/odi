@@ -12,7 +12,7 @@ v_ddl varchar(32000);
 
 v_execute boolean := true;
 
-v_source_user varchar(20) := 'PSD1_DWH_FST';
+v_source_user varchar(20) := 'THM_DWH_FST';
 v_target_user varchar(20) := 'SVS41WH_FST';
 
 begin

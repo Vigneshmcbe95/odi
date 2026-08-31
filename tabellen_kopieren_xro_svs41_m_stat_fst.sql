@@ -18,7 +18,7 @@ v_col_names   CLOB;
 v_part_count  INTEGER :=0;
 v_part_names  CLOB;
 
-v_source_user VARCHAR(20) := 'XRO_DM_STAT_FST';
+v_source_user VARCHAR(20) := 'THM_DM_STAT_FST';
 v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
 
 v_mon_id_next NUMBER;
