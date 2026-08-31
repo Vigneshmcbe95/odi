@@ -1,0 +1,121 @@
+====================================================================
+FST Sandbox 41 (B05) – Status & Übergabe
+Stand: 2026-08-31
+====================================================================
+
+1. ÜBERSICHT ALLER SCHEMATA
+--------------------------------------------------------------------
+
+Schema                    | Objekte      | Synonyme     | Datenladen
+--------------------------------------------------------------------
+SSC41LL_FST                | erledigt     | -            | Skript bereit
+SSC41M_STAT_FST             | erledigt     | -            | Skript bereit
+SSC41WH_FST                 | erledigt     | -            | Skript bereit
+SSC41WH_STAT_FST            | erledigt     | -            | Skript bereit
+SVS41LL_FST                 | offen        | zu prüfen    | offen
+SVS41M_STAT_FST             | teilweise    | -            | Skript bereit (vereinfacht)
+SVS41WH_BA_TRS               | erledigt     | -            | Skript bereit
+SVS41WH_FST                  | erledigt     | -            | Skript bereit
+SVS41WH_STAT_BA_TRS          | erledigt     | -            | Skript bereit
+SVS41WH_STAT_FST             | erledigt     | -            | OFFEN (kein Skript)
+SVS41WH_UEB_DIM              | -            | erledigt (1537) | über Synonym (live)
+SVS41WL_FST                  | offen        | zu prüfen    | offen
+SVS41EB_ODIKM                | offen        | zu prüfen    | offen
+
+Legende: "erledigt" = geprüft und bestätigt; "teilweise" = nur Teilliste
+angelegt; "offen" = noch nicht begonnen bzw. nicht bestätigt.
+
+
+2. ERLEDIGT
+--------------------------------------------------------------------
+- Sandbox-41-Umgebung aufgesetzt (Repository, Context CT_ESTAT_FST_41,
+  Physical-Schema-Zuordnungen bestätigt).
+- Objekterstellung (Tabellen, Primary Keys, Indizes) für SSC41LL_FST,
+  SSC41M_STAT_FST, SSC41WH_FST, SSC41WH_STAT_FST, SVS41WH_FST,
+  SVS41WH_BA_TRS, SVS41WH_STAT_BA_TRS, SVS41WH_STAT_FST abgeschlossen.
+- Diverse Fehler bei der Objekterstellung gefunden und behoben:
+  ORA-00922 (Mehrfach-Anweisungen im generierten DDL), PLS-00642
+  (lokaler Collection-Typ in SQL), ORA-00904 (Spaltenabweichung),
+  ORA-00955 (Objekt existiert bereits), ORA-01652 (TEMP-Tablespace voll).
+- Quell-Konvention geklärt: THM_* ist die eigentliche Basis-Quelle
+  (nicht der 43er-Sandbox-Peer), bestätigt durch Thorsten.
+- SVS41WH_UEB_DIM: 1537 Synonyme auf THM_DWH_UEB_DIM erstellt (inkl.
+  SELECT-Rechte), gemäß Vorgabe, dass geteilte/übergreifende Bereiche
+  nicht kopiert, sondern nur verlinkt werden.
+- Datenladen-Skripte (max. 1000 Zeilen/Tabelle, spaltensicher) erstellt
+  für alle Schemata mit bekannter Tabellenliste sowie alle Scratch-
+  Schemata.
+- Existenz-/Vollständigkeitsprüfungen (Objekte, Partitionen, Indizes,
+  Primary Keys) als exportierbare Übersichtsberichte gebaut.
+
+
+3. OFFEN / AUSSTEHEND
+--------------------------------------------------------------------
+- SVS41WH_STAT_FST: Objekte vorhanden, aber Datenladen-Skript fehlt
+  noch (Quelle vermutlich THM_DWH_STAT_FST, nicht final bestätigt).
+- SVS41LL_FST, SVS41WL_FST, SVS41EB_ODIKM: noch nicht geklärt, ob
+  Objekte real angelegt oder (wie UEB_DIM) nur Synonyme benötigt werden.
+- Rückfrage an Thorsten: gilt die Synonym-Regel (statt Tabellenkopie)
+  auch für diese drei Schemata?
+- Rückfrage an Thorsten: welche der ursprünglich gemeldeten 8 fehlenden
+  Tabellen sind "Sicherungstabellen" und können ignoriert werden?
+- Datenladen für alle SVS-Schemata muss noch vollständig ausgeführt
+  und die Ergebnisse (Zeilenanzahl, Fehler) geprüft werden.
+- Gesamtprüfung (Objekte, Partitionen, Indizes) über alle 13 Schemata
+  gegen die jeweilige Quelle noch nicht final durchgelaufen.
+
+
+====================================================================
+STORY (1 Woche) – Objektprüfung, Synonym-Erstellung, Datenladen-Test,
+Dokumentation
+====================================================================
+
+Titel: FST Sandbox 41 (B05) – Objekte prüfen, Synonyme UEB anlegen,
+Datenladen testen, Prozess dokumentieren
+
+Beschreibung:
+Als Entwickler im FST-Team möchte ich die in Sandbox 41 angelegten
+Objekte und zugehörigen Schemata vollständig überprüfen, die
+fehlenden Synonyme für die UEB-/geteilten Bereiche anlegen, das
+Datenladen für alle Schemata testen und den gesamten Sandbox-Aufbau-
+prozess dokumentieren, damit die Umgebung für die weitere Entwicklung
+freigegeben werden kann.
+
+Aufgaben (Tasks):
+
+1. Objektprüfung je Schema
+   - Für jedes der 13 Zielschemata: Tabellen, Primary Keys und
+     Indizes gegen die jeweilige Basis-/Quellschema prüfen
+     (Existenz, Partitionierung, Index-Anzahl).
+   - Abweichungen dokumentieren und nachziehen.
+
+2. Synonym-Erstellung für verbleibende UEB-/geteilte Bereiche
+   - Prüfen, ob SVS41LL_FST, SVS41WL_FST, SVS41EB_ODIKM Tabellen
+     oder Synonyme benötigen (Rückfrage Thorsten).
+   - Synonyme anlegen, wo erforderlich (analog SVS41WH_UEB_DIM,
+     inkl. SELECT-Rechte).
+
+3. Verifizierung der Synonyme (SVS41WH_UEB_DIM)
+   - Stichprobenartig Zeilenzahlen und Beispieldaten über Synonym
+     gegen Basistabelle vergleichen.
+   - Bestätigen, dass alle 1537 Synonyme tatsächlich nutzbar sind.
+
+4. Datenladen-Test für alle SVS-Schemata
+   - Datenladen-Skripte (max. 1000 Zeilen/Tabelle) für alle
+     SVS41-Schemata ausführen.
+   - Fehlerhafte Tabellen einzeln nachverfolgen und Ursache klären.
+   - Fehlendes Datenladen-Skript für SVS41WH_STAT_FST erstellen und
+     ausführen, sobald Quelle final bestätigt ist.
+
+5. Gesamtprüfung und Abschluss
+   - Übersichtsbericht über alle 13 Schemata (Objekte, Synonyme,
+     Datenladen-Status) final erzeugen und exportieren.
+   - Offene Punkte mit Thorsten/Jörn final klären.
+
+6. Dokumentation
+   - Sandbox-Aufbauprozess (Repository-Klon, Context-Erstellung,
+     Objekterstellung, Synonym-Erstellung, Datenladen) in Confluence
+     dokumentieren, als Vorlage für zukünftige Sandbox-Aufbauten.
+
+Story Points: 13
+Sprint: nächste Woche
