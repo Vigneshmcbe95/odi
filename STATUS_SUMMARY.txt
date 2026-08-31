@@ -1,0 +1,18 @@
+Schema                  | Completed
+------------------------|--------------------------------------------------
+SSC41LL_FST             | Objects created, load script ready
+SSC41M_STAT_FST         | Objects created, load script ready
+SSC41WH_FST             | Objects created, load script ready
+SSC41WH_STAT_FST        | Objects created, load script ready
+SVS41WH_FST             | Objects created, load script ready
+SVS41WH_BA_TRS          | Objects created, load script ready
+SVS41WH_STAT_BA_TRS     | Objects created, load script ready
+SVS41WH_STAT_FST        | Objects created, load script missing
+SVS41M_STAT_FST         | Objects partial, load script ready (simplified)
+SVS41WH_UEB_DIM         | 1537 synonyms created (synonym approach applies here only)
+SVS41LL_FST             | Not started
+SVS41WL_FST             | Not started
+SVS41EB_ODIKM           | Not started
+
+Note: Synonym creation is specific to SVS41WH_UEB_DIM only -- every
+other schema uses real table objects, not synonyms.
