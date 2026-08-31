@@ -1,0 +1,6 @@
+Zeiterfassung 31.08.2026
+
+1. Synonym-Erstellungsskript für SVS41WH_UEB_DIM entwickelt (Ziel THM_DWH_UEB_DIM)
+2. SELECT-Rechte und Überspringen-Logik für bestehende Synonyme ergänzt
+3. Skript ausgeführt — 1537 Synonyme erfolgreich erstellt
+4. Synonyme verifiziert: Zeilenanzahl und Beispieldaten gegen Basistabelle geprüft
