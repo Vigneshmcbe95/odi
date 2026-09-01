@@ -1,0 +1,89 @@
+SET FEEDBACK ON
+SET SERVEROUTPUT ON
+
+declare
+v_sql         VARCHAR(32000);
+v_ddl         VARCHAR(32000);
+
+v_execute     BOOLEAN := TRUE;
+v_col_names   CLOB;
+
+v_part_count  INTEGER :=0;
+v_part_names  CLOB;
+
+v_source_owner VARCHAR(20 CHAR) := 'PSD1_DWH_FST';
+v_target_owner VARCHAR(20 CHAR) := 'SVS43WH_FST';
+v_table_name   VARCHAR(30 CHAR) := 'TD_DWH_TEILNAHME';
+
+v_mon_id_next NUMBER;
+a_mon_id      DBMS_SQL.NUMBER_TABLE;
+
+v_rowcnt      INTEGER := 0;
+
+begin
+  execute immediate 'alter session enable parallel ddl';
+  execute immediate 'alter session enable parallel dml';
+  execute immediate 'alter session enable parallel query';
+  execute immediate 'alter session set parallel_degree_limit = 16';
+  execute immediate 'alter session set parallel_degree_policy = auto';
+
+--  v_source_owner := 'PSD1_DWH_FST'; 
+     
+  dbms_output.put_line('=========================================================================');
+  dbms_output.put_line('Source Table: '||v_source_owner||'.'||v_table_name);
+  dbms_output.put_line('Target Table: '||v_target_owner||'.'||v_table_name);
+  -- Truncate Zieltabelle      
+  v_ddl := 'TRUNCATE TABLE '||v_target_owner||'.'||v_table_name;
+  dbms_output.put_line('Step 1 : Truncate Table');
+  execute immediate v_ddl;
+  
+  SELECT LISTAGG (COLUMN_NAME, ',') within group (order by COLUMN_NAME) COLS into v_col_names from DBA_TAB_COLUMNS WHERE OWNER=v_source_owner AND TABLE_NAME=v_table_name AND COLUMN_NAME IN (SELECT COLUMN_NAME from DBA_TAB_COLUMNS WHERE OWNER=v_target_owner AND TABLE_NAME=v_table_name) group by TABLE_NAME;
+  -- Beginn Partitionierung
+   dbms_output.put_line('Step 2a: Check Partitioning');
+  select count(*) into v_part_count from dba_tab_partitions where table_owner = v_target_owner and table_name = v_table_name;
+  if v_part_count > 0 then
+     dbms_output.put_line('Step 2b: Table Partitioned - Dropping Partitions');
+     v_sql := 'ALTER TABLE ' || v_target_owner || '.' || v_table_name || ' SET INTERVAL()';
+     EXECUTE IMMEDIATE (v_sql);
+        if v_part_count > 1 then	
+           select LISTAGG (PARTITION_NAME, ',') within group (order by PARTITION_NAME) COLS into v_part_names from DBA_TAB_PARTITIONS WHERE TABLE_OWNER=v_target_owner AND TABLE_NAME=v_table_name AND PARTITION_NAME != 'P_FIRST' group by TABLE_NAME;
+           v_ddl := 'ALTER TABLE ' || v_target_owner || '.' || v_table_name || ' DROP PARTITIONS ' || v_part_names;
+           EXECUTE IMMEDIATE (v_ddl);
+        end if;
+	 dbms_output.put_line('Step 2c: Recreate Partitions and Copy Data');	
+     v_sql := 'select distinct mon_id from ' || v_source_owner || '.' || v_table_name || ' order by mon_id';
+     execute immediate v_sql bulk collect into a_mon_id;
+        FOR i in a_mon_id.FIRST .. a_mon_id.LAST
+   	    LOOP
+     	  IF substr(a_mon_id(i),5,2) = 12
+     		THEN 
+     		v_mon_id_next := a_mon_id(i) + 89;
+     		ELSE
+     		v_mon_id_next := a_mon_id(i) + 1;
+     	  END IF;
+          -- Partition hinzuf gen
+		  dbms_output.put_line('         Add Partition for MON_ID: ' || a_mon_id(i));
+          v_sql := 'ALTER TABLE ' || v_target_owner || '.' || v_table_name || ' ADD PARTITION P' || a_mon_id(i) || ' VALUES LESS THAN (' || v_mon_id_next || ')' ;
+          EXECUTE IMMEDIATE (v_sql);
+          -- Daten der Montasscheibe kopieren
+		  dbms_output.put_line('         Copy Data for MON_ID: ' || a_mon_id(i));
+          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||v_target_owner||'.'||v_table_name||' ('||v_col_names||') '||
+          'SELECT '||v_col_names||' FROM '||v_source_owner||'.'||v_table_name || ' WHERE MON_ID = ' || a_mon_id(i);
+          EXECUTE IMMEDIATE (v_sql);
+  	      v_rowcnt := v_rowcnt + sql%rowcount;
+          COMMIT;
+        END LOOP;
+     v_sql := 'ALTER TABLE ' || v_target_owner || '.' || v_table_name || ' SET INTERVAL(1)';
+	 EXECUTE IMMEDIATE (v_sql);
+  else
+     dbms_output.put_line('Step 2b: Table not Partitioned - Copying Data');
+     v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||v_target_owner||'.'||v_table_name||' ('||v_col_names||') '||
+     'SELECT '||v_col_names||' FROM '||v_source_owner||'.'||v_table_name;
+     execute immediate v_sql;
+     v_rowcnt := sql%rowcount;  
+  	 commit;
+  end if;
+     dbms_output.put_line('===');
+     dbms_output.put_line('Step 3 : Done - '||v_target_owner||'.'||v_table_name||' inserted '||v_rowcnt||' rows.');
+end;
+/
