@@ -10,6 +10,7 @@ v_col_names   CLOB;
 
 v_part_count  INTEGER :=0;
 v_part_names  CLOB;
+v_interval    VARCHAR2(1000);
 
 v_source_user VARCHAR(20) := '';
 v_target_user VARCHAR(20) := 'SVS41WH_FST';
@@ -73,9 +74,12 @@ begin
 -- Beginn Partitionierung
         select count(*) into v_part_count from dba_tab_partitions where table_owner = c.target_owner and table_name = c.table_name;
 		if v_part_count > 0 then
-           v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
- 	       EXECUTE IMMEDIATE (v_sql);
-           if v_part_count > 1 then	
+           select interval into v_interval from dba_part_tables where owner = c.target_owner and table_name = c.table_name;
+           if v_interval is not null then
+              v_sql := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' SET INTERVAL()';
+ 	          EXECUTE IMMEDIATE (v_sql);
+           end if;
+           if v_part_count > 1 then
 	          select LISTAGG (PARTITION_NAME, ',') within group (order by PARTITION_NAME) COLS into v_part_names from DBA_TAB_PARTITIONS WHERE TABLE_OWNER=c.target_owner AND TABLE_NAME=c.table_name AND PARTITION_NAME != 'P_FIRST' group by TABLE_NAME;
 		      v_ddl := 'ALTER TABLE ' || c.target_owner || '.' || c.table_name || ' DROP PARTITIONS ' || v_part_names;
 		      EXECUTE IMMEDIATE (v_ddl);
