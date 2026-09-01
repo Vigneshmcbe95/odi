@@ -11,8 +11,8 @@ v_col_names   CLOB;
 v_part_count  INTEGER :=0;
 v_part_names  CLOB;
 
-v_source_user VARCHAR(20) := '';
-v_target_user VARCHAR(20) := 'SVS41WH_FST';
+v_source_user VARCHAR(20) := 'PSD1_DM_STAT_FST';
+v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
 
 v_mon_id_next NUMBER;
 a_mon_id      DBMS_SQL.NUMBER_TABLE;
