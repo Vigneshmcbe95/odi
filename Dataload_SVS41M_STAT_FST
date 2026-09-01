@@ -100,7 +100,14 @@ begin
 --          Daten der Monatsscheibe kopieren
             v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
                  'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name || ' WHERE MON_ID = ' || a_mon_id(i);
-            EXECUTE IMMEDIATE (v_sql);
+            BEGIN
+              EXECUTE IMMEDIATE (v_sql);
+            EXCEPTION
+              WHEN OTHERS THEN
+                dbms_output.put_line('FEHLER bei ' || c.table_name || ', MON_ID=' || a_mon_id(i) || ': ' || SQLERRM);
+                dbms_output.put_line('SQL: ' || v_sql);
+                RAISE;
+            END;
 			v_rowcnt := v_rowcnt + sql%rowcount;
             COMMIT;
 		   END LOOP;
