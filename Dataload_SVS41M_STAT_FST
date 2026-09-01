@@ -45,6 +45,7 @@ begin
                 and t.table_name not like 'TG_FST_TRG%'
 
                 and t.table_name not like 'TF_FST_AFOEAN%'
+                and t.table_name != 'TF_FST_TN_BNF_KORR'
 
                 and t.table_name not like 'TF_FST_%BAK'
                 and t.table_name not like 'TF_FST_%OLD'
