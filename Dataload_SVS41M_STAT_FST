@@ -25,6 +25,7 @@ v_part_count  INTEGER :=0;
 v_part_names  CLOB;
 v_interval    VARCHAR2(1000);
 v_errmsg      VARCHAR2(4000);
+v_this_rowcount INTEGER;
 
 v_source_user VARCHAR(20) := 'PSD1_DM_STAT_FST';
 v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
@@ -120,14 +121,15 @@ begin
               v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_col_names||') '||
                    'SELECT '||v_col_names||' FROM '||c.source_owner||'.'||c.table_name || ' WHERE MON_ID = ' || a_mon_id(i);
               EXECUTE IMMEDIATE (v_sql);
-              v_rowcnt := v_rowcnt + sql%rowcount;
+              v_this_rowcount := sql%rowcount;
+              v_rowcnt := v_rowcnt + v_this_rowcount;
 
               -- Zwischenstand pro Monat/Partition loggen, nicht erst
               -- am Ende der ganzen Tabelle -- sonst bei grossen
               -- partitionierten Tabellen (Vollladung, kein Zeilenlimit)
               -- lange keine Sichtbarkeit im Live-Protokoll.
               insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
-              values (c.target_owner, c.table_name, 'LAEUFT', sql%rowcount, 'MON_ID='||a_mon_id(i));
+              values (c.target_owner, c.table_name, 'LAEUFT', v_this_rowcount, 'MON_ID='||a_mon_id(i));
 
               COMMIT;
            END LOOP;
