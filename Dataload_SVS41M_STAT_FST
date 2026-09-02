@@ -24,6 +24,7 @@ v_col_names   CLOB;
 v_part_count  INTEGER :=0;
 v_part_names  CLOB;
 v_interval    VARCHAR2(1000);
+v_errmsg      VARCHAR2(4000);
 
 v_source_user VARCHAR(20) := 'PSD1_DM_STAT_FST';
 v_target_user VARCHAR(20) := 'SVS41M_STAT_FST';
@@ -149,9 +150,10 @@ begin
 
       exception
         when others then
-          dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
+          v_errmsg := SQLERRM;
+          dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || v_errmsg);
           insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
-          values (c.target_owner, c.table_name, 'FEHLER', SQLERRM);
+          values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
           commit;
       end;
 

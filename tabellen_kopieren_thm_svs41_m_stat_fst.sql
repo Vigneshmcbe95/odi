@@ -15,6 +15,7 @@ SET SERVEROUTPUT ON SIZE UNLIMITED
 
 declare
 v_sql varchar(32000);
+v_errmsg varchar2(4000);
 
 v_source_user varchar(30) := 'THM_DM_STAT_FST';
 v_target_user varchar(30) := 'SVS41M_STAT_FST';
@@ -79,9 +80,10 @@ begin
 
         exception
           when others then
-            dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
+            v_errmsg := SQLERRM;
+            dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || v_errmsg);
             insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
-            values (c.target_owner, c.table_name, 'FEHLER', SQLERRM);
+            values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
             commit;
         end;
 
