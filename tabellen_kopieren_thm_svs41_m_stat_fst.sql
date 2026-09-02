@@ -69,11 +69,20 @@ begin
           execute immediate v_sql;
           dbms_output.put_line('03 :: ' || c.target_owner || '.' || c.table_name ||
                                 ' -> ' || to_char(sql%rowcount) || ' Zeilen eingefuegt.');
+
+          -- Live-Protokoll: sofort committen, damit eine zweite Session
+          -- den Fortschritt live sehen kann (DBMS_OUTPUT allein wird
+          -- von den meisten SQL-Tools erst am Ende des Laufs angezeigt).
+          insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+          values (c.target_owner, c.table_name, 'OK', sql%rowcount);
           commit;
 
         exception
           when others then
             dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || SQLERRM);
+            insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
+            values (c.target_owner, c.table_name, 'FEHLER', SQLERRM);
+            commit;
         end;
 
     end loop;
