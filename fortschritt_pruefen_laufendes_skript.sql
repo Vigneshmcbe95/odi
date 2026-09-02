@@ -19,11 +19,17 @@ ORDER BY last_call_et DESC;
 --    verarbeiteten Zieltabelle pruefen (mehrfach im Abstand pruefen).
 -- SELECT COUNT(*) FROM SVS41M_STAT_FST.TF_FST_MN_FIM;
 
--- 3) Welche Anweisung laeuft gerade wirklich?
-SELECT s.sid, sq.sql_text
+-- 3) GEZIELT die Session finden, die tatsaechlich das INSERT ins
+--    Zielschema ausfuehrt -- nicht alle Sessions des gleichen
+--    (evtl. gemeinsam genutzten) DB-Users, sondern nur die, deren
+--    aktuelle Anweisung wirklich "INSERT" und den Zielschema-Namen
+--    enthaelt. Das vermeidet, versehentlich die interne Abfrage des
+--    SQL-Tools selbst (z.B. mit "ora_rowid") zu erwischen.
+SELECT s.sid, s.serial#, s.status, s.last_call_et, sq.sql_text
 FROM v$session s
 JOIN v$sql sq ON s.sql_id = sq.sql_id
-WHERE s.username = USER;
+WHERE UPPER(sq.sql_text) LIKE '%INSERT%SVS41M_STAT_FST%'
+ORDER BY s.last_call_et;
 
 -- 4) Wird die Session durch eine andere Sperre blockiert?
 SELECT blocking_session, sid, serial#, wait_class, seconds_in_wait
