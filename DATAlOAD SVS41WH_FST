@@ -1,9 +1,27 @@
 SET FEEDBACK ON
 SET SERVEROUTPUT ON
 
+-- Vollladung (kein Zeilenlimit) SVS41WH_FST, Quelle PSD1_DWH_FST.
+-- Fixes:
+--   * Spaltenliste jetzt nur aus Spalten, die in Quelle UND Ziel
+--     existieren (vorher nur aus der Quelle -- fuehrte zu ORA-00904
+--     bei abweichender Tabellenstruktur, z.B. ZMS_ERSTEL_DAT fehlte
+--     im Ziel bei TD_DWH_MASSNAHME_MGBB_TBD).
+--   * Pro Tabelle eigener BEGIN/EXCEPTION-Block: ein Fehler stoppt
+--     nicht den gesamten Lauf, nur die betroffene Tabelle.
+--   * Live-Fortschritt ueber LADEPROTOKOLL: nach jeder Tabelle wird
+--     sofort eine Zeile geschrieben und committet -- in einer zweiten
+--     Session live sichtbar (siehe ladeprotokoll_live_ansehen.sql).
+--     Vorher einmalig ladeprotokoll_tabelle_erstellen.sql ausfuehren.
+--   * SQLERRM vor Verwendung in einer INSERT-Anweisung in eine
+--     Variable geschrieben (darf nicht direkt in statischem SQL
+--     stehen -- sonst ORA-00984).
+
 declare
 v_sql varchar(32000);
 v_ddl varchar(32000);
+v_errmsg varchar2(4000);
+v_rowcnt integer;
 
 v_execute boolean := true;
 
@@ -26,8 +44,8 @@ begin
                join dba_tab_columns tc on t.owner = tc.owner and t.table_name = tc.table_name
           where t.owner = v_source_user
                 and t.table_name in (
-                                    select s.table_name 
-                                    from dba_tables s 
+                                    select s.table_name
+                                    from dba_tables s
                                     where s.owner = v_target_user
                                     )
                 and t.table_name not like 'FST_VOR_INPUT%'
@@ -38,33 +56,58 @@ begin
                 and t.table_name not like '%OLD'
                 and t.table_name not like '%SAV'
                 and t.table_name not like '%SICH'
+                -- nur Spalten, die auch im Zielschema existieren
+                and tc.column_name in (
+                                    select tc2.column_name
+                                    from dba_tab_columns tc2
+                                    where tc2.owner = v_target_user
+                                          and tc2.table_name = t.table_name
+                                    )
 
           group by t.owner, v_target_user, t.table_name
           order by 1,2,3
     ) loop
-      
-        dbms_output.put_line('=========================================================================');
-      
-        dbms_output.put_line('00 :: '||c.target_owner||'.'||c.table_name);
-        
-        v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
-        dbms_output.put_line('01 :: '||v_ddl);
-        
-        if v_execute then
-          execute immediate v_ddl;
-        end if;
-        
-        v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||c.attr_list||') '||
-                 'SELECT '||c.attr_list||' FROM '||c.source_owner||'.'||c.table_name;
-        dbms_output.put_line('02 :: '||v_sql);
-                  
-        if v_execute then
-          execute immediate v_sql;
-          dbms_output.put_line('===');
-          dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(sql%rowcount)||' rows.');
-          commit;
-        end if;      
+
+        begin
+
+          dbms_output.put_line('=========================================================================');
+          dbms_output.put_line('00 :: '||c.target_owner||'.'||c.table_name);
+
+          v_ddl := 'TRUNCATE TABLE '||c.target_owner||'.'||c.table_name;
+          dbms_output.put_line('01 :: '||v_ddl);
+
+          if v_execute then
+            execute immediate v_ddl;
+          end if;
+
+          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||c.attr_list||') '||
+                   'SELECT '||c.attr_list||' FROM '||c.source_owner||'.'||c.table_name;
+          dbms_output.put_line('02 :: '||v_sql);
+
+          if v_execute then
+            execute immediate v_sql;
+            v_rowcnt := sql%rowcount;
+            dbms_output.put_line('===');
+            dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(v_rowcnt)||' rows.');
+            commit;
+
+            insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+            values (c.target_owner, c.table_name, 'OK', v_rowcnt);
+            commit;
+          end if;
+
+        exception
+          when others then
+            v_errmsg := SQLERRM;
+            dbms_output.put_line('FEHLER bei '||c.target_owner||'.'||c.table_name||' - '||v_errmsg);
+            insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
+            values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
+            commit;
+        end;
 
     end loop;
+
+  dbms_output.put_line('Kopiervorgang abgeschlossen.');
+
 end;
 /
