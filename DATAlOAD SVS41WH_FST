@@ -56,6 +56,12 @@ begin
                 and t.table_name not like '%OLD'
                 and t.table_name not like '%SAV'
                 and t.table_name not like '%SICH'
+                -- explizit ausgeschlossen: bekannte Strukturabweichungen
+                and t.table_name not in (
+                                    'TD_DWH_MASSNAHME_MGBB_TBD',
+                                    'TH_DWH_MASSNAHME_MAT_ALT',
+                                    'TH_DWH_TEILNAHME_AUW_MB'
+                                    )
                 -- nur Spalten, die auch im Zielschema existieren
                 and tc.column_name in (
                                     select tc2.column_name
