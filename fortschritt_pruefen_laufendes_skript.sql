@@ -19,16 +19,20 @@ ORDER BY last_call_et DESC;
 --    verarbeiteten Zieltabelle pruefen (mehrfach im Abstand pruefen).
 -- SELECT COUNT(*) FROM SVS41M_STAT_FST.TF_FST_MN_FIM;
 
--- 3) GEZIELT die Session finden, die tatsaechlich mit dem Zielschema
---    arbeitet (TRUNCATE, Spaltenabfrage oder INSERT -- irgendein
---    Schritt der Schleife). Wichtig: dieses Diagnose-Skript selbst
---    NICHT mit auflisten (sonst matcht es sich selbst, weil der
---    Schemaname im eigenen WHERE-Text vorkommt) -- daher der
---    Ausschluss von Abfragen, die "V$SESSION" enthalten.
+-- 3) GEZIELT die Session finden, die wirklich TRUNCATE/INSERT gegen
+--    das Zielschema ausfuehrt. Wichtig: reine "SELECT ... ROWID AS
+--    ora_rowid"-Abfragen ausschliessen -- das ist die interne
+--    Abfrage des SQL-Tools fuer die editierbare Datenansicht einer
+--    Tabelle, keine echte Skript-Aktivitaet (typischerweise viele
+--    Sessions mit IDENTISCHEM SQL-Text und IDENTISCHEM last_call_et
+--    -- ein klares Zeichen fuer idle Pool-Verbindungen, nicht fuer
+--    aktive Arbeit). Dieses Diagnose-Skript selbst ebenfalls ausschliessen.
 SELECT s.sid, s.serial#, s.status, s.last_call_et, sq.sql_text
 FROM v$session s
 JOIN v$sql sq ON s.sql_id = sq.sql_id
 WHERE UPPER(sq.sql_text) LIKE '%SVS41M_STAT_FST%'
+  AND (UPPER(sq.sql_text) LIKE '%INSERT%' OR UPPER(sq.sql_text) LIKE '%TRUNCATE%')
+  AND UPPER(sq.sql_text) NOT LIKE '%ORA_ROWID%'
   AND UPPER(sq.sql_text) NOT LIKE '%V$SESSION%'
 ORDER BY s.last_call_et;
 
