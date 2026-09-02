@@ -19,16 +19,17 @@ ORDER BY last_call_et DESC;
 --    verarbeiteten Zieltabelle pruefen (mehrfach im Abstand pruefen).
 -- SELECT COUNT(*) FROM SVS41M_STAT_FST.TF_FST_MN_FIM;
 
--- 3) GEZIELT die Session finden, die tatsaechlich das INSERT ins
---    Zielschema ausfuehrt -- nicht alle Sessions des gleichen
---    (evtl. gemeinsam genutzten) DB-Users, sondern nur die, deren
---    aktuelle Anweisung wirklich "INSERT" und den Zielschema-Namen
---    enthaelt. Das vermeidet, versehentlich die interne Abfrage des
---    SQL-Tools selbst (z.B. mit "ora_rowid") zu erwischen.
+-- 3) GEZIELT die Session finden, die tatsaechlich mit dem Zielschema
+--    arbeitet (TRUNCATE, Spaltenabfrage oder INSERT -- irgendein
+--    Schritt der Schleife). Wichtig: dieses Diagnose-Skript selbst
+--    NICHT mit auflisten (sonst matcht es sich selbst, weil der
+--    Schemaname im eigenen WHERE-Text vorkommt) -- daher der
+--    Ausschluss von Abfragen, die "V$SESSION" enthalten.
 SELECT s.sid, s.serial#, s.status, s.last_call_et, sq.sql_text
 FROM v$session s
 JOIN v$sql sq ON s.sql_id = sq.sql_id
-WHERE UPPER(sq.sql_text) LIKE '%INSERT%SVS41M_STAT_FST%'
+WHERE UPPER(sq.sql_text) LIKE '%SVS41M_STAT_FST%'
+  AND UPPER(sq.sql_text) NOT LIKE '%V$SESSION%'
 ORDER BY s.last_call_et;
 
 -- 4) Wird die Session durch eine andere Sperre blockiert?
