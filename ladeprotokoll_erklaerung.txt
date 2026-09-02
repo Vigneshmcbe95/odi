@@ -1,0 +1,4 @@
+LADEPROTOKOLL: pro Tabelle eine Zeile. STATUS = OK (geladen, ZEILEN =
+Anzahl) oder FEHLER (MELDUNG = Fehlertext). Bei Volladung: genau eine
+Zeile pro Tabelle. Bei partitionierter Ladung: mehrere LAEUFT-Zeilen
+(je Monat), zum Schluss eine OK-Zeile mit der Gesamtsumme.
