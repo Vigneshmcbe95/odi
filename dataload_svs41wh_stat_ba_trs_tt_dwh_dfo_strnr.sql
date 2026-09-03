@@ -37,6 +37,12 @@ begin
 
   dbms_output.put_line('Spalten: '||v_attr_list);
 
+  if v_attr_list is null then
+    raise_application_error(-20002,
+      'Keine gemeinsamen Spalten zwischen Quelle und Ziel gefunden -- '||
+      'Struktur pruefen (siehe struktur_vergleich_quelle_ziel_generisch.sql).');
+  end if;
+
   -- Ziel-only NOT NULL Spalten (z.B. META_INS_DT) aufheben, damit die
   -- 1:1-Kopie nicht an ORA-01400 scheitert.
   for m in (
