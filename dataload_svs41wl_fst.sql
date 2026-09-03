@@ -162,9 +162,43 @@ begin
           when others then
             v_errmsg := dbms_utility.format_error_stack;
             dbms_output.put_line('FEHLER bei '||c.target_owner||'.'||c.table_name||' - '||v_errmsg);
-            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
-            values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
-            commit;
+
+            -- ORA-14400: Quelldaten enthalten Werte ausserhalb aller
+            -- vorhandenen Partitionsgrenzen (z.B. Datum/Periode neuer
+            -- als die letzte definierte Partition). Loesung: eine
+            -- MAXVALUE-Auffangpartition anlegen (funktioniert unabhaengig
+            -- vom Partitionsschluessel-Typ) und den Insert einmal erneut
+            -- versuchen.
+            if v_errmsg like '%ORA-14400%' then
+              begin
+                execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
+                                   ' ADD PARTITION P_MAXVALUE_AUTO VALUES LESS THAN (MAXVALUE)';
+                dbms_output.put_line('    -> ORA-14400: MAXVALUE-Auffangpartition angelegt, Insert wird wiederholt.');
+
+                execute immediate v_sql;
+                v_rowcnt := sql%rowcount;
+                commit;
+                dbms_output.put_line('03 (Wiederholung) :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(v_rowcnt)||' rows.');
+
+                insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
+                values (c.target_owner, c.table_name, 'OK', v_rowcnt,
+                        'Nach ORA-14400 mit MAXVALUE-Auffangpartition erfolgreich nachgeladen');
+                commit;
+
+              exception
+                when others then
+                  v_errmsg := dbms_utility.format_error_stack;
+                  dbms_output.put_line('    -> Auch nach MAXVALUE-Partition fehlgeschlagen: '||v_errmsg);
+                  insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+                  values (c.target_owner, c.table_name, 'FEHLER',
+                          'ORA-14400, MAXVALUE-Partition-Versuch ebenfalls fehlgeschlagen: '||v_errmsg);
+                  commit;
+              end;
+            else
+              insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+              values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
+              commit;
+            end if;
         end;
 
     end loop;
