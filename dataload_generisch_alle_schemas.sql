@@ -126,7 +126,12 @@ begin
 
         exception
           when others then
-            v_errmsg := SQLERRM;
+            -- SQLERRM allein zeigt bei parallelen Ausfuehrungen oft nur
+            -- ORA-12801 ("error signaled in parallel query server") --
+            -- die eigentliche Ursache steckt im Fehler-Stack.
+            -- FORMAT_ERROR_STACK liefert den kompletten Stack inkl. der
+            -- echten Ursache (z.B. ORA-01652, ORA-00904, ...).
+            v_errmsg := dbms_utility.format_error_stack;
             dbms_output.put_line('FEHLER bei '||c.target_owner||'.'||c.table_name||' - '||v_errmsg);
             insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
             values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
