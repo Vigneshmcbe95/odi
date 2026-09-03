@@ -11,14 +11,17 @@ SET SERVEROUTPUT ON
 --      EINSPALTIGE RANGE-Partitionierung wird unterstuetzt -- Tabellen
 --      mit mehrspaltigem/LIST/HASH-Partitionsschluessel werden mit
 --      WARNUNG uebersprungen).
---   2. Alle in der QUELLE tatsaechlich vorkommenden Werte dieser Spalte
---      ermitteln (DISTINCT).
---   3. Fuer jeden Wert, der noch in keine vorhandene Partition passt,
---      eine eigene, eng begrenzte Partition anlegen (VALUES LESS THAN
---      Wert+1 bei NUMBER, Wert+1 Tag bei DATE) -- dadurch bekommt jeder
---      Wert seine eigene Partition, statt in einem MAXVALUE-Sammelbecken
---      zu landen.
---   4. Danach EIN normaler INSERT ... SELECT fuer die ganze Tabelle --
+--   2. ALLE vorhandenen Partitionen bis auf die mit der niedrigsten
+--      Grenze (Position 1) werden entfernt -- kompletter Neuaufbau
+--      statt Luecken einzeln zu reparieren (SPLIT PARTITION waere fuer
+--      Luecken in der Mitte noetig, ADD PARTITION kann das nicht).
+--   3. Alle in der QUELLE tatsaechlich vorkommenden Werte dieser Spalte
+--      ermitteln (DISTINCT, aufsteigend sortiert).
+--   4. Fuer jeden Wert der Reihe nach eine eigene, eng begrenzte
+--      Partition anlegen (VALUES LESS THAN Wert+1 bei NUMBER, Wert+1
+--      Tag bei DATE) -- da aufsteigend sortiert, funktioniert ADD
+--      PARTITION dabei immer garantiert ohne Luecken oder Konflikte.
+--   5. Danach EIN normaler INSERT ... SELECT fuer die ganze Tabelle --
 --      Oracle ordnet jede Zeile automatisch der jetzt passenden
 --      Partition zu.
 --
@@ -99,21 +102,31 @@ begin
 
             dbms_output.put_line('    -> Partitionsspalte: '||v_part_col||' ('||v_data_type||')');
 
-            -- Falls aus einem frueheren Lauf bereits eine
-            -- MAXVALUE-Auffangpartition existiert: erst entfernen. Eine
-            -- Partition darf nie NACH einer MAXVALUE-Partition
-            -- hinzugefuegt werden (deren Grenze ist per Definition die
-            -- hoechstmoegliche) -- sonst wuerden ALLE neuen, engen
-            -- Partitionen fehlschlagen und alles wuerde weiterhin in
-            -- der alten Sammelpartition landen. Unbedenklich, da die
-            -- Tabelle gleich sowieso neu geladen wird (TRUNCATE+INSERT).
-            begin
-              execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
-                                 ' DROP PARTITION P_MAXVALUE_AUTO';
-              dbms_output.put_line('    -> Alte MAXVALUE-Auffangpartition aus vorherigem Lauf entfernt.');
-            exception
-              when others then null; -- gab es nicht, kein Problem
-            end;
+            -- Alle vorhandenen Partitionen bis auf EINE (Position 1,
+            -- per Definition die mit der niedrigsten Grenze) entfernen.
+            -- Grund: ADD PARTITION kann immer nur eine NEUE HOECHSTE
+            -- Partition anhaengen -- bei bestehenden Luecken in der
+            -- Mitte (bereits hoehere Partitionen vorhanden, aber ein
+            -- Wert passt in keine) schlaegt das mit ORA-14400 fehl und
+            -- muesste eigentlich per SPLIT PARTITION geloest werden.
+            -- Einfacher und zuverlaessiger: komplett neu aufbauen --
+            -- unbedenklich, da die Tabelle gleich sowieso per
+            -- TRUNCATE+INSERT neu befuellt wird.
+            for old_p in (
+                  select partition_name
+                  from dba_tab_partitions
+                  where table_owner = c.target_owner and table_name = c.table_name
+                        and partition_position > 1
+                  order by partition_position desc
+                ) loop
+                begin
+                  execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
+                                     ' DROP PARTITION '||old_p.partition_name;
+                exception
+                  when others then null;
+                end;
+            end loop;
+            dbms_output.put_line('    -> Alte Partitionen entfernt, nur Position 1 (niedrigste Grenze) blieb erhalten.');
 
             v_added := 0;
             v_skipped := 0;
