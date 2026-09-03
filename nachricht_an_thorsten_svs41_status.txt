@@ -13,5 +13,7 @@ Offene Fragen
 
 3. SVS41LL_FST — gleiche Frage, welches ist das richtige Quellschema?
 
+4. SVS41WH_STAT_BA_TRS.TT_DWH_DFO_STRNR — fuer diese Tabelle finde ich keine passende Quelltabelle. Welches ist die richtige Quelle dafuer?
+
 Danke,
 Vignesh
