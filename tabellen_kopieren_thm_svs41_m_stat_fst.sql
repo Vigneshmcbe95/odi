@@ -74,7 +74,7 @@ begin
           -- Live-Protokoll: sofort committen, damit eine zweite Session
           -- den Fortschritt live sehen kann (DBMS_OUTPUT allein wird
           -- von den meisten SQL-Tools erst am Ende des Laufs angezeigt).
-          insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+          insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
           values (c.target_owner, c.table_name, 'OK', sql%rowcount);
           commit;
 
@@ -82,7 +82,7 @@ begin
           when others then
             v_errmsg := SQLERRM;
             dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || v_errmsg);
-            insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
+            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
             values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
             commit;
         end;

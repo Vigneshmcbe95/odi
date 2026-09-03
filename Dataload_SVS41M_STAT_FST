@@ -128,7 +128,7 @@ begin
               -- am Ende der ganzen Tabelle -- sonst bei grossen
               -- partitionierten Tabellen (Vollladung, kein Zeilenlimit)
               -- lange keine Sichtbarkeit im Live-Protokoll.
-              insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
+              insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
               values (c.target_owner, c.table_name, 'LAEUFT', v_this_rowcount, 'MON_ID='||a_mon_id(i));
 
               COMMIT;
@@ -154,7 +154,7 @@ begin
         dbms_output.put_line('===');
         dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||v_rowcnt||' rows.');
 
-        insert into ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+        insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
         values (c.target_owner, c.table_name, 'OK', v_rowcnt);
         commit;
 
@@ -162,7 +162,7 @@ begin
         when others then
           v_errmsg := SQLERRM;
           dbms_output.put_line('FEHLER bei ' || c.target_owner || '.' || c.table_name || ' - ' || v_errmsg);
-          insert into ladeprotokoll (ziel_schema, tabelle, status, meldung)
+          insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
           values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
           commit;
       end;

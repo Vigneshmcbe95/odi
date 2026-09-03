@@ -15,7 +15,7 @@ SET SERVEROUTPUT ON
 --     der Parallelitaet reduzieren oder TEMP-Tablespace vergroessern.
 --   * Pro Tabelle eigener BEGIN/EXCEPTION-Block -- ein Fehler stoppt
 --     nicht den gesamten Lauf, nur die betroffene Tabelle.
---   * Live-Fortschritt ueber DEV_RUMMELIN.LADEPROTOKOLL -- nach jeder
+--   * Live-Fortschritt ueber UBI_RUEMMELIN.LADEPROTOKOLL -- nach jeder
 --     Tabelle wird sofort eine Zeile geschrieben und committet (siehe
 --     ladeprotokoll_live_ansehen.sql). Vorher einmalig
 --     ladeprotokoll_tabelle_erstellen.sql ausfuehren, falls noch nicht
@@ -111,7 +111,7 @@ begin
             dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(v_rowcnt)||' rows.');
             commit;
 
-            insert into DEV_RUMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
             values (c.target_owner, c.table_name, 'OK', v_rowcnt);
             commit;
           end if;
@@ -120,7 +120,7 @@ begin
           when others then
             v_errmsg := SQLERRM;
             dbms_output.put_line('FEHLER bei '||c.target_owner||'.'||c.table_name||' - '||v_errmsg);
-            insert into DEV_RUMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
             values (c.target_owner, c.table_name, 'FEHLER', v_errmsg);
             commit;
         end;

@@ -5,5 +5,5 @@
 -- erscheinen sofort nach jedem Commit der laufenden Session.
 
 SELECT log_zeit, ziel_schema, tabelle, status, zeilen, meldung
-FROM ladeprotokoll
+FROM UBI_RUEMMELIN.ladeprotokoll
 ORDER BY log_zeit DESC;
