@@ -1,0 +1,17 @@
+Hallo Thorsten,
+
+Status-Update und ein paar offene Fragen zum SVS41 (B05) Datenladen:
+
+Status
+Die restlichen SVS41-Sandbox-Schemata sind mit dem Datenladen fertig.
+
+Offene Fragen
+
+1. SVS41WL_FST — beim Laden dieses Schemas bin ich an ein Tablespace-Limit gestossen (ORA-01688, Tablespace STAT_DWL voll). Gibt es eine definierte Liste, welche Objekte/Tabellen fuer SVS41WL_FST tatsaechlich geladen werden muessen?
+
+2. SVS41WH_STAT_FST — welches ist das richtige Quellschema auf der PSD-Seite?
+
+3. SVS41LL_FST — gleiche Frage, welches ist das richtige Quellschema?
+
+Danke,
+Vignesh
