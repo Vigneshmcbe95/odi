@@ -6,9 +6,16 @@ SET FEEDBACK ON
 -- Struktur-Abweichungen auf einen Blick zu sehen, statt sie erst
 -- ueber ORA-01400 / ORA-12899 im Ladeskript zu entdecken.
 --
--- >>> HIER FUELLEN <<<
-DEFINE v_source_user = 'PSD1_DWH_FST'
-DEFINE v_target_user = 'SVS41WH_FST'
+-- Keine SQL*Plus-Substitutionsvariablen (&...) -- manche SQL-Clients
+-- (z.B. VS-Code-SQL-Erweiterungen) fragen dann bei JEDEM Vorkommen
+-- einzeln nach statt einmal zu substituieren. Stattdessen werden die
+-- zwei Werte unten EINMAL in v_schemas eingetragen und ueber einen
+-- JOIN im ganzen Skript wiederverwendet.
+--
+-- >>> HIER FUELLEN (nur diese eine Zeile) <<<
+WITH v_schemas AS (
+  SELECT 'PSD1_DWH_FST' AS v_source_user, 'SVS41WH_FST' AS v_target_user FROM dual
+)
 
 -- Ergebnis-Spalten:
 --   TABELLE      -- betroffene Tabelle (Name identisch in Quelle/Ziel)
@@ -40,17 +47,17 @@ FROM (
          tc_t.data_type||'('||
            case when tc_t.char_length > 0 then tc_t.char_length else tc_t.data_length end||
          ') NOT NULL' ziel_info
-  FROM dba_tab_columns tc_t
-  WHERE tc_t.owner = upper('&v_target_user')
-        AND tc_t.nullable = 'N'
+  FROM v_schemas v
+       JOIN dba_tab_columns tc_t ON tc_t.owner = upper(v.v_target_user)
+  WHERE tc_t.nullable = 'N'
         AND tc_t.table_name IN (
-              SELECT table_name FROM dba_tables WHERE owner = upper('&v_source_user')
+              SELECT table_name FROM dba_tables WHERE owner = upper(v.v_source_user)
               INTERSECT
-              SELECT table_name FROM dba_tables WHERE owner = upper('&v_target_user')
+              SELECT table_name FROM dba_tables WHERE owner = upper(v.v_target_user)
             )
         AND tc_t.column_name NOT IN (
               SELECT tc_s.column_name FROM dba_tab_columns tc_s
-              WHERE tc_s.owner = upper('&v_source_user')
+              WHERE tc_s.owner = upper(v.v_source_user)
                     AND tc_s.table_name = tc_t.table_name
             )
 
@@ -63,16 +70,16 @@ FROM (
            case when tc_s.char_length > 0 then tc_s.char_length else tc_s.data_length end||')'
          ||case when tc_s.nullable = 'N' then ' NOT NULL' else '' end quelle_info,
          '(nicht vorhanden)' ziel_info
-  FROM dba_tab_columns tc_s
-  WHERE tc_s.owner = upper('&v_source_user')
-        AND tc_s.table_name IN (
-              SELECT table_name FROM dba_tables WHERE owner = upper('&v_source_user')
+  FROM v_schemas v
+       JOIN dba_tab_columns tc_s ON tc_s.owner = upper(v.v_source_user)
+  WHERE tc_s.table_name IN (
+              SELECT table_name FROM dba_tables WHERE owner = upper(v.v_source_user)
               INTERSECT
-              SELECT table_name FROM dba_tables WHERE owner = upper('&v_target_user')
+              SELECT table_name FROM dba_tables WHERE owner = upper(v.v_target_user)
             )
         AND tc_s.column_name NOT IN (
               SELECT tc_t.column_name FROM dba_tab_columns tc_t
-              WHERE tc_t.owner = upper('&v_target_user')
+              WHERE tc_t.owner = upper(v.v_target_user)
                     AND tc_t.table_name = tc_s.table_name
             )
 
@@ -87,13 +94,13 @@ FROM (
          tc_t.data_type||'('||
            case when tc_t.char_length > 0 then tc_t.char_length else tc_t.data_length end||')'
          ||case when tc_t.nullable = 'N' then ' NOT NULL' else '' end ziel_info
-  FROM dba_tab_columns tc_s
+  FROM v_schemas v
+       JOIN dba_tab_columns tc_s ON tc_s.owner = upper(v.v_source_user)
        JOIN dba_tab_columns tc_t
-         ON tc_t.owner = upper('&v_target_user')
+         ON tc_t.owner = upper(v.v_target_user)
             AND tc_t.table_name = tc_s.table_name
             AND tc_t.column_name = tc_s.column_name
-  WHERE tc_s.owner = upper('&v_source_user')
-        AND tc_s.data_type != tc_t.data_type
+  WHERE tc_s.data_type != tc_t.data_type
 
   UNION ALL
 
@@ -106,13 +113,13 @@ FROM (
          tc_t.data_type||'('||
            case when tc_t.char_length > 0 then tc_t.char_length else tc_t.data_length end||')'
          ||case when tc_t.nullable = 'N' then ' NOT NULL' else '' end ziel_info
-  FROM dba_tab_columns tc_s
+  FROM v_schemas v
+       JOIN dba_tab_columns tc_s ON tc_s.owner = upper(v.v_source_user)
        JOIN dba_tab_columns tc_t
-         ON tc_t.owner = upper('&v_target_user')
+         ON tc_t.owner = upper(v.v_target_user)
             AND tc_t.table_name = tc_s.table_name
             AND tc_t.column_name = tc_s.column_name
-  WHERE tc_s.owner = upper('&v_source_user')
-        AND tc_s.data_type = tc_t.data_type
+  WHERE tc_s.data_type = tc_t.data_type
         AND (
               (tc_t.char_length > 0 AND tc_s.char_length > tc_t.char_length)
               OR (tc_t.char_length = 0 AND tc_s.data_length > tc_t.data_length)
