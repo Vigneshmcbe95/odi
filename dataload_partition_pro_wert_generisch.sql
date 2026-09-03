@@ -99,6 +99,22 @@ begin
 
             dbms_output.put_line('    -> Partitionsspalte: '||v_part_col||' ('||v_data_type||')');
 
+            -- Falls aus einem frueheren Lauf bereits eine
+            -- MAXVALUE-Auffangpartition existiert: erst entfernen. Eine
+            -- Partition darf nie NACH einer MAXVALUE-Partition
+            -- hinzugefuegt werden (deren Grenze ist per Definition die
+            -- hoechstmoegliche) -- sonst wuerden ALLE neuen, engen
+            -- Partitionen fehlschlagen und alles wuerde weiterhin in
+            -- der alten Sammelpartition landen. Unbedenklich, da die
+            -- Tabelle gleich sowieso neu geladen wird (TRUNCATE+INSERT).
+            begin
+              execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
+                                 ' DROP PARTITION P_MAXVALUE_AUTO';
+              dbms_output.put_line('    -> Alte MAXVALUE-Auffangpartition aus vorherigem Lauf entfernt.');
+            exception
+              when others then null; -- gab es nicht, kein Problem
+            end;
+
             v_added := 0;
             v_skipped := 0;
 
@@ -158,6 +174,19 @@ begin
             end if;
 
             dbms_output.put_line('    -> '||v_added||' neue Partitionen angelegt, '||v_skipped||' bereits abgedeckt/uebersprungen.');
+
+            -- Als letzte Partition eine MAXVALUE-Sicherheitspartition
+            -- anlegen -- faengt nur Werte auf, die NICHT in der obigen
+            -- DISTINCT-Liste der Quelle waren (z.B. zwischen Ermittlung
+            -- der Werte und dem eigentlichen Insert neu hinzugekommen).
+            -- Da sie IMMER die letzte ist, blockiert sie keine der oben
+            -- neu angelegten, engen Partitionen.
+            begin
+              execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
+                                 ' ADD PARTITION P_MAXVALUE_AUTO VALUES LESS THAN (MAXVALUE)';
+            exception
+              when others then null;
+            end;
           end if;
 
           -- Normale 1:1-Kopie, wie im generischen Ladeskript.
