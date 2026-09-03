@@ -1,11 +1,10 @@
 SET FEEDBACK ON
 SET SERVEROUTPUT ON
 
--- Einfaches Ladeskript fuer EINE einzelne Tabelle -- fuer schnelle
--- Einzelfaelle, ohne die ganze Schema-Schleife wie im generischen
--- Mehrtabellen-Skript. Spaltenliste = Schnittmenge Quelle/Ziel (1:1-
--- Kopie, keine erfundenen Werte). NOT NULL auf reinen Ziel-Spalten
--- (z.B. META_INS_DT) wird automatisch aufgehoben, falls noetig.
+-- Ladeskript NUR fuer SVS41WH_STAT_BA_TRS.TT_DWH_DFO_STRNR (einzelne
+-- Tabelle). Spaltenliste = Schnittmenge Quelle/Ziel (1:1-Kopie, keine
+-- erfundenen Werte). NOT NULL auf reinen Ziel-Spalten (z.B.
+-- META_INS_DT) wird automatisch aufgehoben, falls noetig.
 --
 -- >>> HIER FUELLEN <<<
 declare
