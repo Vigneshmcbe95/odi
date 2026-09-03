@@ -18,6 +18,12 @@ SET SERVEROUTPUT ON
 --   * Vollladung -- KEIN Zeilenlimit. Achtung: bei sehr grossen Tabellen
 --     ggf. ORA-01652 (TEMP voll) moeglich -- falls das auftritt, Grad
 --     der Parallelitaet reduzieren oder TEMP-Tablespace vergroessern.
+--   * Partitionierte Zieltabellen werden automatisch erkannt. Bei
+--     INTERVAL-Partitionierung wird SET INTERVAL() vor dem Laden
+--     aufgehoben und danach wieder aktiviert (verhindert
+--     ORA-14757/ORA-14760). Es werden KEINE Partitionen manuell
+--     angelegt/gedroppt -- die Struktur kommt bereits 1:1 aus dem
+--     GET_DDL-Klon, Oracle ordnet jede Zeile automatisch zu.
 --   * Pro Tabelle eigener BEGIN/EXCEPTION-Block -- ein Fehler stoppt
 --     nicht den gesamten Lauf, nur die betroffene Tabelle.
 --   * Live-Fortschritt ueber UBI_RUEMMELIN.LADEPROTOKOLL -- nach jeder
@@ -41,6 +47,8 @@ v_errmsg varchar2(4000);
 v_rowcnt integer;
 v_insert_cols varchar2(32000);
 v_select_cols varchar2(32000);
+v_part_count integer;
+v_interval varchar2(1000);
 
 v_execute boolean := true;
 
@@ -151,6 +159,30 @@ begin
                    'SELECT '||v_select_cols||' FROM '||c.source_owner||'.'||c.table_name;
           dbms_output.put_line('02 :: '||v_sql);
 
+          -- Partitionierte Zieltabelle? Bei INTERVAL-Partitionierung muss
+          -- SET INTERVAL() vor dem Laden aufgehoben werden (sonst
+          -- ORA-14757/ORA-14760 bei Oracle's automatischer Partitions-
+          -- anlage waehrend paralleler INSERTs), nach dem Laden wieder
+          -- aktiviert (SET INTERVAL(1)). Bereits vorhandene Partitionen
+          -- werden NICHT neu angelegt/gedroppt -- Oracle ordnet jede
+          -- Zeile automatisch ihrer Partition zu (Struktur kommt 1:1
+          -- aus dem GET_DDL-Klon der Tabelle).
+          v_part_count := 0;
+          v_interval := null;
+          select count(*) into v_part_count
+          from dba_tab_partitions
+          where table_owner = c.target_owner and table_name = c.table_name;
+
+          if v_part_count > 0 then
+            select interval into v_interval
+            from dba_part_tables
+            where owner = c.target_owner and table_name = c.table_name;
+            if v_interval is not null then
+              execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||' SET INTERVAL()';
+              dbms_output.put_line('    -> INTERVAL-Partitionierung erkannt, SET INTERVAL() vor dem Laden aufgehoben.');
+            end if;
+          end if;
+
           if v_execute then
             execute immediate v_sql;
             v_rowcnt := sql%rowcount;
@@ -158,8 +190,17 @@ begin
             dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(v_rowcnt)||' rows.');
             commit;
 
-            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
-            values (c.target_owner, c.table_name, 'OK', v_rowcnt);
+            -- Nur zuruecksetzen, wenn vorher auch aktiviert (symmetrisch
+            -- zur Aufhebung oben -- sonst ORA-14757 bei reinen RANGE-
+            -- Tabellen, die nie interval-partitioniert waren).
+            if v_part_count > 0 and v_interval is not null then
+              execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||' SET INTERVAL(1)';
+              dbms_output.put_line('    -> SET INTERVAL(1) nach dem Laden wieder aktiviert.');
+            end if;
+
+            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
+            values (c.target_owner, c.table_name, 'OK', v_rowcnt,
+                    case when v_part_count > 0 then 'Partitioniert ('||v_part_count||' Partitionen)' end);
             commit;
           end if;
 
