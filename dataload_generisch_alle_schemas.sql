@@ -41,10 +41,16 @@ v_execute boolean := true;
 v_source_user varchar2(30) := '';   -- z.B. 'PSD1_DWH_STAT_FST' / 'THM_...' / etc.
 v_target_user varchar2(30) := '';   -- z.B. 'SVS41WH_STAT_FST'
 
+v_table_count integer := 0;
+
 begin
 
   if v_source_user is null or v_target_user is null
      or v_source_user = '' or v_target_user = '' then
+    insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+    values ('(unbekannt)', '(unbekannt)', 'FEHLER',
+            'v_source_user / v_target_user sind noch leer -- bitte im Skript eintragen.');
+    commit;
     raise_application_error(-20001,
       'v_source_user / v_target_user sind noch leer -- bitte im Skript eintragen.');
   end if;
@@ -88,6 +94,8 @@ begin
           order by 1
     ) loop
 
+        v_table_count := v_table_count + 1;
+
         begin
 
           dbms_output.put_line('=========================================================================');
@@ -126,6 +134,16 @@ begin
         end;
 
     end loop;
+
+  if v_table_count = 0 then
+    dbms_output.put_line('WARNUNG: keine passenden Tabellen gefunden (Quelle='||
+                          v_source_user||', Ziel='||v_target_user||').');
+    insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+    values (v_target_user, '(keine Tabelle)', 'WARNUNG',
+            'Keine gemeinsamen Tabellen zwischen Quelle '||v_source_user||
+            ' und Ziel '||v_target_user||' gefunden -- Schema-/Namensangabe pruefen.');
+    commit;
+  end if;
 
   dbms_output.put_line('Kopiervorgang abgeschlossen fuer '||v_target_user||'.');
 
