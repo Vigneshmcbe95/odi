@@ -14,7 +14,17 @@ SET SERVEROUTPUT ON
 --   * Ziel-Spalten, die es in der Quelle nicht gibt und die NOT NULL
 --     sind (z.B. META_INS_DT), wuerden eine reine 1:1-Kopie verhindern
 --     (ORA-01400) -- das Skript hebt NOT NULL auf diesen Ziel-Spalten
---     automatisch auf, statt einen Wert zu erfinden.
+--     automatisch auf, statt einen Wert zu erfinden. Falls das Aufheben
+--     fehlschlaegt (z.B. fehlendes ALTER-Recht, Spalte Teil eines Keys),
+--     wird das als WARNUNG in LADEPROTOKOLL geloggt statt still zu
+--     verschwinden.
+--   * VOR dem Laden: Abgleich der gemeinsamen Spalten auf abweichenden
+--     Datentyp bzw. zu kleine Ziel-Laenge (z.B. Ziel VARCHAR2(24) vs.
+--     Quelle VARCHAR2(38)) -- wird als WARNUNG geloggt/ausgegeben,
+--     BEVOR der INSERT versucht wird (statt erst ueber ORA-12899 zu
+--     stolpern). Die Spalte/Struktur wird NICHT automatisch angepasst
+--     (kein automatisches Vergroessern) -- echte Strukturabweichungen
+--     muessen mit dem Schema-Verantwortlichen geklaert werden.
 --   * Vollladung -- KEIN Zeilenlimit. Achtung: bei sehr grossen Tabellen
 --     ggf. ORA-01652 (TEMP voll) moeglich -- falls das auftritt, Grad
 --     der Parallelitaet reduzieren oder TEMP-Tablespace vergroessern.
@@ -148,8 +158,52 @@ begin
                 dbms_output.put_line('    -> '||m.column_name||' fehlt in Quelle, NOT NULL im Ziel aufgehoben.');
               exception
                 when others then
-                  dbms_output.put_line('    -> Konnte NOT NULL auf '||m.column_name||' nicht aufheben: '||SQLERRM);
+                  v_errmsg := SQLERRM;
+                  dbms_output.put_line('    -> Konnte NOT NULL auf '||m.column_name||' nicht aufheben: '||v_errmsg);
+                  insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+                  values (c.target_owner, c.table_name, 'WARNUNG',
+                          'NOT NULL auf '||m.column_name||' konnte nicht aufgehoben werden -- '||v_errmsg);
+                  commit;
               end;
+          end loop;
+
+          -- Spalten-Abgleich Quelle/Ziel: gemeinsame Spalten mit
+          -- abweichendem Datentyp oder zu kleiner Ziel-Laenge VORHER
+          -- pruefen und ausgeben/loggen, statt erst beim INSERT ueber
+          -- ORA-12899 (value too large) / ORA-01722 etc. zu stolpern,
+          -- z.B. SVS41WL_FST.TL_DWL_AUWM.RAM_OS_OS: Ziel VARCHAR2(24),
+          -- Quelle VARCHAR2(38).
+          for d in (
+                select tc_s.column_name
+                      , tc_s.data_type source_type, tc_s.data_length source_len
+                      , tc_s.char_length source_char_len
+                      , tc_t.data_type target_type, tc_t.data_length target_len
+                      , tc_t.char_length target_char_len
+                from dba_tab_columns tc_s
+                     join dba_tab_columns tc_t
+                       on tc_t.owner = c.target_owner
+                          and tc_t.table_name = c.table_name
+                          and tc_t.column_name = tc_s.column_name
+                where tc_s.owner = c.source_owner
+                      and tc_s.table_name = c.table_name
+                      and (
+                            tc_s.data_type != tc_t.data_type
+                            or (tc_t.char_length > 0 and tc_s.char_length > tc_t.char_length)
+                            or (tc_t.char_length = 0 and tc_s.data_length > tc_t.data_length)
+                          )
+            ) loop
+              dbms_output.put_line('    !! SPALTEN-MISMATCH '||c.table_name||'.'||d.column_name||
+                                    ': Quelle '||d.source_type||'('||
+                                    case when d.source_char_len > 0 then d.source_char_len else d.source_len end||
+                                    ') vs Ziel '||d.target_type||'('||
+                                    case when d.target_char_len > 0 then d.target_char_len else d.target_len end||')');
+              insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, meldung)
+              values (c.target_owner, c.table_name, 'WARNUNG',
+                      'Spalten-Mismatch '||d.column_name||': Quelle '||d.source_type||'('||
+                      case when d.source_char_len > 0 then d.source_char_len else d.source_len end||
+                      ') vs Ziel '||d.target_type||'('||
+                      case when d.target_char_len > 0 then d.target_char_len else d.target_len end||')');
+              commit;
           end loop;
 
           v_insert_cols := c.attr_list;
