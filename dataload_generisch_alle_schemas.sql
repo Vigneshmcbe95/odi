@@ -9,7 +9,12 @@ SET SERVEROUTPUT ON
 --     die im Ziel existiert UND unter demselben Namen auch in der
 --     Quelle existiert, wird geladen.
 --   * Spaltenliste = Schnittmenge Quelle/Ziel (verhindert ORA-00904 bei
---     abweichender Tabellenstruktur).
+--     abweichender Tabellenstruktur). Daten werden 1:1 wie in der
+--     Quelle uebernommen -- keine erfundenen Werte.
+--   * Ziel-Spalten, die es in der Quelle nicht gibt und die NOT NULL
+--     sind (z.B. META_INS_DT), wuerden eine reine 1:1-Kopie verhindern
+--     (ORA-01400) -- das Skript hebt NOT NULL auf diesen Ziel-Spalten
+--     automatisch auf, statt einen Wert zu erfinden.
 --   * Vollladung -- KEIN Zeilenlimit. Achtung: bei sehr grossen Tabellen
 --     ggf. ORA-01652 (TEMP voll) moeglich -- falls das auftritt, Grad
 --     der Parallelitaet reduzieren oder TEMP-Tablespace vergroessern.
@@ -110,22 +115,18 @@ begin
             execute immediate v_ddl;
           end if;
 
-          -- Basis: Spalten, die in Quelle UND Ziel existieren, 1:1 kopiert.
-          v_insert_cols := c.attr_list;
-          v_select_cols := c.attr_list;
-
-          -- Ziel-only Meta-/Audit-Spalten (z.B. META_INS_DT, META_UPD_DT),
-          -- die NOT NULL sind aber in der Quelle fehlen, mit SYSDATE
-          -- befuellen -- sonst ORA-01400 (cannot insert NULL), wie bei
-          -- SVS41WL_FST.TL_DWL_* / META_INS_DT beobachtet.
+          -- Ziel-only Spalten, die in der Quelle fehlen aber NOT NULL
+          -- sind, wuerden die 1:1-Kopie (source as-is) verhindern
+          -- (ORA-01400), z.B. SVS41WL_FST.TL_DWL_* / META_INS_DT.
+          -- Statt Werte zu erfinden: NOT NULL auf dieser Ziel-Spalte
+          -- aufheben, damit die Kopie unveraendert 1:1 (source=target)
+          -- funktioniert -- Spalte bleibt dann fuer diese Zeilen leer.
           for m in (
                 select tc.column_name
                 from dba_tab_columns tc
                 where tc.owner = c.target_owner
                       and tc.table_name = c.table_name
                       and tc.nullable = 'N'
-                      and (tc.column_name like 'META\_%' escape '\'
-                           or tc.column_name like '%\_DT' escape '\')
                       and tc.column_name not in (
                                     select tc2.column_name
                                     from dba_tab_columns tc2
@@ -133,10 +134,18 @@ begin
                                           and tc2.table_name = c.table_name
                                     )
             ) loop
-              v_insert_cols := v_insert_cols||', '||m.column_name;
-              v_select_cols := v_select_cols||', SYSDATE';
-              dbms_output.put_line('    -> Meta-Spalte '||m.column_name||' fehlt in Quelle, wird mit SYSDATE befuellt.');
+              begin
+                execute immediate 'ALTER TABLE '||c.target_owner||'.'||c.table_name||
+                                   ' MODIFY ('||m.column_name||' NULL)';
+                dbms_output.put_line('    -> '||m.column_name||' fehlt in Quelle, NOT NULL im Ziel aufgehoben.');
+              exception
+                when others then
+                  dbms_output.put_line('    -> Konnte NOT NULL auf '||m.column_name||' nicht aufheben: '||SQLERRM);
+              end;
           end loop;
+
+          v_insert_cols := c.attr_list;
+          v_select_cols := c.attr_list;
 
           v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_insert_cols||') '||
                    'SELECT '||v_select_cols||' FROM '||c.source_owner||'.'||c.table_name;
