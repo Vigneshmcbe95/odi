@@ -172,10 +172,38 @@ begin
 
           dbms_output.put_line('03 :: '||c.target_owner||'.'||c.table_name||' Inserted '||to_char(v_rowcnt)||' rows.');
 
-          insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
-          values (c.target_owner, c.table_name, 'OK', v_rowcnt,
-                  case when v_part_col is not null then 'Wertbasierte Partitionen: '||v_added||' neu angelegt' end);
-          commit;
+          if v_part_col is null then
+            -- Nicht partitioniert: eine einzelne Zusammenfassungszeile.
+            insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen)
+            values (c.target_owner, c.table_name, 'OK', v_rowcnt);
+            commit;
+          else
+            -- Partitioniert: EIN Log-Eintrag PRO Partition, mit
+            -- Zeilenzahl je Partition und dem Partitionswert in der
+            -- Meldung (Spaltenname=Wert) -- statt einer einzigen
+            -- Sammelzeile fuer die ganze Tabelle. Bei nur einer
+            -- vorhandenen Partition entsteht dadurch automatisch genau
+            -- eine klare Meldungszeile.
+            for p in (
+                  select partition_name
+                  from dba_tab_partitions
+                  where table_owner = c.target_owner and table_name = c.table_name
+                  order by partition_position
+                ) loop
+                begin
+                  execute immediate 'SELECT COUNT(*) FROM '||c.target_owner||'.'||c.table_name||
+                                     ' PARTITION ('||p.partition_name||')' into v_rowcnt;
+
+                  insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
+                  values (c.target_owner, c.table_name, 'OK', v_rowcnt,
+                          v_part_col||' -- Partition '||p.partition_name);
+                  commit;
+                exception
+                  when others then
+                    dbms_output.put_line('    -> Konnte Partition '||p.partition_name||' nicht zaehlen: '||SQLERRM);
+                end;
+            end loop;
+          end if;
 
         exception
           when others then
