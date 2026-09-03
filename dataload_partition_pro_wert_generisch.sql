@@ -207,31 +207,34 @@ begin
             values (c.target_owner, c.table_name, 'OK', v_rowcnt);
             commit;
           else
-            -- Partitioniert: EIN Log-Eintrag PRO Partition, mit
-            -- Zeilenzahl je Partition und dem Partitionswert in der
-            -- Meldung (Spaltenname=Wert) -- statt einer einzigen
-            -- Sammelzeile fuer die ganze Tabelle. Bei nur einer
-            -- vorhandenen Partition entsteht dadurch automatisch genau
-            -- eine klare Meldungszeile.
-            for p in (
-                  select partition_name
-                  from dba_tab_partitions
-                  where table_owner = c.target_owner and table_name = c.table_name
-                  order by partition_position
-                ) loop
-                begin
-                  execute immediate 'SELECT COUNT(*) FROM '||c.target_owner||'.'||c.table_name||
-                                     ' PARTITION ('||p.partition_name||')' into v_rowcnt;
+            -- Partitioniert: EIN Log-Eintrag PRO tatsaechlichem Wert der
+            -- Partitionsspalte (nicht pro internem Partitionsnamen) --
+            -- Meldung zeigt "SPALTE = WERT" mit der jeweiligen
+            -- Zeilenzahl, direkt aus den geladenen Daten gruppiert.
+            declare
+              type t_cur is ref cursor;
+              v_cur t_cur;
+              v_val_txt varchar2(4000);
+              v_cnt integer;
+            begin
+              open v_cur for
+                'SELECT TO_CHAR('||v_part_col||'), COUNT(*) FROM '||c.target_owner||'.'||c.table_name||
+                ' GROUP BY '||v_part_col||' ORDER BY '||v_part_col;
+              loop
+                fetch v_cur into v_val_txt, v_cnt;
+                exit when v_cur%notfound;
 
-                  insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
-                  values (c.target_owner, c.table_name, 'OK', v_rowcnt,
-                          v_part_col||' -- Partition '||p.partition_name);
-                  commit;
-                exception
-                  when others then
-                    dbms_output.put_line('    -> Konnte Partition '||p.partition_name||' nicht zaehlen: '||SQLERRM);
-                end;
-            end loop;
+                insert into UBI_RUEMMELIN.ladeprotokoll (ziel_schema, tabelle, status, zeilen, meldung)
+                values (c.target_owner, c.table_name, 'OK', v_cnt,
+                        v_part_col||' = '||v_val_txt);
+                commit;
+              end loop;
+              close v_cur;
+            exception
+              when others then
+                if v_cur%isopen then close v_cur; end if;
+                dbms_output.put_line('    -> Konnte nicht nach '||v_part_col||' gruppieren: '||SQLERRM);
+            end;
           end if;
 
         exception
