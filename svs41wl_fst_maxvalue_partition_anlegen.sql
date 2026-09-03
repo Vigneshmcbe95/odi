@@ -17,11 +17,17 @@ declare
 v_target_user varchar2(30) := 'SVS41WL_FST';
 
 v_errmsg varchar2(4000);
-v_has_maxvalue integer;
-v_high_value long;
 
 begin
 
+  -- Kein Vorab-Check auf bereits vorhandene MAXVALUE-Partition -- die
+  -- HIGH_VALUE-Spalte in dba_tab_partitions ist vom Typ LONG und kann
+  -- nicht in einem SQL-Vergleich (CASE/WHERE) verwendet werden
+  -- (ORA-00997: illegal use of LONG datatype). Einfacher und robuster:
+  -- einfach versuchen, die Partition anzulegen -- existiert bereits
+  -- eine MAXVALUE-Partition, schlaegt ADD PARTITION mit einer eigenen,
+  -- klaren Fehlermeldung fehl (z.B. ORA-14074), die einfach ignoriert
+  -- werden kann.
   for t in (
         select distinct table_name
         from dba_tab_partitions
@@ -29,37 +35,16 @@ begin
         order by table_name
     ) loop
 
-      -- Pruefen, ob bereits eine MAXVALUE-Partition existiert (letzte
-      -- Partition nach PARTITION_POSITION, high_value = 'MAXVALUE').
-      v_has_maxvalue := 0;
       begin
-        select case when high_value = 'MAXVALUE' then 1 else 0 end
-        into v_has_maxvalue
-        from (
-              select high_value
-              from dba_tab_partitions
-              where table_owner = v_target_user
-                    and table_name = t.table_name
-              order by partition_position desc
-             )
-        where rownum = 1;
+        execute immediate 'ALTER TABLE '||v_target_user||'.'||t.table_name||
+                           ' ADD PARTITION P_MAXVALUE_AUTO VALUES LESS THAN (MAXVALUE)';
+        dbms_output.put_line('OK    :: '||v_target_user||'.'||t.table_name||' -- MAXVALUE-Auffangpartition angelegt.');
       exception
-        when others then v_has_maxvalue := 0;
+        when others then
+          v_errmsg := SQLERRM;
+          dbms_output.put_line('UEBERSPRUNGEN :: '||v_target_user||'.'||t.table_name||
+                                ' -- vermutlich bereits vorhanden oder anderer Partitionstyp: '||v_errmsg);
       end;
-
-      if v_has_maxvalue = 0 then
-        begin
-          execute immediate 'ALTER TABLE '||v_target_user||'.'||t.table_name||
-                             ' ADD PARTITION P_MAXVALUE_AUTO VALUES LESS THAN (MAXVALUE)';
-          dbms_output.put_line('OK    :: '||v_target_user||'.'||t.table_name||' -- MAXVALUE-Auffangpartition angelegt.');
-        exception
-          when others then
-            v_errmsg := SQLERRM;
-            dbms_output.put_line('FEHLER:: '||v_target_user||'.'||t.table_name||' -- '||v_errmsg);
-        end;
-      else
-        dbms_output.put_line('OK    :: '||v_target_user||'.'||t.table_name||' -- hat bereits eine MAXVALUE-Partition, uebersprungen.');
-      end if;
 
     end loop;
 
