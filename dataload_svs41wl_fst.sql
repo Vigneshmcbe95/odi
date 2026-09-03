@@ -3,18 +3,17 @@ SET SERVEROUTPUT ON
 
 -- Vollladung SVS41WL_FST, Quelle PSD1_DWL_FST.
 -- Basiert auf dataload_generisch_alle_schemas.sql, mit Quelle/Ziel
--- fest eingetragen und den 6 Tabellen ausgeschlossen, die laut
--- struktur_vergleich_ergebnis_svs41wl_fst.csv einen echten
--- LAENGE_ZU_KLEIN-Konflikt haben (wuerden mit ORA-12899 fehlschlagen):
---   TL_DWL_AUWM  (RAM_OS_OS:   Quelle VARCHAR2(255) vs. Ziel VARCHAR2(24))
---   TL_DWL_BVBM  (BVM_OS_OS:   Quelle VARCHAR2(255) vs. Ziel VARCHAR2(24))
---   TL_DWL_KNGS  (KGS_OS_OS:   Quelle VARCHAR2(255) vs. Ziel VARCHAR2(24))
---   TL_DWL_KPBT  (KBT_OS_OS:   Quelle VARCHAR2(255) vs. Ziel VARCHAR2(24))
---   TL_DWL_BVBT  (BVT_ZIELGRP_1/2/3: Quelle VARCHAR2(2) vs. Ziel VARCHAR2(1))
---   TL_DWL_SOZT  (SZT_ED: Quelle DATE vs. Ziel TIMESTAMP(6) -- TYP_MISMATCH,
---                 sicherheitshalber ebenfalls ausgeschlossen bis geprueft)
--- Diese 6 Tabellen erst laden, nachdem die Spaltengroesse im Ziel
--- geklaert/angepasst wurde -- siehe struktur_vergleich_quelle_ziel_generisch.sql.
+-- fest eingetragen.
+--
+-- Die 5 Tabellen mit LAENGE_ZU_KLEIN (TL_DWL_AUWM, TL_DWL_BVBM,
+-- TL_DWL_KNGS, TL_DWL_KPBT, TL_DWL_BVBT) sind NICHT mehr ausgeschlossen
+-- -- die betroffenen Spalten wurden per svs41wl_fst_spalten_anpassen.sql
+-- auf die Quell-Laenge vergroessert.
+--
+-- TL_DWL_SOZT (SZT_ED: Quelle DATE vs. Ziel TIMESTAMP(6) -- TYP_MISMATCH,
+-- kein Laengenproblem) bleibt weiterhin ausgeschlossen, bis bestaetigt
+-- ist, dass die implizite DATE->TIMESTAMP-Konvertierung beim Insert
+-- keine Probleme macht.
 
 declare
 v_sql varchar2(32000);
@@ -59,14 +58,9 @@ begin
                 and t.table_name not like '%OLD'
                 and t.table_name not like '%SAV'
                 and t.table_name not like '%SICH'
-                -- explizit ausgeschlossen: bekannte Struktur-Konflikte
+                -- explizit ausgeschlossen: TYP_MISMATCH, kein Laengenproblem
                 -- (siehe Kommentar oben, struktur_vergleich_ergebnis_svs41wl_fst.csv)
                 and t.table_name not in (
-                                    'TL_DWL_AUWM',
-                                    'TL_DWL_BVBM',
-                                    'TL_DWL_KNGS',
-                                    'TL_DWL_KPBT',
-                                    'TL_DWL_BVBT',
                                     'TL_DWL_SOZT'
                                     )
                 -- nur Spalten, die auch in der Quelle existieren
