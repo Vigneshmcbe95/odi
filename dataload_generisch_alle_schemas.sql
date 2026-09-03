@@ -34,6 +34,8 @@ v_sql varchar2(32000);
 v_ddl varchar2(32000);
 v_errmsg varchar2(4000);
 v_rowcnt integer;
+v_insert_cols varchar2(32000);
+v_select_cols varchar2(32000);
 
 v_execute boolean := true;
 
@@ -108,8 +110,36 @@ begin
             execute immediate v_ddl;
           end if;
 
-          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||c.attr_list||') '||
-                   'SELECT '||c.attr_list||' FROM '||c.source_owner||'.'||c.table_name;
+          -- Basis: Spalten, die in Quelle UND Ziel existieren, 1:1 kopiert.
+          v_insert_cols := c.attr_list;
+          v_select_cols := c.attr_list;
+
+          -- Ziel-only Meta-/Audit-Spalten (z.B. META_INS_DT, META_UPD_DT),
+          -- die NOT NULL sind aber in der Quelle fehlen, mit SYSDATE
+          -- befuellen -- sonst ORA-01400 (cannot insert NULL), wie bei
+          -- SVS41WL_FST.TL_DWL_* / META_INS_DT beobachtet.
+          for m in (
+                select tc.column_name
+                from dba_tab_columns tc
+                where tc.owner = c.target_owner
+                      and tc.table_name = c.table_name
+                      and tc.nullable = 'N'
+                      and (tc.column_name like 'META\_%' escape '\'
+                           or tc.column_name like '%\_DT' escape '\')
+                      and tc.column_name not in (
+                                    select tc2.column_name
+                                    from dba_tab_columns tc2
+                                    where tc2.owner = c.source_owner
+                                          and tc2.table_name = c.table_name
+                                    )
+            ) loop
+              v_insert_cols := v_insert_cols||', '||m.column_name;
+              v_select_cols := v_select_cols||', SYSDATE';
+              dbms_output.put_line('    -> Meta-Spalte '||m.column_name||' fehlt in Quelle, wird mit SYSDATE befuellt.');
+          end loop;
+
+          v_sql := 'INSERT /*+ APPEND PARALLEL*/ INTO '||c.target_owner||'.'||c.table_name||' ('||v_insert_cols||') '||
+                   'SELECT '||v_select_cols||' FROM '||c.source_owner||'.'||c.table_name;
           dbms_output.put_line('02 :: '||v_sql);
 
           if v_execute then
