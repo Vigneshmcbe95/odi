@@ -10,7 +10,7 @@ Montag, 31.08.2026
 Dienstag, 01.09.2026
 08-10 Uhr: PL/SQL Ladeskripte erste Version geschrieben
 10-12 Uhr: ORA-01400 SQLERRM Fehler analysiert behoben
-12-14 Uhr: LADEPROTOKOLL Tabelle fuer Live-Fortschritt gebaut
+12-14 Uhr: Ladeskripte weitere Schemata SVS41 geschrieben
 14-16 Uhr: Partitionsfehler ORA-14757 ORA-14760 systematisch geloest
 
 Mittwoch, 02.09.2026
