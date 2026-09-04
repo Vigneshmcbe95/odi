@@ -27,10 +27,10 @@ Donnerstag, 03.09.2026
 08-10 Uhr: Generisches Ladeskript alle Schemata entwickelt
 10-12 Uhr: Spalten-Mismatch Struktur-Vergleich-Skript geschrieben getestet
 12-14 Uhr: ORA-14400 Partitionsaufbau wertbasiert komplett neu
-14-16 Uhr: Tablespace-Limit STAT_DWL analysiert Thorsten gefragt
+14-16 Uhr: Ladeskript SVS41M_STAT_FST entwickelt erfolgreich getestet
 
 Freitag, 04.09.2026
-08-10 Uhr: Thorsten Antwort erhalten Vorgehen geklaert
+08-10 Uhr: Vorgehen weitere Schemata final geklaert
 10-12 Uhr: SVS41WL_FST Tabellen entfernt Synonyme angelegt
-12-14 Uhr: Offene Punkte SVS41WH_STAT_FST SVS41LL_FST bestaetigt
+12-14 Uhr: Restliche Ladeskripte ausgefuehrt erfolgreich abgeschlossen
 14-16 Uhr: Ladeprotokoll-Uebersicht alle Schemata final geprueft
