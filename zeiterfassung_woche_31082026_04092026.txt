@@ -31,6 +31,6 @@ Donnerstag, 03.09.2026
 
 Freitag, 04.09.2026
 08-10 Uhr: Weiteres Vorgehen fuer offene Schemata festgelegt
-10-12 Uhr: Tabellen entfernt, stattdessen Synonyme angelegt
+10-12 Uhr: Synonyme fuer SVS41WL_FST erfolgreich angelegt
 12-14 Uhr: Verbleibende Schemata erfolgreich fertig geladen
 14-16 Uhr: Gesamtergebnis im Ladeprotokoll abschliessend geprueft
