@@ -1,0 +1,32 @@
+Zeiterfassung Woche 31.08.2026 - 04.09.2026 (Montag - Freitag)
+Je Tag 4 Punkte, alle 2 Stunden, je 5 Woerter
+
+Montag, 31.08.2026
+08-10 Uhr: Sandbox B05 Schemata angelegt vollstaendig
+10-12 Uhr: Physical Schemas Context ODI eingerichtet
+12-14 Uhr: Oracle DB Schemata real erstellt
+14-16 Uhr: Tabellen aus THM Quellschemata geklont
+
+Dienstag, 01.09.2026
+08-10 Uhr: PL/SQL Ladeskripte erste Version geschrieben
+10-12 Uhr: ORA-01400 SQLERRM Fehler analysiert behoben
+12-14 Uhr: LADEPROTOKOLL Tabelle fuer Live-Fortschritt gebaut
+14-16 Uhr: Partitionsfehler ORA-14757 ORA-14760 systematisch geloest
+
+Mittwoch, 02.09.2026
+08-10 Uhr: Vier Hauptladeskripte auf THM umgestellt
+10-12 Uhr: Historisierung-Meeting Aufnahme transkribiert analysiert
+12-14 Uhr: Confluence-Seite Meeting-Protokoll erstellt veroeffentlicht
+14-16 Uhr: Synonyme SVS41WH_UEB_DIM erfolgreich angelegt getestet
+
+Donnerstag, 03.09.2026
+08-10 Uhr: Generisches Ladeskript alle Schemata entwickelt
+10-12 Uhr: Spalten-Mismatch Struktur-Vergleich-Skript geschrieben getestet
+12-14 Uhr: ORA-14400 Partitionsaufbau wertbasiert komplett neu
+14-16 Uhr: Tablespace-Limit STAT_DWL analysiert Thorsten gefragt
+
+Freitag, 04.09.2026
+08-10 Uhr: Thorsten Antwort erhalten Vorgehen geklaert
+10-12 Uhr: SVS41WL_FST Tabellen entfernt Synonyme angelegt
+12-14 Uhr: Offene Punkte SVS41WH_STAT_FST SVS41LL_FST bestaetigt
+14-16 Uhr: Ladeprotokoll-Uebersicht alle Schemata final geprueft
