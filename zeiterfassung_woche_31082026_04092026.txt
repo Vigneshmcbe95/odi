@@ -1,6 +1,10 @@
 Zeiterfassung Woche 31.08.2026 - 04.09.2026 (Montag - Freitag)
 Je Tag 4 Punkte, alle 2 Stunden, je 5 Woerter
 
+Alle SVS41-Sandbox-Schemata (B05) mit Daten geladen:
+SVS41WH_FST, SVS41WH_STAT_FST, SVS41M_STAT_FST, SVS41WH_BA_TRS,
+SVS41WH_STAT_BA_TRS, SVS41WL_FST, SVS41LL_FST, SVS41WH_UEB_DIM
+
 Montag, 31.08.2026
 08-10 Uhr: Sandbox B05 Schemata angelegt vollstaendig
 10-12 Uhr: Physical Schemas Context ODI eingerichtet
