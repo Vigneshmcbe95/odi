@@ -1,0 +1,42 @@
+Ticket 1 - Nils
+
+Titel: B05 lauffaehig machen - UC4-Anbindung einrichten
+Story Points: 13
+
+Beschreibung:
+
+Ziel
+Die Sandbox B05 lauffaehig machen -- sicherstellen, dass ODI-Pakete ueber UC4 gestartet werden koennen.
+
+Schritte
+- Termin einstellen, um im UC4 zu zeigen, wie ODI-Sachen gestartet werden.
+- ODI-Jobs/Pakete in UC4 einbinden.
+- Grundlegende Lauffaehigkeit der Umgebung pruefen.
+
+Akzeptanzkriterien
+- Mindestens ein ODI-Job wurde erfolgreich ueber UC4 gestartet.
+- UC4-Einbindung fuer B05 ist dokumentiert und wiederholbar.
+
+Hinweis
+Betrifft auch die Meta-DB und wird bei jedem zukuenftigen Umgebungsaufbau wiederkehrend relevant sein.
+
+
+Ticket 2 - Joern
+
+Titel: ETL's laufen lassen - Stichtag-Lauf in B05 durchfuehren
+Story Points: 13
+
+Beschreibung:
+
+Ziel
+Einen vollstaendigen Stichtag-Lauf in der B05-Umgebung durchfuehren und verifizieren.
+
+Schritte
+- Nach Einbindung in UC4 (siehe zugehoeriges Ticket) einen Stichtag auswaehlen.
+- ETL-Lauf fuer diesen Stichtag durchfuehren.
+- Ergebnis pruefen, Abweichungen/Fehler dokumentieren.
+
+Akzeptanzkriterien
+- Ein kompletter Stichtag-Lauf wurde durchgefuehrt.
+- Ergebnis ist verifiziert und dokumentiert.
+- Eventuelle Blocker sind festgehalten.
