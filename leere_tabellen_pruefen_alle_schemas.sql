@@ -1,18 +1,14 @@
 SET FEEDBACK ON
-SET SERVEROUTPUT ON
+SET SERVEROUTPUT ON SIZE UNLIMITED
 
 -- Prueft fuer alle angegebenen Schemata JEDE Tabelle: hat sie
--- mindestens eine Zeile, oder ist sie leer (0 Zeilen)? Ergebnis wird
--- in eine Ergebnistabelle geschrieben -- danach mit
--- leere_tabellen_ergebnis_ansehen.sql auslesen.
+-- mindestens eine Zeile, oder ist sie leer (0 Zeilen)? Schreibt NICHTS
+-- in die Datenbank -- reine Pruefung, Ausgabe nur ueber DBMS_OUTPUT.
 --
 -- Ausgabe pro Schema (eine Zeile):
---   SCHEMA               -- das geprueft Schema
---   ANZAHL_TABELLEN       -- wie viele Tabellen insgesamt geprueft wurden
---   ANZAHL_LEER            -- wie viele davon 0 Zeilen haben
---   LEERE_TABELLEN         -- alle leeren Tabellennamen, komma-getrennt,
---                            in EINER Zelle (CLOB, da bei vielen leeren
---                            Tabellen ueber 4000 Zeichen moeglich sind)
+--   SCHEMA: Anzahl Tabellen gesamt, Anzahl leer
+--   Leere Tabellen: alle leeren Tabellennamen, komma-getrennt, in
+--   einer Zeile
 --
 -- >>> HIER FUELLEN (Liste der zu pruefenden Schemata) <<<
 declare
@@ -31,23 +27,9 @@ declare
   v_rowcnt integer;
   v_anzahl_tabellen integer;
   v_anzahl_leer integer;
-  v_leere_liste clob;
+  v_leere_liste varchar2(32000);
 
 begin
-
-  -- Ergebnistabelle einmalig anlegen, falls noch nicht vorhanden.
-  begin
-    execute immediate '
-      CREATE TABLE UBI_RUEMMELIN.LEERE_TABELLEN_ERGEBNIS (
-        pruef_zeit       TIMESTAMP DEFAULT SYSTIMESTAMP,
-        schema_name      VARCHAR2(30),
-        anzahl_tabellen  NUMBER,
-        anzahl_leer      NUMBER,
-        leere_tabellen   CLOB
-      )';
-  exception
-    when others then null; -- existiert schon
-  end;
 
   for i in 1 .. v_schemas.count loop
 
@@ -88,17 +70,13 @@ begin
 
       end loop;
 
-    insert into UBI_RUEMMELIN.LEERE_TABELLEN_ERGEBNIS
-      (schema_name, anzahl_tabellen, anzahl_leer, leere_tabellen)
-    values
-      (v_schemas(i), v_anzahl_tabellen, v_anzahl_leer, v_leere_liste);
-    commit;
-
+    dbms_output.put_line('=========================================================================');
     dbms_output.put_line(v_schemas(i)||': '||v_anzahl_tabellen||' Tabellen, '||v_anzahl_leer||' davon leer.');
+    if v_anzahl_leer > 0 then
+      dbms_output.put_line('Leere Tabellen: '||v_leere_liste);
+    end if;
 
   end loop;
-
-  dbms_output.put_line('Fertig. Ergebnis ansehen mit: leere_tabellen_ergebnis_ansehen.sql');
 
 end;
 /
