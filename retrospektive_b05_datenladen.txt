@@ -1,0 +1,21 @@
+Retrospektive: B05 Aufbau & Datenladen
+
+Was gut lief
+- Liste aller Schemata erstellt und dokumentiert.
+- Datenladen-Skripte fuer alle Schemata entwickelt und erfolgreich eingesetzt.
+- Zusaetzliche wichtige Informationen von Thorsten erhalten (Quellschemata,
+  Sonderfaelle wie Synonyme statt echter Tabellenkopien, welche Schemata
+  aktuell keine Testdaten benoetigen).
+
+Was nicht gut lief
+- Der Release Definition Editor (RDE) war anfangs nicht verstanden, die
+  vorhandene Dokumentation hat nicht ausgereicht.
+- Erst nach einer gemeinsamen Session mit Thorsten konnte der komplette
+  Ablauf zum Deployen von Skripten ueber RDE nachvollzogen werden.
+- Inzwischen ist der Ablauf gut dokumentiert -- zukuenftig kann jeder
+  diesen Schritten folgen, ohne erneut bei Null anfangen zu muessen.
+
+Anmerkung
+Der Speicherort fuer BI-Entwicklungsunterlagen ist aktuell noch nicht
+offiziell festgelegt. Bis dahin liegt alles im persoenlichen Arbeitsbereich
+und wird zusaetzlich nach GitHub gepusht.
