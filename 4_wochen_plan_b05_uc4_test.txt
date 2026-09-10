@@ -1,0 +1,116 @@
+4-Wochen-Plan: B05 Lauffaehigkeit testen (UC4 / ODI / Datenladen)
+
+Basierend auf dem Meeting "UC4 & MetaDB" vom 09.09.2026.
+
+=========================================================================
+WOCHE 1 -- Registrierung & Funktionstest
+=========================================================================
+
+Montag
+- Pruefen, was in der MetaDB fuer B05 schon registriert ist
+  (Hook-Parametergruppen, vergebene Ordnungsnummern).
+- Liste erstellen, was noch fehlt.
+
+Dienstag
+- MetaDB Importer (Modus Do-All) fuer 1-2 Ordner ausfuehren,
+  Themenbereich + Ordnungsnummer angeben.
+- Parallel: Anfrage fuer den PD-Datenbanklink anstossen (externe
+  Abhaengigkeit, frueh starten).
+
+Mittwoch
+- 1-2 einzelne Jobs manuell im UC4 gegen B05 ausfuehren.
+- Ueberwachen ueber den ODI Operator (zuverlaessiger als der
+  UC4-Monitor allein).
+
+Donnerstag
+- Fehler von Mittwoch beheben.
+- Restliche Ordner ueber den MetaDB Importer registrieren.
+
+Freitag
+- W450-Ordner (unter W400) als persoenliche Testumgebung anlegen.
+- Offene Punkte/Blocker dokumentieren.
+
+=========================================================================
+WOCHE 2 -- Kompletten DWH-Lauf hochskalieren
+=========================================================================
+
+Montag
+- Ersten kompletten "DWH Gesamt"-Lauf frueh am Tag starten
+  (dauert 4-5 Std., auf E ggf. bis 12 Std.).
+- Waehrend des Laufs ueberwachen (ODI Operator + UC4 Process
+  Monitoring).
+
+Dienstag
+- Ergebnis pruefen. Bei Datenfehler: kompletten Plan rekursiv
+  abbrechen, Ursache beheben, von vorne starten. Bei einfachem
+  Strukturfehler: nur den blockierten Job neu starten.
+
+Mittwoch
+- Fix-und-Rerun-Zyklus fortsetzen.
+- Status des PD-Datenbanklinks pruefen.
+
+Donnerstag
+- Weiterer kompletter Lauf.
+- Alle aufgetretenen Fehler protokollieren.
+
+Freitag
+- Ziel: ein sauberer, vollstaendiger "DWH Gesamt"-Lauf.
+- Bei Platzproblemen: Scratch-Tabellen bereits abgeschlossener
+  Strecken (z.B. W302) truncaten.
+- Alle noetigen Fixes dokumentieren.
+
+=========================================================================
+WOCHE 3 -- Datenkorrektheit pruefen
+=========================================================================
+
+Montag
+- Validierungsskript vom Kollegen (ueber Thorsten) besorgen.
+- Zielmonat + Vormonat vorbereiten.
+
+Dienstag
+- Vormonat laufen lassen (Basis fuer die Historisierung).
+
+Mittwoch
+- Zielmonat laufen lassen.
+- Historisierungsergebnis pruefen: Gueltig-von/Gueltig-bis korrekt?
+  Keine Duplikate?
+
+Donnerstag
+- Frage E-PDRS vs. F-PDRS Testdatenzugriff nachverfolgen (braucht
+  wahrscheinlich Abstimmung mit mehreren Personen).
+
+Freitag
+- Datenpruefung abschliessen.
+- Gefundene Datenprobleme dokumentieren.
+
+=========================================================================
+WOCHE 4 -- Ultimativer Test & Abschluss
+=========================================================================
+
+Montag
+- Gesamte DWH-Schicht einen Monat zurücksetzen.
+
+Dienstag
+- Gesamte Schicht wieder nach vorne laufen lassen.
+
+Mittwoch
+- Korrektheit ueberall pruefen, nicht nur in den bereits geprueften
+  Bereichen. Verbleibende Probleme beheben.
+
+Donnerstag
+- Beide Jira-Tickets (Nils: UC4-Anbindung, Joern: Stichtag-Lauf)
+  mit den tatsaechlichen Ergebnissen aktualisieren.
+- Ablageort der Confluence-Dokumentation final klaeren.
+
+Freitag
+- Abschluss-/Uebergabenotizen schreiben.
+- Offene Punkte fuer die naechste Phase festhalten (PD-Datenfluss
+  wird laut Thorsten den 30.09-Meilenstein realistisch nicht
+  einhalten).
+
+=========================================================================
+Hinweis: Ein voller Lauf dauert 4-12 Std. -- an den meisten Tagen
+ist realistisch nur ein voller Lauf plus Fehleranalyse moeglich.
+Wenn PD-Datenbanklink oder F-PDRS-Zugriff sich verzoegern, ist das
+der wahrscheinlichste Grund fuer eine Verschiebung ueber Woche 4
+hinaus.
