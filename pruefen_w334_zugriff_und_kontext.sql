@@ -5,7 +5,7 @@
 --    diese Tabelle? Ohne GRANT meldet Oracle "table or view does not
 --    exist" statt eines Rechte-Fehlers -- das sieht identisch aus wie
 --    eine fehlende Tabelle.
-SELECT grantee, privilege, table_schema, table_name
+SELECT grantee, privilege, owner AS table_schema, table_name
 FROM dba_tab_privs
 WHERE table_name = 'W334_LOADED_VARIABLES'
       AND owner = 'SSC41WH_FST'
