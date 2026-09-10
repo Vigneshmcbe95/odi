@@ -2,8 +2,8 @@ SET FEEDBACK ON
 SET SERVEROUTPUT ON
 
 -- FST_VOR_INPUT_KM_TABLE fehlt in SVS41WH_FST -- existiert bereits in
--- SVS43WH_FST (und anderen Sandboxen). Einfaches Skript: Struktur per
--- GET_DDL aus 43 klonen, dann Daten 1:1 kopieren.
+-- SVS43WH_FST (und anderen Sandboxen). Einfaches Skript: legt NUR die
+-- Struktur per GET_DDL aus 43 an, laedt keine Daten.
 
 declare
 v_source_owner varchar2(30) := 'SVS43WH_FST';
@@ -12,7 +12,6 @@ v_table_name   varchar2(30) := 'FST_VOR_INPUT_KM_TABLE';
 
 v_ddl clob;
 v_sql varchar2(32000);
-v_rowcnt integer;
 v_exists integer;
 
 begin
@@ -50,19 +49,6 @@ begin
 
     dbms_output.put_line('Tabelle '||v_target_owner||'.'||v_table_name||' angelegt.');
   end if;
-
-  -- Daten 1:1 kopieren (Spaltenliste = Schnittmenge, falls doch
-  -- Abweichungen bestehen)
-  v_sql := 'TRUNCATE TABLE '||v_target_owner||'.'||v_table_name;
-  execute immediate v_sql;
-
-  v_sql := 'INSERT INTO '||v_target_owner||'.'||v_table_name||
-           ' SELECT * FROM '||v_source_owner||'.'||v_table_name;
-  execute immediate v_sql;
-  v_rowcnt := sql%rowcount;
-  commit;
-
-  dbms_output.put_line('Fertig: '||v_rowcnt||' Zeilen kopiert nach '||v_target_owner||'.'||v_table_name);
 
 exception
   when others then
