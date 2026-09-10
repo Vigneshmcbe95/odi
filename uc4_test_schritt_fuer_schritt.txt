@@ -1,0 +1,72 @@
+UC4-Test Schritt fuer Schritt: ersten Job gegen B05 ausfuehren
+
+Schritt 1 -- Bei der richtigen UC4-Umgebung anmelden
+Auf der E-Umgebungs-URL anmelden, oben rechts bestaetigen, dass
+Mandant 1055 (E/Entwicklung) angezeigt wird. Nie gegen 1255 (I) oder
+1003 (P) testen -- dort gibt es ohnehin keine Editierrechte.
+
+Schritt 2 -- Zum Jobplan navigieren
+Process Assembly -> OPS2_BATCHVERFAHREN -> @BI_GLOBAL -> J.BI ->
+Stadt -> DWH -> FST (oder wo auch immer der registrierte Ordner im
+Stadt-Baum liegt). Den Jobplan zum Zielordner suchen -- z.B.
+J.STAT.DWH.FST.14.FFSGB2.
+
+Schritt 3 -- ERST EINEN Job auswaehlen, nicht gleich den ganzen Plan
+Jobplan per Doppelklick oeffnen, um die einzelnen Jobs (EPS) zu
+sehen. Fuer einen ersten Test nicht gleich die ganze 7er-Kette
+laufen lassen -- nur 1-2 Jobs manuell auswaehlen, um den moeglichen
+Schaden klein zu halten.
+
+Schritt 4 -- Ausfuehren
+Rechtsklick auf den Job (oder Jobplan, falls mehrere Schritte
+getestet werden) -> Ausfuehren -> Abfrage bestaetigen.
+
+Schritt 5 -- Hook-Parametergruppe auswaehlen (der kritische Schritt)
+Bei der Abfrage nach der Gruppe konkret den B05-Eintrag waehlen.
+Das entscheidet, welcher Kontext verwendet wird und damit, welches
+reale Schema (SVS41...) der Job tatsaechlich anfasst. Hier genau
+hinschauen -- die falsche Gruppe zu waehlen laesst den Lauf still und
+leise gegen eine andere Sandbox laufen.
+
+Schritt 6 -- Stichtag eingeben
+Start- und End-Stichtag angeben, etwas Aktuelles/Realistisches
+waehlen (z.B. April oder Mai, wie von Thorsten vorgeschlagen), kein
+zufaelliges Datum.
+
+Schritt 7 -- Abschicken
+Hier verbindet sich UC4 mit der Datenbank, holt das erste EPS, macht
+die Kontext-Substituierung und beginnt mit der Ausfuehrung.
+
+Schritt 8 -- An zwei Stellen gleichzeitig beobachten
+- UC4 Process Monitoring, gefiltert auf "Aktiv" -- zeigt den
+  eigenen Benutzernamen und den Job-Status.
+- ODI Operator, gegen die B05-Sandbox -- Thorstens bevorzugte
+  Ansicht, zeigt zuverlaessiger, was tatsaechlich passiert, als der
+  UC4-Monitor allein.
+
+Schritt 9 -- Ergebnis lesen
+- Grau = fertig. Gruen = laeuft gerade. Gelb = blockiert (etwas ist
+  schiefgelaufen).
+- Wenn er sauber durchgelaufen ist (gruen -> grau, keine Fehler):
+  die Verkabelung funktioniert -- Kontext, Hook-Parameter und
+  Schema-Ansteuerung sind fuer diesen Job korrekt.
+- Wenn gelb: oeffnen, echten Fehler lesen (in ODI Operator die
+  "Caused by"-Zeile, oder direkt in UC4).
+
+Schritt 10 -- Bei Gelb: die richtige Wiederherstellungsaktion waehlen
+- Einfacher Strukturfehler (z.B. fehlende Spalte) -> beheben, dann
+  Wiederanlauf (nur diesen einen Job neu starten).
+- Tieferes Daten-/Logikproblem -> Abbrechen, Rekursiv (die ganze
+  Kette abbrechen), richtig untersuchen, dann von vorne neu starten.
+
+Schritt 11 -- Erst wenn 1-2 Jobs sauber laufen, hochskalieren
+Die gleiche Prozedur wiederholen, aber diesmal den ganzen Jobplan
+(alle 7 EPS) statt nur einen Job auswaehlen -- das ist der Uebergang
+von "Funktionstest" zu "kompletter Ordner-Test" aus dem
+4-Wochen-Plan.
+
+Wichtig: In diesem Schritt noch NICHT die Datenkorrektheit pruefen --
+diese ganze Prozedur ist ein reiner Verkabelungstest: laeuft er
+ueberhaupt, gegen das richtige Schema, ohne Fehler. Die
+Datenvalidierung ist ein separater, spaeterer Schritt (Woche 3 im
+Plan).
