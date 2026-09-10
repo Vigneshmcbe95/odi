@@ -1,0 +1,80 @@
+Erklaerung: MetaDB-Begriffe aus dem Montag-Task (Woche 1)
+
+Was jeder Begriff bedeutet, wo er tatsaechlich liegt, und wie alles
+zusammenhaengt.
+
+MetaDB
+Ein Datenbankschema namens "StadtMeta", eines pro Umgebung (E, F, I, P).
+Liegt ganz normal in Oracle -- man koennte es auch mit SQL abfragen,
+normalerweise nutzt man dafuer aber den MetaDB-Browser. Es ist die
+"Uebersetzungsschicht", die dem UC4 alles sagt, was es ueber ein
+ODI-Szenario wissen muss -- denn UC4 selbst weiss nichts von ODI und
+kann nicht direkt mit ihm sprechen.
+
+Hook-Parametergruppen
+Das ist ein bestimmter Bereich im MetaDB-Browser-Baum -- praktisch
+eine Tabelle mit Sandbox-Registrierungen. Jeder Eintrag (z.B.
+CT_GRP_FST_B05) ist eine Zeile, die eine Sandbox-Umgebung beschreibt.
+Liegt als Datenzeile im MetaDB-Schema; die Baumansicht im Browser ist
+nur die lesbare Darstellung davon.
+
+In so einem Hook-Parametergruppen-Eintrag stehen folgende Felder:
+- Work Repository: Name des ODI Work Repository, auf das diese
+  Sandbox zeigt (ODI speichert seine Metadaten in zwei
+  Repository-Typen -- Master und Work; das Work Repository enthaelt
+  die eigentlichen Projekte/Mappings/Szenarien).
+- Master Repository: Name des ODI Master Repository (enthaelt
+  Topologie-Infos: physische/logische Schemata, Kontexte,
+  Sicherheit), an das diese Sandbox gebunden ist, plus das Passwort
+  fuer die Verbindung.
+- Agent-Port: auf welchem Netzwerk-Port der ODI-Agent (der
+  Hintergrundprozess, der Szenarien tatsaechlich ausfuehrt) fuer diese
+  Sandbox lauscht.
+- Standard-Kontext: welcher ODI-Kontext (loest einen logischen
+  Schemanamen in ein reales physisches Schema auf, z.B. SVS41WH_FST)
+  standardmaessig verwendet wird, wenn Jobs dieser Sandbox laufen.
+
+Dieser eine Hook-Parametergruppen-Eintrag ist also im Prinzip: "alles,
+was UC4 wissen muss, um sich korrekt mit dieser einen ODI-Sandbox zu
+verbinden und gegen sie auszufuehren."
+
+Ordnungsnummern
+Ein anderer Bereich, eine Ebene tiefer -- jeder ODI-Ordner (z.B.
+W308_FST_FFSGB2) bekommt eine eindeutige Nummer innerhalb seiner
+Schicht (z.B. eindeutig innerhalb von DWH_FST). Diese Nummer liegt
+ebenfalls als Datenfeld in der MetaDB, am Laufgruppen-Datensatz. Das
+ist nicht nur kosmetisch -- UC4 nutzt diese Nummer intern, um
+Jobplan-Namen zu bauen (z.B. J.STAT.DWH.FST.14.FFSGB2, wobei 14 die
+Ordnungsnummer ist), statt mit dem Textnamen des Ordners zu arbeiten.
+
+Ordner
+Das ist die Organisationseinheit von ODI selbst, innerhalb eines
+Projekts -- buchstaeblich ein Ordner im ODI-Studio-Baum, der Packages
+enthaelt, die zu Szenarien kompiliert werden. Ordner liegen im
+ODI Work Repository (demselben, auf das der Hook-Parametergruppen-
+Eintrag oben verweist). Der Ordnername muss exakt als "Laufgruppen"-
+Name in der MetaDB gespiegelt werden -- das ist der verbindende Faden
+zwischen beiden Systemen.
+
+Wie alles zusammenhaengt, Schritt fuer Schritt:
+1. ODI (Work Repository) hat einen Ordner mit Szenarien darin.
+2. Jemand legt manuell einen passenden Laufgruppen-Eintrag in der
+   MetaDB an, mit dem GLEICHEN Namen wie der Ordner, und vergibt eine
+   Ordnungsnummer.
+3. Diese Laufgruppe haengt unter einem Hook-Parametergruppen-Eintrag,
+   der festlegt, zu welcher Sandbox (Work/Master Repository, Agent,
+   Kontext) sie gehoert.
+4. Der MetaDB-Importer-Job (in UC4) liest das alles aus und baut
+   daraus den tatsaechlichen UC4-Jobplan -- das ist die einzige
+   Bruecke von "ODI + MetaDB-Metadaten" zu "etwas, das UC4 ausfuehren
+   kann".
+
+Warum der Montag-Task wichtig ist: bevor irgendetwas gestartet wird,
+muss zuerst geprueft werden, ob Schritt 2 und 3 fuer B05 bereits
+korrekt existieren -- denn wenn der Hook-Parametergruppen-Eintrag
+fehlt oder falsch ist, oder ein Ordner nie eine Ordnungsnummer bekam,
+schlaegt Schritt 4 (der Importer) entweder komplett fehl oder baut
+still und leise etwas Unvollstaendiges. Das vorher zu pruefen,
+verhindert, dass man spaeter ein "Job ist fehlgeschlagen"-Symptom in
+UC4 debuggt, obwohl die eigentliche Ursache weiter vorne in der
+MetaDB-Registrierung liegt.
