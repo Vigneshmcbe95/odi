@@ -7,110 +7,167 @@ WOCHE 1 -- Registrierung & Funktionstest
 =========================================================================
 
 Montag
-- Pruefen, was in der MetaDB fuer B05 schon registriert ist
-  (Hook-Parametergruppen, vergebene Ordnungsnummern).
-- Liste erstellen, was noch fehlt.
+Zuerst genau pruefen, was in der MetaDB fuer B05 bereits registriert
+ist -- der Hook-Parametergruppen-Eintrag (Sandbox-Infos: Work
+Repository, Master Repository, Agent-Port, Standard-Kontext) und
+welche Ordnungsnummern bereits welchen Ordnern zugeordnet sind. Das
+ist wichtig, weil nichts im UC4 laufen kann, bevor es hier
+registriert ist -- es gibt keinen automatischen Abgleich aus dem
+ODI. Vor allem anderen eine Liste erstellen, was noch fehlt.
 
 Dienstag
-- MetaDB Importer (Modus Do-All) fuer 1-2 Ordner ausfuehren,
-  Themenbereich + Ordnungsnummer angeben.
-- Parallel: Anfrage fuer den PD-Datenbanklink anstossen (externe
-  Abhaengigkeit, frueh starten).
+Den MetaDB-Importer-Job (J.BI.02.METADB_IMPORTER) im Modus Do-All
+fuer 1-2 Ordner ausfuehren, dabei Themenbereich (DWH FST) und die
+jeweilige Ordnungsnummer angeben. Dieser Job liest die MetaDB aus
+und baut daraus die tatsaechliche UC4-Jobplan-Struktur -- das ist der
+Schritt, der aus "registrierten Metadaten" etwas macht, das UC4
+wirklich ausfuehren kann. Parallel dazu die Anfrage fuer den
+PD-Datenbanklink anstossen (physische Serverdefinitionen, Eintragen
+ins ODI) -- das haengt von anderen Personen ab, deswegen jetzt schon
+starten, damit es spaeter nicht zum Flaschenhals wird.
 
 Mittwoch
-- 1-2 einzelne Jobs manuell im UC4 gegen B05 ausfuehren.
-- Ueberwachen ueber den ODI Operator (zuverlaessiger als der
-  UC4-Monitor allein).
+1-2 einzelne Jobs manuell im UC4 gegen die B05-Sandbox ausfuehren.
+Das ist der "Funktionstest"-Schritt -- es geht hier nicht darum, ob
+die Daten korrekt sind, sondern ob die Verkabelung ueberhaupt
+funktioniert: zieht er den richtigen Kontext, die richtigen
+Hook-Parameter, landet er im richtigen Schema (SVS41)? Ueberwachen
+ueber den ODI-Operator-Tab -- das zeigt zuverlaessiger, was wirklich
+passiert, als der UC4-Monitor allein.
 
 Donnerstag
-- Fehler von Mittwoch beheben.
-- Restliche Ordner ueber den MetaDB Importer registrieren.
+Beheben, was am Mittwoch kaputt gegangen ist -- wahrscheinlichste
+Ursachen sind falsche Hook-Parameter-Werte oder ein
+Kontext-Mismatch. Sobald das behoben ist, die restlichen Ordner
+ueber den MetaDB-Importer registrieren, damit die gesamte
+DWH-Schicht im UC4 vorhanden ist, nicht nur die 1-2 Testordner.
 
 Freitag
-- W450-Ordner (unter W400) als persoenliche Testumgebung anlegen.
-- Offene Punkte/Blocker dokumentieren.
+Den Ordner W450 (unter W400) als persoenliche Testumgebung anlegen
+-- das gibt eine sichere Spielwiese fuer Dinge, die nichts mit dem
+eigentlichen Projekt zu tun haben, ohne dass ein komplett neues
+ODI-Projekt noetig ist. Die Woche damit abschliessen, dass man
+aufschreibt, was noch blockiert ist (am wahrscheinlichsten: der
+PD-Datenbanklink), damit das vor Beginn von Woche 2 sichtbar ist.
 
 =========================================================================
 WOCHE 2 -- Kompletten DWH-Lauf hochskalieren
 =========================================================================
 
 Montag
-- Ersten kompletten "DWH Gesamt"-Lauf frueh am Tag starten
-  (dauert 4-5 Std., auf E ggf. bis 12 Std.).
-- Waehrend des Laufs ueberwachen (ODI Operator + UC4 Process
-  Monitoring).
+Den ersten kompletten "DWH Gesamt"-Lauf so frueh wie moeglich am Tag
+starten -- ein sauberer Lauf dauert normalerweise 4-5 Stunden, auf
+der E-Umgebung ggf. bis zu 12 Stunden, wenn viel Betrieb ist. Spaet
+am Tag starten heisst, den ganzen Tag zu verlieren. Waehrend der
+Lauf laeuft, ueber ODI Operator und UC4 Process Monitoring
+mitverfolgen, damit man den Fehlerpunkt sofort sieht und nicht erst
+Stunden spaeter entdeckt.
 
 Dienstag
-- Ergebnis pruefen. Bei Datenfehler: kompletten Plan rekursiv
-  abbrechen, Ursache beheben, von vorne starten. Bei einfachem
-  Strukturfehler: nur den blockierten Job neu starten.
+Genau pruefen, wo der Lauf von Montag stehen geblieben ist. Wenn es
+ein Datenproblem ist (z.B. NULL in ein NOT-NULL-Feld), bedeutet
+das, dass ein vorheriger Schritt bereits etwas falsch gemacht hat --
+dann den ganzen Plan rekursiv abbrechen, die eigentliche Ursache
+beheben und von vorne starten. Wenn es ein einfaches
+Strukturproblem ist (fehlende Spalte), die Tabelle reparieren und
+nur den blockierten Job neu starten, nicht die ganze Kette.
 
 Mittwoch
-- Fix-und-Rerun-Zyklus fortsetzen.
-- Status des PD-Datenbanklinks pruefen.
+Fix-und-Rerun-Zyklus fortsetzen. Ausserdem den Status der
+PD-Datenbanklink-Anfrage von Dienstag letzter Woche pruefen -- falls
+das ins Stocken geraten ist, jetzt nachhaken statt es stillschweigend
+verzoegern zu lassen.
 
 Donnerstag
-- Weiterer kompletter Lauf.
-- Alle aufgetretenen Fehler protokollieren.
+Ein weiterer kompletter Laufversuch. Dabei jeden einzelnen
+aufgetretenen Fehler mitprotokollieren -- das wird spaeter als Beleg
+fuer das Jira-Ticket-Update in Woche 4 nuetzlich.
 
 Freitag
-- Ziel: ein sauberer, vollstaendiger "DWH Gesamt"-Lauf.
-- Bei Platzproblemen: Scratch-Tabellen bereits abgeschlossener
-  Strecken (z.B. W302) truncaten.
-- Alle noetigen Fixes dokumentieren.
+Ziel: bis Ende der Woche einen kompletten, sauber durchlaufenden
+"DWH Gesamt"-Lauf erreichen. Falls waehrend eines Laufs der
+Speicherplatz ausgeht: Scratch-Tabellen bereits abgeschlossener
+Strecken (z.B. alles unter W302) truncaten, um sofort wieder Platz
+zu schaffen, statt von vorne neu zu starten. Alle Fixes, die dafuer
+noetig waren, dokumentieren.
 
 =========================================================================
 WOCHE 3 -- Datenkorrektheit pruefen
 =========================================================================
 
 Montag
-- Validierungsskript vom Kollegen (ueber Thorsten) besorgen.
-- Zielmonat + Vormonat vorbereiten.
+Das Validierungsskript des Kollegen besorgen, das Thorsten
+weiterleiten wollte -- das erspart, Validierungsabfragen von Null
+auf selbst zu schreiben. Zielmonat und den Monat direkt davor
+vorbereiten, weil die Historisierung den aktuellen Stichtag immer
+auf die bereits bestehende Historie des Vormonats aufsetzt -- man
+braucht diesen Vormonat als Grundlage, damit der Test ueberhaupt
+etwas aussagt.
 
 Dienstag
-- Vormonat laufen lassen (Basis fuer die Historisierung).
+Zuerst den "Vormonat" laufen lassen, rein um die
+Historisierungstabellen mit einer Ausgangsbasis zu befuellen, auf
+der aufgebaut werden kann.
 
 Mittwoch
-- Zielmonat laufen lassen.
-- Historisierungsergebnis pruefen: Gueltig-von/Gueltig-bis korrekt?
-  Keine Duplikate?
+Den eigentlichen Zielmonat laufen lassen. Danach direkt das
+Historisierungsergebnis pruefen: sind Gueltig-von/Gueltig-bis auf den
+alten und neuen Zeilen korrekt gesetzt, und gibt es Duplikate, die
+es nicht geben duerfte (ein Zeichen dafuer, dass der
+NOT-EXISTS-Filter untertaegige Rueckaenderungen nicht korrekt
+abfaengt)?
 
 Donnerstag
-- Frage E-PDRS vs. F-PDRS Testdatenzugriff nachverfolgen (braucht
-  wahrscheinlich Abstimmung mit mehreren Personen).
+Die Frage zu E-PDRS gegenueber F-PDRS-Testdatenzugriff
+weiterverfolgen -- das betrifft mehrere Stakeholder und braucht
+wahrscheinlich Hin und Her, deswegen schon in der Wochenmitte
+anstossen statt es auf Freitag zu verschieben.
 
 Freitag
-- Datenpruefung abschliessen.
-- Gefundene Datenprobleme dokumentieren.
+Die Datenpruefung von Mittwoch abschliessen. Alle gefundenen
+Datenkorrektheitsprobleme dokumentieren -- das sind die konkreten
+Befunde, die am Ende belegen, ob das Ticket wirklich abgeschlossen
+werden kann.
 
 =========================================================================
 WOCHE 4 -- Ultimativer Test & Abschluss
 =========================================================================
 
 Montag
-- Gesamte DWH-Schicht einen Monat zurücksetzen.
+Die gesamte DWH-Schicht einen Monat zuruecksetzen. Das ist der
+Vorbereitungsschritt fuer den gruendlichsten verfuegbaren Test -- er
+versetzt die gesamte Schicht absichtlich in einen Zustand, in dem
+sie wieder komplett nach vorne durchverarbeitet werden muss.
 
 Dienstag
-- Gesamte Schicht wieder nach vorne laufen lassen.
+Die gesamte Schicht von diesem zurueckgesetzten Punkt aus wieder
+nach vorne laufen lassen. Das beweist, dass wirklich jeder
+nachgelagerte Schritt ueberall korrekte, aktuelle Daten schreibt --
+nicht nur in dem einen Bereich, der in Woche 3 stichprobenartig
+geprueft wurde.
 
 Mittwoch
-- Korrektheit ueberall pruefen, nicht nur in den bereits geprueften
-  Bereichen. Verbleibende Probleme beheben.
+Die Korrektheit in allen betroffenen Bereichen aus dem Lauf vom
+Dienstag pruefen, nicht nur in den bereits validierten. Alles, was
+dabei noch nicht stimmt, beheben.
 
 Donnerstag
-- Beide Jira-Tickets (Nils: UC4-Anbindung, Joern: Stichtag-Lauf)
-  mit den tatsaechlichen Ergebnissen aktualisieren.
-- Ablageort der Confluence-Dokumentation final klaeren.
+Beide Jira-Tickets (Nils: UC4-Anbindung, Joern: Stichtag-Lauf) mit
+den tatsaechlichen Ergebnissen dieser vier Wochen aktualisieren --
+was funktioniert hat, was nicht, was repariert werden musste. Mit
+demjenigen, der den Confluence-Ablageort verwaltet, final klaeren,
+wo diese Dokumentation offiziell liegen soll.
 
 Freitag
-- Abschluss-/Uebergabenotizen schreiben.
-- Offene Punkte fuer die naechste Phase festhalten (PD-Datenfluss
-  wird laut Thorsten den 30.09-Meilenstein realistisch nicht
-  einhalten).
+Die abschliessenden Uebergabe-/Retro-Notizen schreiben -- was jetzt
+nachweislich funktioniert, was noch offen ist (der PD-Datenfluss
+wird laut Thorstens eigener Einschaetzung den 30.09-Meilenstein
+realistisch nicht einhalten), und was die naechste Phase der Arbeit
+sein sollte.
 
 =========================================================================
-Hinweis: Ein voller Lauf dauert 4-12 Std. -- an den meisten Tagen
+Hinweis: Ein voller Lauf dauert 4-12 Stunden -- an den meisten Tagen
 ist realistisch nur ein voller Lauf plus Fehleranalyse moeglich.
-Wenn PD-Datenbanklink oder F-PDRS-Zugriff sich verzoegern, ist das
-der wahrscheinlichste Grund fuer eine Verschiebung ueber Woche 4
-hinaus.
+Wenn sich der PD-Datenbanklink oder der F-PDRS-Zugriff verzoegern,
+ist das der wahrscheinlichste Grund, warum es ueber Woche 4 hinaus
+dauert.
