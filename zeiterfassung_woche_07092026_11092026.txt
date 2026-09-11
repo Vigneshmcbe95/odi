@@ -1,0 +1,32 @@
+Zeiterfassung Woche 07.09.2026 - 11.09.2026 (Montag - Freitag)
+
+Montag
+-
+-
+-
+-
+
+Dienstag
+- UC4-Jobplan-Struktur und Aufbau ueberprueft
+- MetaDB Hook-Parametergruppen-Registrierung geprueft
+- ODI-Designer Modell- und Datastore-Struktur erkundet
+- Schritt-fuer-Schritt-Testverfahren fuer UC4-Ausfuehrung dokumentiert
+
+Mittwoch
+- Objektexistenz ueber mehrere Zielschemata hinweg geprueft
+- Synonym-Designmuster fuer Quellschema ueberprueft
+- Topologie-Kontext und Schema-Zuordnung verifiziert
+- Umgebung fuer ersten Job-Ausfuehrungstest vorbereitet
+
+Donnerstag
+- Ersten einzelnen Job gegen die Sandbox ausgefuehrt
+- Fehlerprotokolle aus dem Ausfuehrungstool analysiert
+- Fehlende Scratch-Tabellen als Fehlerursache identifiziert
+- Fehlende Tabellenstrukturen in Zielschema geklont
+- Zugriffsrechte auf Tabellen diagnostiziert und behoben
+
+Freitag
+- Jobplan insgesamt erfolgreich abgeschlossen bestaetigt
+- Datenkorrektheitspruefungen fuer den Stichtag vorbereitet
+- Empfohlenen Ansatz zur Historisierungsvalidierung ueberprueft
+- Naechste Schritte fuer den folgenden Testlauf dokumentiert
