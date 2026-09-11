@@ -7,26 +7,26 @@ Montag
 -
 
 Dienstag
-- UC4-Jobplan-Struktur und Aufbau ueberprueft
-- MetaDB Hook-Parametergruppen-Registrierung geprueft
+- UC4-Jobplan-Struktur und Aufbau überprüft
+- MetaDB Hook-Parametergruppen-Registrierung geprüft
 - ODI-Designer Modell- und Datastore-Struktur erkundet
-- Schritt-fuer-Schritt-Testverfahren fuer UC4-Ausfuehrung dokumentiert
+- Schritt-für-Schritt-Testverfahren für UC4-Ausführung dokumentiert
 
 Mittwoch
-- Objektexistenz ueber mehrere Zielschemata hinweg geprueft
-- Synonym-Designmuster fuer Quellschema ueberprueft
+- Objektexistenz über mehrere Zielschemata hinweg geprüft
+- Synonym-Designmuster für Quellschema überprüft
 - Topologie-Kontext und Schema-Zuordnung verifiziert
-- Umgebung fuer ersten Job-Ausfuehrungstest vorbereitet
+- Umgebung für ersten Job-Ausführungstest vorbereitet
 
 Donnerstag
-- Ersten einzelnen Job gegen die Sandbox ausgefuehrt
-- Fehlerprotokolle aus dem Ausfuehrungstool analysiert
+- Ersten einzelnen Job gegen die Sandbox ausgeführt
+- Fehlerprotokolle aus dem Ausführungstool analysiert
 - Fehlende Scratch-Tabellen als Fehlerursache identifiziert
 - Fehlende Tabellenstrukturen in Zielschema geklont
 - Zugriffsrechte auf Tabellen diagnostiziert und behoben
 
 Freitag
-- Jobplan insgesamt erfolgreich abgeschlossen bestaetigt
-- Datenkorrektheitspruefungen fuer den Stichtag vorbereitet
-- Empfohlenen Ansatz zur Historisierungsvalidierung ueberprueft
-- Naechste Schritte fuer den folgenden Testlauf dokumentiert
+- Jobplan insgesamt erfolgreich abgeschlossen bestätigt
+- Datenkorrektheitsprüfungen für den Stichtag vorbereitet
+- Empfohlenen Ansatz zur Historisierungsvalidierung überprüft
+- Nächste Schritte für den folgenden Testlauf dokumentiert
