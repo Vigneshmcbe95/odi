@@ -1,233 +1,75 @@
-***************************************************************************
-**  ucxjlx6m     version 21.0.12+build.1727462440704 changelist 1727462440  **
-**  JOB 0693985741 (ProcID:0000036947) START AT   11.09.2026 / 10:09:32  **
-**                                     UTC TIME   11.09.2026 / 08:09:32  **
-**  TEXT="        Job started             "                              **
-***************************************************************************
-SP2-0640: Nicht angemeldet
-SP2-0640: Nicht angemeldet
-SP2-0640: Nicht angemeldet
-SP2-0640: Nicht angemeldet
-SP2-0640: Nicht angemeldet
-Session wurde geÃ€ndert.
-Session wurde geÃ€ndert.
-Session wurde geÃ€ndert.
-Session wurde geÃ€ndert.
-Session wurde geÃ€ndert.
-Beginn S10_EPS_MAIN...
-10:09:32.881744 MSG_DBG.........SRC_FRMWRK: In FRMWRK-Session: ALTER SESSION DISABLE PARALLEL QUERY
-10:09:32.882415 MSG_DBG.........SRC_FRMWRK: In FRMWRK-Session: ALTER SESSION DISABLE PARALLEL DML
-10:09:32.882874 EPS_START.......SRC_FRMWRK: S10_EPS_MAIN.STEP_BEGINN (Instanz: ed980601 DB-Session-ID:9449)
-10:09:32.883348 MSG_DBG.........SRC_FRMWRK: S1010_FRMWRK_INIT.STEP_BEGINN
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK: <parameter>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <eps>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<eps_name>EPS_DWH_FST_W334_001_HIST_TLN_PERSB</eps_name>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<eps_thm>DWH_FST</eps_thm>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<eps_uthm>DEFAULT</eps_uthm>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   </eps>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <next_period>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<zykl_name>CZYKL_ALLG_ZAEHLTAGE_DS</zykl_name>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<zykl_period_end>20260413</zykl_period_end>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<zykl_precision>DAY</zykl_precision>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   </next_period>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <uc4>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<uc4_job_id>693985741</uc4_job_id>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<uc4_jobplan_id>693988544</uc4_jobplan_id>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   </uc4>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <inline_parameter>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<runtime_hkpgr_list>CTGRP_FST_E_B05</runtime_hkpgr_list>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<eps_run_mode/>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<run_skip_filtername/>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   </inline_parameter>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <restart_option>_ALL_</restart_option>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   <frmwrk>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<epsr_id>234546</epsr_id>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:	<metadb_schema>STATMETA</metadb_schema>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK:   </frmwrk>
-10:09:32.885092 XML_PARAMS......SRC_FRMWRK: </parameter>
-10:09:32.886971 MSG_INFO........SRC_FRMWRK.CALLED_BY: UC4: Jobplan-ID: "693988544"; Job-ID: "693985741"; 
-10:09:32.887277 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND: Verwaltung der EPS-Zustaende fuer Themenbereich <DWH_FST> ist NICHT aktiviert.
-10:09:32.887737 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND: EPS_RUN_MODE (Default vom Themenbereich): <RUN_FULL>
-10:09:32.888538 MSG_DBG.........SRC_FRMWRK: Von UC4 erhaltene Runtime-Hookparametergruppen: <CTGRP_FST_E_B05> .
-10:09:32.889499 MSG_DBG.........SRC_FRMWRK: S1010_FRMWRK_INIT.STEP_ENDE (RC: RC_OK)
-10:09:32.889695 MSG_DBG.........SRC_FRMWRK: S1020_RUNNABLE_CHECK.STEP_BEGINN
-10:09:32.893349 MSG_DBG.........SRC_FRMWRK.SKIP: Der EPS <DWH_FST.EPS_DWH_FST_W334_001_HIST_TLN_PERSB>	wird ausgefuehrt, da kein Run-Skip-Filter aus UC4 angegeben ist.
-10:09:32.893522 MSG_DBG.........SRC_FRMWRK: S1020_RUNNABLE_CHECK.STEP_ENDE (RC: RC_OK)
-10:09:32.893686 MSG_DBG.........SRC_FRMWRK: S1022_GET_SUBSTPARAMS.STEP_BEGINN
-10:09:32.893967 MSG_DBG.........SRC_FRMWRK: S1022_GET_SUBSTPARAMS.STEP_ENDE (RC: RC_OK)
-10:09:32.894133 MSG_DBG.........SRC_FRMWRK: S1024_GET_HOOKPARAMS.STEP_BEGINN
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK: <HOOK_PARAMS hktype_name="HOOK_LOAD_ODI_SZENARIO">
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<WORKREPOSITORY art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">FST_E_B05</WORKREPOSITORY>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<WORKREPOSITORY_SCHEMA art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">ODI_FST_E_B05</WORKREPOSITORY_SCHEMA>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<LB_AGENT art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">HTTP_URL@http://q0000288.sdst.sbaintern.de:52255</LB_AGENT>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<MASTERREPOSITORY_SCHEMA art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">ODI_FST_E_B05</MASTERREPOSITORY_SCHEMA>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<CONTEXT art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">CT_ESTAT_FST_41</CONTEXT>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<GV_STICHTAG_CHR8 art="CUSTOM" group="PARAM_FST" value_source="THMSPEZ">20260413</GV_STICHTAG_CHR8>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<SYNCHRONOUS art="SYSTEM" group="ODI_GENERAL" value_source="GLOBAL">false</SYNCHRONOUS>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<PASSWORD art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">******</PASSWORD>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<POLL_TIMEOUT art="SYSTEM" group="ODI_GENERAL" value_source="GLOBAL">36000</POLL_TIMEOUT>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<USER art="SYSTEM" group="ODI_GENERAL" value_source="GLOBAL">SUPERVISOR</USER>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<DEBUG_STATE art="CUSTOM" group="ODI_CUSTOM" value_source="GLOBAL">2</DEBUG_STATE>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<LOG_LEVEL art="SYSTEM" group="ODI_GENERAL" value_source="GLOBAL">6</LOG_LEVEL>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<POLL_INTERVALL art="SYSTEM" group="ODI_GENERAL" value_source="GLOBAL">5</POLL_INTERVALL>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK:	<PORT art="SYSTEM" group="CTGRP_FST_E_B05" value_source="RUNTIME_GRP:CTGRP_FST_E_B05">52255</PORT>
-10:09:32.991707 HOOK_PARAMS.....SRC_FRMWRK: </HOOK_PARAMS>
-10:09:32.992501 MSG_DBG.........SRC_FRMWRK: S1024_GET_HOOKPARAMS.STEP_ENDE (RC: RC_OK)
-10:09:32.992675 MSG_DBG.........SRC_FRMWRK: S1026_GET_LAUFKONTEXT.STEP_BEGINN
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND: aktueller Laufkontext: [ 
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND:      Masterrepository: ODI_FST_E_B05,
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND:      ODI-Context:      CT_ESTAT_FST_41,
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND:      Zykl-Period-End:  20260413,
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND:      Zykl-Precision:   DAY
-10:09:32.992849 MSG_INFO........SRC_FRMWRK.EPS_ZUSTAND:  ]
-10:09:32.993003 MSG_DBG.........SRC_FRMWRK: S1026_GET_LAUFKONTEXT.STEP_ENDE (RC: RC_OK)
-10:09:32.993144 MSG_DBG.........SRC_FRMWRK: S1030_LOAD.STEP_BEGINN
-10:09:32.993279 MSG_INFO........SRC_FRMWRK: ODI Scenario: EPS_DWH_FST_W334_001_HIST_TLN_PERSB#001 wird gestartet.
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated): <parameter>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <eps>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <eps_name>EPS_DWH_FST_W334_001_HIST_TLN_PERSB</eps_name>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <eps_thm>DWH_FST</eps_thm>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <eps_uthm>DEFAULT</eps_uthm>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </eps>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <next_period>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <zykl_name>CZYKL_ALLG_ZAEHLTAGE_DS</zykl_name>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <zykl_period_end>20260413</zykl_period_end>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <zykl_precision>DAY</zykl_precision>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </next_period>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <uc4>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <uc4_job_id>693985741</uc4_job_id>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <uc4_jobplan_id>693988544</uc4_jobplan_id>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </uc4>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <inline_parameter>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <runtime_hkpgr_list>CTGRP_FST_E_B05</runtime_hkpgr_list>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <eps_run_mode/>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <run_skip_filtername/>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </inline_parameter>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <restart_option>_ALL_</restart_option>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <frmwrk>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <epsr_id>234546</epsr_id>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <metadb_schema>STATMETA</metadb_schema>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </frmwrk>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   <custom_params>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <gv_stichtag_chr8>20260413</gv_stichtag_chr8>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):     <debug_state>2</debug_state>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated):   </custom_params>
-10:09:32.993845 XML_PARAMS......SRC_FRMWRK(value_updated): </parameter>
-10:09:32.995138 MSG_INFO........SRC_FRMWRK.ODI_ZUGRIFF: Ermitteln der http-URL	=> URL war direkt in MetaDB konfigureiert. => Ergebnis: <http://q0000288.sdst.sbaintern.de:52255/oraclediagent/OdiInvoke?wsdl>
-10:09:32.995331 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST_URL: Request-URL: http://q0000288.sdst.sbaintern.de:52255/oraclediagent/OdiInvoke?wsdl
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST: <?xml version="1.0"?>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <soapsoapenv:Envelope xmlns:soapsoapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:odi="xmlns.oracle.com/odi/OdiInvoke/">
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <soapsoapenv:Header/>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <soapsoapenv:Body>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <odi:OdiStartScenRequest xmlns:odi="xmlns.oracle.com/odi/OdiInvoke/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Credentials>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <OdiUser>SUPERVISOR</OdiUser>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <OdiPassword>****</OdiPassword>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <WorkRepository>FST_E_B05</WorkRepository>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </Credentials>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Request>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <ScenarioName>EPS_DWH_FST_W334_001_HIST_TLN_PERSB</ScenarioName>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <ScenarioVersion>001</ScenarioVersion>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Context>CT_ESTAT_FST_41</Context>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Synchronous>false</Synchronous>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Variables>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Name>GLOBAL.GV_EPS_PARAMETER_XML</Name>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Value> <![CDATA[<parameter>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <eps>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <eps_name>EPS_DWH_FST_W334_001_HIST_TLN_PERSB</eps_name>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <eps_thm>DWH_FST</eps_thm>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <eps_uthm>DEFAULT</eps_uthm>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </eps>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <next_period>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <zykl_name>CZYKL_ALLG_ZAEHLTAGE_DS</zykl_name>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <zykl_period_end>20260413</zykl_period_end>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <zykl_precision>DAY</zykl_precision>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </next_period>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <uc4>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <uc4_job_id>693985741</uc4_job_id>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <uc4_jobplan_id>693988544</uc4_jobplan_id>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </uc4>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <inline_parameter>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <runtime_hkpgr_list>CTGRP_FST_E_B05</runtime_hkpgr_list>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <eps_run_mode/>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <run_skip_filtername/>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </inline_parameter>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <restart_option>_ALL_</restart_option>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <frmwrk>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <epsr_id>234546</epsr_id>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <metadb_schema>STATMETA</metadb_schema>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </frmwrk>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <custom_params>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <gv_stichtag_chr8>20260413</gv_stichtag_chr8>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:     <debug_state>2</debug_state>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </custom_params>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST: </parameter>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST: ]]> </Value>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </Variables>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <LogLevel>6</LogLevel>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   <Keywords><![CDATA[ZYKL_PERIOD_END=20260413,THM_NAME=DWH_FST]]></Keywords>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </Request>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </odi:OdiStartScenRequest>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </soapsoapenv:Body>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:   </soapsoapenv:Envelope>
-10:09:32.995485 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.REQUEST:
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: Response> length: "253"
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: === Print result ===
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: <?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns0:OdiStartScenResponse xmlns:ns0="xmlns.oracle.com/odi/OdiInvoke/"><Session>50566</Session></ns0:OdiStartScenResponse></S:Body></S:Envelope>
-10:09:33.191257 ODI_SESSION_ID..SRC_FRMWRK.ODI_ZUGRIFF: 50566
-10:09:33.192367 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF: DBMS_PIPE <UC4_EPS_DWH_FST_W334_001_HIST_TLN_PERSB_693985741> angelegt.
-10:09:33.192558 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF: BEGIN: Warten auf ODI-Session-Status
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: Response> length: "253"
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: === Print result ===
-10:09:33.189929 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF.RESPONSE: <?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns0:OdiStartScenResponse xmlns:ns0="xmlns.oracle.com/odi/OdiInvoke/"><Session>50566</Session></ns0:OdiStartScenResponse></S:Body></S:Envelope>
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1217: Session EPS_DWH_FST_W334_001_HIST_TLN_PERSB (50566) nicht erfolgreich mit Return Code ODI-1298.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1226: Schritt MAP_DWH_W334_002_WRK_LOAD_DIM nach 1 Versuch(en) nicht erfolgreich.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1240: Flow MAP_DWH_W334_002_WRK_LOAD_DIM beim AusfÃŒhren eines Truncate target table-IKM Oracle Insert--Vorgangs nicht erfolgreich. Dieser Flow lÃ€dt Zieltabelle W334_WRK_PERSB_TN.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1298: Serielle Aufgabe "SERIAL-MAP_BEGIN- (10)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (20)" fehlerhaft ist.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (20)" nicht erfolgreich, da die untergeordnete Aufgabe "Truncate target table-IKM Oracle Insert- (40)" fehlerhaft ist.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: ODI-1228: Aufgabe Truncate target table-IKM Oracle Insert- bei Zielverbindung DS_ESTAT nicht erfolgreich.
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: Caused By: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-10:09:35.198619 MSG_ERR.........SRC_FRMWRK.ODI_ZUGRIFF.ODI_ERR: 	at java.util.concurrent.ThreadPoolExecutor.runWorke
-10:09:35.199186 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF: END: Warten auf ODI-Session-Status
-10:09:35.199377 MSG_DBG.........SRC_FRMWRK.ODI_ZUGRIFF: DBMS_PIPE <UC4_EPS_DWH_FST_W334_001_HIST_TLN_PERSB_693985741> entfernt.
-10:09:35.199564 MSG_ERR.........SRC_FRMWRK: ODI Scenario EPS_DWH_FST_W334_001_HIST_TLN_PERSB mit Returncode ODI-1298 ausgefuehrt
-10:09:35.199722 MSG_INFO........SRC_FRMWRK: ODI Scenario: EPS_DWH_FST_W334_001_HIST_TLN_PERSB#001 beendet.
-10:09:35.199874 MSG_ERR.........SRC_FRMWRK: S1030_LOAD.STEP_ENDE (RC: RC_ERR)
-10:09:35.200017 EPS_END.........SRC_FRMWRK: S10_EPS_MAIN.STEP_ENDE (Laufzeit: 0d 00h 00m 02.329s) (RC: RC_ERR)
-10:09:35.200214 RET_CODE........SRC_FRMWRK: RC_ERR
-V_ERR_TEXT=Fehler bei TEMPLATE 693985741
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W346_TH_DWH_MN_DFO_TRS bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
+
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
+	atoracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
+	atoracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
+	atoracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
+	atoracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
+	atoracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
+	atoracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
+	atoracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
+	atoracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
+	atoracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
+	atoracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
+	atoracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
+	atoracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
+	atoracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
+	atoracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
+	atoracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
+	atoracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
+	atoracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
+	atoracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
+	atoracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
+	atjava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atjava.util.concurrent.FutureTask.run(FutureTask.java:266)
+	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	atjava.lang.Thread.run(Thread.java:750)
+Caused by: Sql = 
+INSERT 
+  /*+  APPEND PARALLEL  */ 
+  INTO SSC41WH_FST.W346_TH_DWH_MN_DFO_TRS
+  (
+    HMD_ID ,
+    DFO_ID ,
+    KMD_ID ,
+    HMD_GUELT_VON_DAT ,
+    HMD_GUELT_BIS_DAT ,
+    HMD_ERSTEL_DAT ,
+    HMD_UPDATE_DAT ,
+    HMD_KORR_DAT ,
+    JAN_ID_DURCHFUEHRUNGSORT_GUELTIG ,
+    HMD_DURCHFUEHRUNGSORT_ORT ,
+    HMD_DURCHFUEHRUNGSORT_PLZ ,
+    HMD_DURCHFUEHRUNGSORT_STRHSNR 
+  ) 
+SELECT 
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_ID ,
+  TH_DWH_MASSNAHME_DFO_TRS.DFO_ID ,
+  TH_DWH_MASSNAHME_DFO_TRS.KMD_ID ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_GUELT_VON_DAT ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_GUELT_BIS_DAT ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_ERSTEL_DAT ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_UPDATE_DAT ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_KORR_DAT ,
+  TH_DWH_MASSNAHME_DFO_TRS.JAN_ID_DURCHFUEHRUNGSORT_GUELTIG ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_ORT ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_PLZ ,
+  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_STRHSNR  
+FROM 
+  SVS41WH_BA_TRS.TH_DWH_MASSNAHME_DFO_TRS TH_DWH_MASSNAHME_DFO_TRS  
+        
+, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
