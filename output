@@ -1,75 +1,178 @@
-ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W346_TH_DWH_MN_DFO_TRS bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
+ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (50)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (60)" fehlerhaft ist.
+ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (60)" nicht erfolgreich, da die untergeordnete Aufgabe "Insert new rows-IKM Oracle Insert-Load W346_WRK_HIST_TN_DFZ_TRS (80)" fehlerhaft ist.
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W346_WRK_HIST_TN_DFZ_TRS bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused By: java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P00F angezeigt
+ORA-12899: Wert zu groß für Spalte "SSC41WH_FST"."W346_WRK_HIST_TN_DFZ_TRS"."HDZ_DURCHFUEHRUNGSORT_PLZ" (aktuell: 16, maximal: 15)
 
-	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
-	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
-	atoracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
-	atoracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
-	atoracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
-	atoracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
-	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
-	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
-	atoracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
-	atoracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
-	atoracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
-	atoracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
-	atoracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
-	atoracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
-	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
-	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
-	atoracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
-	atoracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
-	atoracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
-	atoracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
-	atoracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
-	atoracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
-	atoracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
-	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
-	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
-	atoracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
-	atoracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
-	atjava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	atjava.util.concurrent.FutureTask.run(FutureTask.java:266)
-	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	atjava.lang.Thread.run(Thread.java:750)
-Caused by: Sql = 
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
+	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
+	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
+	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
+	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
+	at oracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
+	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
+	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
+	at oracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
+	at oracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
+	at oracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
+	at oracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
+	at oracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
+	at oracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
+	at oracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
+	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
+	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
+	at oracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
+	at oracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: Error : 12801, Position : 0, Sql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W346_TH_DWH_MN_DFO_TRS
+  INTO SSC41WH_FST.W346_WRK_HIST_TN_DFZ_TRS
   (
-    HMD_ID ,
+    DFZ_ID ,
     DFO_ID ,
-    KMD_ID ,
-    HMD_GUELT_VON_DAT ,
-    HMD_GUELT_BIS_DAT ,
-    HMD_ERSTEL_DAT ,
-    HMD_UPDATE_DAT ,
-    HMD_KORR_DAT ,
-    JAN_ID_DURCHFUEHRUNGSORT_GUELTIG ,
-    HMD_DURCHFUEHRUNGSORT_ORT ,
-    HMD_DURCHFUEHRUNGSORT_PLZ ,
-    HMD_DURCHFUEHRUNGSORT_STRHSNR 
+    KTD_ID ,
+    HDZ_GUELT_VON_DAT ,
+    HDZ_GUELT_BIS_DAT ,
+    HDZ_ERSTEL_DAT ,
+    HDZ_UPDATE_DAT ,
+    HDZ_KORR_DAT ,
+    HDZ_DURCHFUEHRUNGSORT_ORT ,
+    HDZ_DURCHFUEHRUNGSORT_PLZ ,
+    HDZ_DURCHFUEHRUNGSORT_STRHSNR 
   ) 
 SELECT 
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_ID ,
-  TH_DWH_MASSNAHME_DFO_TRS.DFO_ID ,
-  TH_DWH_MASSNAHME_DFO_TRS.KMD_ID ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_GUELT_VON_DAT ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_GUELT_BIS_DAT ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_ERSTEL_DAT ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_UPDATE_DAT ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_KORR_DAT ,
-  TH_DWH_MASSNAHME_DFO_TRS.JAN_ID_DURCHFUEHRUNGSORT_GUELTIG ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_ORT ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_PLZ ,
-  TH_DWH_MASSNAHME_DFO_TRS.HMD_DURCHFUEHRUNGSORT_STRHSNR  
+  DISTINCT_.DFZ_ID ,
+  DISTINCT_.DFO_ID ,
+  DISTINCT_.KTD_ID ,
+  DISTINCT_.HDZ_GUELT_VON_DAT ,
+  (LEAD( DISTINCT_.HDZ_GUELT_VON_DAT  -1 ) OVER (PARTITION BY DISTINCT_.DFZ_ID ORDER BY DISTINCT_.HDZ_GUELT_VON_DAT ASC)) ,
+  (TO_DATE ('20260414','YYYYMMDD')) ,
+  TO_DATE(NULL) ,
+  TO_DATE(NULL) ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_ORT ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_PLZ ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_STRHSNR  
 FROM 
-  SVS41WH_BA_TRS.TH_DWH_MASSNAHME_DFO_TRS TH_DWH_MASSNAHME_DFO_TRS  
-        
-, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
+  (
+SELECT 
+  DISTINCT 
+  W346_TD_DWH_TN_DFZ.DFZ_ID AS DFZ_ID ,
+  TD_DWH_MASSNAHME_DFO.DFO_ID AS DFO_ID ,
+  TD_DWH_TEILNAHME.KTD_ID AS KTD_ID ,
+  (TRUNC(W342_WRK_LOAD_KTDZ.TDZ_ED,'DD')) AS HDZ_GUELT_VON_DAT ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_ORT AS HDZ_DURCHFUEHRUNGSORT_ORT ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_PLZ AS HDZ_DURCHFUEHRUNGSORT_PLZ ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_STRHSNR AS HDZ_DURCHFUEHRUNGSORT_STRHSNR   
+FROM 
+  ((SSC41WH_FST.W346_WRK_LOAD_KTDZ W342_WRK_LOAD_KTDZ  INNER JOIN  SSC41WH_FST.W346_TD_DWH_TN_DFZ W346_TD_DWH_TN_DFZ  
+    ON  W342_WRK_LOAD_KTDZ.TDZ_ID = W346_TD_DWH_TN_DFZ.DFZ_COSACHNT_SCHL
+     )  INNER JOIN  SSC41WH_FST.W346_TD_DWH_MN_DFO TD_DWH_MASSNAHME_DFO  
+    ON  W342_WRK_LOAD_KTDZ.MDO_ID = TD_DWH_MASSNAHME_DFO.DFO_COSACHNT_SCHL
+     )  INNER JOIN  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME  
+    ON  W342_WRK_LOAD_KTDZ.KNT_ID = TD_DWH_TEILNAHME.KTD_COSACHNT_SCHL
+WHERE
+  (W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_LOEKENNZ != 'J'
+) 
+  ) DISTINCT_  
+WHERE
+  ( 
+    NOT EXISTS   (    
+SELECT 
+  1  
+FROM 
+  SVS41WH_BA_TRS.TH_DWH_TEILNAHME_DFZ_TRS TH_DWH_TEILNAHME_DFZ_TRS1  
+WHERE
+  (
+       DISTINCT_.HDZ_GUELT_VON_DAT <= TH_DWH_TEILNAHME_DFZ_TRS1.HDZ_GUELT_VON_DAT 
+AND    DISTINCT_.DFZ_ID = TH_DWH_TEILNAHME_DFZ_TRS1.DFZ_ID 
+AND    TH_DWH_TEILNAHME_DFZ_TRS1.HDZ_GUELT_BIS_DAT IS NULL
+) )
+) 
+       , OriginalSql = 
+INSERT 
+  /*+  APPEND PARALLEL  */ 
+  INTO SSC41WH_FST.W346_WRK_HIST_TN_DFZ_TRS
+  (
+    DFZ_ID ,
+    DFO_ID ,
+    KTD_ID ,
+    HDZ_GUELT_VON_DAT ,
+    HDZ_GUELT_BIS_DAT ,
+    HDZ_ERSTEL_DAT ,
+    HDZ_UPDATE_DAT ,
+    HDZ_KORR_DAT ,
+    HDZ_DURCHFUEHRUNGSORT_ORT ,
+    HDZ_DURCHFUEHRUNGSORT_PLZ ,
+    HDZ_DURCHFUEHRUNGSORT_STRHSNR 
+  ) 
+SELECT 
+  DISTINCT_.DFZ_ID ,
+  DISTINCT_.DFO_ID ,
+  DISTINCT_.KTD_ID ,
+  DISTINCT_.HDZ_GUELT_VON_DAT ,
+  (LEAD( DISTINCT_.HDZ_GUELT_VON_DAT  -1 ) OVER (PARTITION BY DISTINCT_.DFZ_ID ORDER BY DISTINCT_.HDZ_GUELT_VON_DAT ASC)) ,
+  (TO_DATE ('20260414','YYYYMMDD')) ,
+  TO_DATE(NULL) ,
+  TO_DATE(NULL) ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_ORT ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_PLZ ,
+  DISTINCT_.HDZ_DURCHFUEHRUNGSORT_STRHSNR  
+FROM 
+  (
+SELECT 
+  DISTINCT 
+  W346_TD_DWH_TN_DFZ.DFZ_ID AS DFZ_ID ,
+  TD_DWH_MASSNAHME_DFO.DFO_ID AS DFO_ID ,
+  TD_DWH_TEILNAHME.KTD_ID AS KTD_ID ,
+  (TRUNC(W342_WRK_LOAD_KTDZ.TDZ_ED,'DD')) AS HDZ_GUELT_VON_DAT ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_ORT AS HDZ_DURCHFUEHRUNGSORT_ORT ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_PLZ AS HDZ_DURCHFUEHRUNGSORT_PLZ ,
+  W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_STRHSNR AS HDZ_DURCHFUEHRUNGSORT_STRHSNR   
+FROM 
+  ((SSC41WH_FST.W346_WRK_LOAD_KTDZ W342_WRK_LOAD_KTDZ  INNER JOIN  SSC41WH_FST.W346_TD_DWH_TN_DFZ W346_TD_DWH_TN_DFZ  
+    ON  W342_WRK_LOAD_KTDZ.TDZ_ID = W346_TD_DWH_TN_DFZ.DFZ_COSACHNT_SCHL
+     )  INNER JOIN  SSC41WH_FST.W346_TD_DWH_MN_DFO TD_DWH_MASSNAHME_DFO  
+    ON  W342_WRK_LOAD_KTDZ.MDO_ID = TD_DWH_MASSNAHME_DFO.DFO_COSACHNT_SCHL
+     )  INNER JOIN  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME  
+    ON  W342_WRK_LOAD_KTDZ.KNT_ID = TD_DWH_TEILNAHME.KTD_COSACHNT_SCHL
+WHERE
+  (W342_WRK_LOAD_KTDZ.TDZ_DURCHFUEHRUNGSORT_LOEKENNZ != 'J'
+) 
+  ) DISTINCT_  
+WHERE
+  ( 
+    NOT EXISTS   (    
+SELECT 
+  1  
+FROM 
+  SVS41WH_BA_TRS.TH_DWH_TEILNAHME_DFZ_TRS TH_DWH_TEILNAHME_DFZ_TRS1  
+WHERE
+  (
+       DISTINCT_.HDZ_GUELT_VON_DAT <= TH_DWH_TEILNAHME_DFZ_TRS1.HDZ_GUELT_VON_DAT 
+AND    DISTINCT_.DFZ_ID = TH_DWH_TEILNAHME_DFZ_TRS1.DFZ_ID 
+AND    TH_DWH_TEILNAHME_DFZ_TRS1.HDZ_GUELT_BIS_DAT IS NULL
+) )
+) 
+       , Error Msg = ORA-12801: Fehler in parallelem Abfrage-Server P00F angezeigt
+ORA-12899: Wert zu groß für Spalte "SSC41WH_FST"."W346_WRK_HIST_TN_DFZ_TRS"."HDZ_DURCHFUEHRUNGSORT_PLZ" (aktuell: 16, maximal: 15)
+
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:514)
+	... 36 more
