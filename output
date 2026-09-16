@@ -1,620 +1,220 @@
-ODI-1226: Schritt MAP_DWH_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D nach 1 Versuch(en) nicht erfolgreich.
-ODI-1240: Flow MAP_DWH_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D beim Ausführen eines Create REJECT_TAB-BA IKM FST HIST5D UPD HISTORIE5D-Load SCR_OUT-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W309_MN_LT_OUT.
-ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (10)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (20)" fehlerhaft ist.
-ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (20)" nicht erfolgreich, da die untergeordnete Aufgabe "Create REJECT_TAB-BA IKM FST HIST5D UPD HISTORIE5D-Load SCR_OUT (30)" fehlerhaft ist.
-ODI-1228: Aufgabe Create REJECT_TAB-BA IKM FST HIST5D UPD HISTORIE5D-Load SCR_OUT bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused By: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
-ORA-06512: in Zeile 120
-ORA-06512: in Zeile 120
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W309_WRK_MAT_TN_PRELADETAB bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "MAT_TEILNAHMEMODUS": ungültige ID
 
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
-	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
-	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
-	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
-	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
-	at oracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
-	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
-	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
-	at oracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
-	at oracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
-	at oracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
-	at oracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
-	at oracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
-	at oracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
-	at oracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
-	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
-	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
-	at oracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
-	at oracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: Error : 942, Position : 0, Sql = declare
-	v_count number;
-	v_sql varchar2(32000);
-	c_timestamp_to_datetime varchar2(4000) := 'to_date(to_char([arg],''yyyymmdd hh24:mi:ss''),''yyyymmdd hh24:mi:ss'')';
-	c_timestamp_to_date varchar2(4000) := 'trunc(to_date(to_char([arg],''yyyymmdd hh24:mi:ss''),''yyyymmdd hh24:mi:ss''),''DD'')';
-	c_datetime_to_date varchar2(4000) := 'trunc([arg],''DD'')';
-	v_convert_datum varchar2(4000);
-	V_KM_RUN_TYPE 	varchar2(100) := 'ST';
-        V_KM_SCRIPT_LVL varchar2(100) := 'fst_mabe_W309_MN_LT';
-        v_PARAM_ODI_REJECT_TAB varchar2(100);
-	v_INPUT_TAB 	varchar2(100);	
-	v_HIST_TAB 		varchar2(100);	
-	v_HIST_TAB_OUT 	varchar2(100);	
-	v_REJECT_TAB 	varchar2(100);	
-					
-					
-					
-	v_ATTR_DEFS 	varchar2(100);	
-	v_STEUER_PARAMS varchar2(100);	
-
-	v_HIST_TAB_OUT_NAME varchar2(100);
-
-	v_CONNECT_IDENT_ROWS 	varchar2(100) := 'YES'; 	 
-	v_DO_WITH_KORR_ROWS 	varchar2(100) := 'REJECT'; 	 
-	v_PREFER_ABSCHL_SATZ 	varchar2(100) := 'NO'; 		 
-	v_VORWERT_UE 			varchar2(100) := 'N'; 		 
-	v_NO_CONNECT_IDENT_ROWS varchar2(100); 
-
-
-
-
-
-
-
-
-
-
-	v_ERSTEL_DAT_I 		varchar2(100);
-	v_ERSTEL_DAT_H 		varchar2(100);
-	v_ERSTEL_DAT_TYP 	varchar2(100);
-	v_GUELT_VON_DAT_I 	varchar2(100);
-	v_GUELT_VON_DAT_H 	varchar2(100);
-	v_GUELT_VON_DAT_TYP     varchar2(100);
-	v_GUELT_VON_NEU_I 	varchar2(100);
-	v_GUELT_VON_NEU_TYP     varchar2(100);
-	v_GUELT_BIS_DAT_H 	varchar2(100);
-	v_GUELT_BIS_DAT_TYP     varchar2(100);
-	v_KORR_DAT_H 		varchar2(100);
-	v_KORR_DAT_TYP 		varchar2(100);
-	v_UPDATE_DAT_H 		varchar2(100);
-	v_UPDATE_DAT_TYP 	varchar2(100);
-	v_FLAG_ABSCHL 		varchar2(100);
-	v_FLAG_ABSCHL_TYP 	varchar2(100);
-	v_HIST_ID 		varchar2(100);
-	v_HIST_ID_TYP 		varchar2(100);
-	v_LIST_IDENT_ID_I 	varchar2(100);
-	v_LIST_IDENT_ID_H 	varchar2(100);
-	v_ERSTEL_DAT_TYP_TRUNC 		varchar2(100);
-	v_GUELT_VON_DAT_TYP_TRUNC 	varchar2(100);
-	v_GUELT_VON_NEU_TYP_TRUNC 	varchar2(100);
-	v_GUELT_BIS_DAT_TYP_TRUNC 	varchar2(100);
-	v_KORR_DAT_TYP_TRUNC 		varchar2(100);
-	v_UPDATE_DAT_TYP_TRUNC 		varchar2(100);
-	v_DATE_DAT_TYP 			varchar2(100);
-	v_DATE_DAT_TYP_TRUNC 		varchar2(100);
-
-	c_DATE_UNGUELTIG_LOC 	varchar2(100) := 'to_timestamp(''1899-12-31 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	c_DATE_MINIMUM_LOC 	varchar2(100) := 'to_timestamp(''1900-01-01 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	c_DATE_MAXIMUM_LOC 	varchar2(100) := 'to_timestamp(''9999-12-31 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	v_DATE_UNGUELTIG_LOC 	varchar2(400);
-	v_DATE_MINIMUM_LOC 	varchar2(400);
-	v_DATE_MAXIMUM_LOC 	varchar2(400);
-
-	v_MIN_DAT_INTERVAL      varchar2(100);
-	
-	v_fal varchar2(32000);
-	
-	v_fii varchar2(32000);
-begin
-	v_HIST_TAB_OUT := 'SSC41WH_FST.W309_MN_LT_OUT';
-	v_HIST_TAB_OUT_NAME := v_HIST_TAB_OUT;
-	for c_tables in
-        (
-        select 'SVS41EB_ODIKM.LFST_UPD5D_MN_LADETAB' AS META
-,'SSC41WH_FST.W309_WRK_MAT_MNLADETAB' AS SCR_INPUT_TAB
-,'SVS41WH_FST.TH_DWH_MASSNAHME_MAT' AS SCR_HIST_TAB
-,'SSC41WH_FST.W309_MN_LT_REJECT_TAB' AS SCR_REJECT_TAB
-,'SSC41WH_FST.W309_MN_LT_HIST_MAX_GUELT_VON' AS SCR_TMP_HIST_MAX_GUELT_VON
-,'SSC41WH_FST.W309_MN_LT_TMP_HIST_IN' AS SCR_TMP_HIST_IN
-,'SSC41WH_FST.W309_MN_LT_TMP_HIST_RAND' AS SCR_TMP_HIST_RAND
-,'SSC41WH_FST.W309_MN_LT_INWRK_GUELTVON_MIN' AS SCR_TMP_INPT_WRK_GUELT_VON_MIN
-,'SSC41WH_FST.W309_MN_LT_INWRK_MINEDAT_KORR' AS SCR_TMP_INPT_WRK_MIN_EDAT_KORR
-,'SSC41WH_FST.W309_MN_LT_IN_STZ_MITMIN_NCHF' AS SCR_TMP_INPT_SATZ_MITMIN_NCHF
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID' AS SCR_TMP_INPUT_WRK_MIT_ID
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID2' AS SCR_TMP_INPUT_WRK_MIT_ID2
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID3' AS SCR_TMP_INPUT_WRK_MIT_ID3
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID4' AS SCR_TMP_INPUT_WRK_MIT_ID4
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID5' AS SCR_TMP_INPUT_WRK_MIT_ID5
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID6' AS SCR_TMP_INPUT_WRK_MIT_ID6
-,'SSC41WH_FST.W309_MN_LT_TMP_INPUT_MAX_GV' AS SCR_TMP_INPUT_MAX_GV
-,'SSC41WH_FST.W309_MN_LT_TMP_INPUT_MAX_GV2' AS SCR_TMP_INPUT_MAX_GV2
-,'SSC41WH_FST.W309_MN_LT_INWRK_GV_KORREKTUR' AS SCR_TMP_INPUT_WRK_GV_KORREKTUR
-,'SSC41WH_FST.W309_MN_LT_TMP_ANFAENGE' AS SCR_TMP_ANFAENGE
-,'SSC41WH_FST.W309_MN_LT_TMP_HILF_ANFAENGE' AS SCR_TMP_HILF_ANFAENGE
-,'SSC41WH_FST.W309_MN_LT_TMP_ENDEN' AS SCR_TMP_ENDEN
-,'SSC41WH_FST.W309_MN_LT_TMP_HILF_ENDEN' AS SCR_TMP_HILF_ENDEN
-,'SVS41EB_ODIKM.GFST_STPARAM_HIST5D' AS ST_PARAM
-,'SVS41EB_ODIKM.PROT_KM_USING' AS PROT_KM_USING
-,'SVS41EB_ODIKM.LFST_Z5DEX_MN_LADETAB' AS META_5DEX
-,'SSC41WH_FST.W309_MN_LT_TMP_GV_MEHRF' AS SCR_TMP_GV_MEHRF
-,'SSC41WH_FST.W309_MN_LT_HIST_STZ_MIT_VG_NF' AS SCR_TMP_HIST_SAETZE_MIT_VG_NF
-,'SSC41WH_FST.W309_MN_LT_UE_STZ_MTGRP_ANFVG' AS SCR_TMP_UE_SATZ_MITGRP_ANF_VG
-,'SSC41WH_FST.W309_MN_LT_UE_STZ_MTGRP_ANF' AS SCR_TMP_UE_SAETZE_MIT_GRP_ANF
- from dual
-        ) loop
-	v_INPUT_TAB 	:= c_tables.SCR_INPUT_TAB;
-	v_HIST_TAB 	:= c_tables.SCR_HIST_TAB;
-	v_REJECT_TAB 	:= c_tables.SCR_REJECT_TAB;
-	
-	execute immediate
-	'select  '||
-	'    case when PARAM_NO_CONNECT_IDENT_ROWS is not null then ''NO'' else  ''YES'' end PARAM_CONNECT_IDENT_ROWS '||
-	'  , case when PARAM_NO_CONNECT_IDENT_ROWS is not null then ''NO'' end PARAM_NO_CONNECT_IDENT_ROWS '||
-	'  , case when PARAM_DO_WITH_KORR_ROWS is not null then replace(upper(PARAM_DO_WITH_KORR_ROWS),''DO_WITH_KORR_ROWS='') else  ''REJECT'' end PARAM_DO_WITH_KORR_ROWS '||
-	'  , case when PARAM_PREFER_ABSCHL_SATZ is not null then replace(upper(PARAM_PREFER_ABSCHL_SATZ),''PREFER_ABSCHL_SATZ='') else  ''NO'' end PARAM_PREFER_ABSCHL_SATZ '||
-	'  , case when PARAM_VORWERT_UE is not null then replace(upper(PARAM_VORWERT_UE),''VORWERT_UE='') else  ''N'' end PARAM_VORWERT_UE '||
-        '  , PARAM_ODI_REJECT_TAB '|| 
-	'from '||c_tables.ST_PARAM||
-	' where PRIMARY_KEY = '''||V_KM_RUN_TYPE||'_'||V_KM_SCRIPT_LVL||''''
-        into  v_CONNECT_IDENT_ROWS
-			, v_NO_CONNECT_IDENT_ROWS
-			, v_DO_WITH_KORR_ROWS
-			, v_PREFER_ABSCHL_SATZ
-			, v_VORWERT_UE
-                        , v_PARAM_ODI_REJECT_TAB;
-	
-        execute immediate 'select I_ATTR_NAME, H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''ERSTEL_DAT''' into v_ERSTEL_DAT_I, v_ERSTEL_DAT_H, v_ERSTEL_DAT_TYP, v_ERSTEL_DAT_TYP_TRUNC;
-	execute immediate 'select I_ATTR_NAME, H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''GUELT_VON_DAT''' into v_GUELT_VON_DAT_I, v_GUELT_VON_DAT_H, v_GUELT_VON_DAT_TYP, v_GUELT_VON_DAT_TYP_TRUNC;
-  execute immediate 'select count(*) from '||c_tables.meta||' where label = ''GUELT_VON_NEU''' into v_count;
-  if v_count = 1 then
-    execute immediate 'select I_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.meta||' where label = ''GUELT_VON_NEU''' into v_guelt_von_neu_i, v_guelt_von_neu_typ, v_guelt_von_neu_typ_trunc;
-  else
-    v_guelt_von_neu_i := to_char(null);
-    v_guelt_von_neu_typ := v_erstel_dat_typ;
-    v_guelt_von_neu_typ_trunc := v_erstel_dat_typ_trunc;
-  end if;
-        execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''GUELT_BIS_DAT''' into v_GUELT_BIS_DAT_H, v_GUELT_BIS_DAT_TYP, v_GUELT_BIS_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''KORR_DAT''' into v_KORR_DAT_H, v_KORR_DAT_TYP, v_KORR_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''UPDATE_DAT''' into v_UPDATE_DAT_H, v_UPDATE_DAT_TYP, v_UPDATE_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE) from '||c_tables.META||' where label = ''FLAG_ABSCHL''' into v_FLAG_ABSCHL, v_FLAG_ABSCHL_TYP;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE) from '||c_tables.META||' where label = ''HIST_ID''' into v_HIST_ID, v_HIST_ID_TYP;
-        execute immediate 'select LISTAGG(I_ATTR_NAME, '', '') WITHIN GROUP (ORDER BY line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_LIST_IDENT_ID_I;
-	execute immediate 'select LISTAGG(H_ATTR_NAME, '', '') WITHIN GROUP (ORDER BY line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_LIST_IDENT_ID_H;
-	if 	nvl(v_ERSTEL_DAT_TYP, 'null') = nvl(v_GUELT_VON_DAT_TYP, 'null')
-		and nvl(v_GUELT_VON_DAT_TYP, 'null') = nvl(v_GUELT_VON_NEU_TYP, 'null')
-		and nvl(v_GUELT_VON_NEU_TYP, 'null') = nvl(v_GUELT_BIS_DAT_TYP, 'null')
-		and nvl(v_GUELT_BIS_DAT_TYP, 'null') = nvl(v_KORR_DAT_TYP, 'null')
-		and nvl(v_KORR_DAT_TYP, 'null') = nvl(v_UPDATE_DAT_TYP, 'null')
-	then
-		v_DATE_DAT_TYP := v_UPDATE_DAT_TYP;
-	else
-		RAISE_APPLICATION_ERROR(-20001,'FEHLER in sr_sql_update_historie5D(): -> Datümer haben nicht den gleichen Datentyp!');
-	end if;
-	if 	nvl(v_ERSTEL_DAT_TYP_TRUNC, 'null') = nvl(v_GUELT_VON_DAT_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_VON_DAT_TYP_TRUNC, 'null') = nvl(v_GUELT_VON_NEU_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_VON_NEU_TYP_TRUNC, 'null') = nvl(v_GUELT_BIS_DAT_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_BIS_DAT_TYP_TRUNC, 'null') = nvl(v_KORR_DAT_TYP_TRUNC, 'null')
-		and nvl(v_KORR_DAT_TYP_TRUNC, 'null') = nvl(v_UPDATE_DAT_TYP_TRUNC, 'null')
-	then
-		v_DATE_DAT_TYP_TRUNC := v_UPDATE_DAT_TYP_TRUNC;
-	else
-		RAISE_APPLICATION_ERROR(-20001,'FEHLER in sr_sql_update_historie5D(): -> [TRUNC] Datümer haben nicht den gleichen Datentyp!');
-	end if;
-	if v_DATE_DAT_TYP = 'DATE' and v_DATE_DAT_TYP_TRUNC is not null and v_DATE_DAT_TYP_TRUNC = 'J'
-	then
-		v_DATE_UNGUELTIG_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_UNGUELTIG_LOC);
-		v_DATE_MINIMUM_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_MINIMUM_LOC);
-		v_DATE_MAXIMUM_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_MAXIMUM_LOC);
-		v_MIN_DAT_INTERVAL := '1';
-	end if;
-	if v_DATE_DAT_TYP = 'DATE' and (v_DATE_DAT_TYP_TRUNC is null or v_DATE_DAT_TYP_TRUNC != 'J')
-	then
-		v_DATE_UNGUELTIG_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_UNGUELTIG_LOC);
-		v_DATE_MINIMUM_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_MINIMUM_LOC);
-		v_DATE_MAXIMUM_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_MAXIMUM_LOC);
-		v_MIN_DAT_INTERVAL := '1/(24*60*60)';
-	end if;
-
-
-
-
-if v_PARAM_ODI_REJECT_TAB = 'YES'
-then
-  execute immediate 'select count(*) from dba_tables where owner||''.''||table_name = '''||c_tables.SCR_REJECT_TAB||'''' into v_count;
-  if v_count = 1
-  then
-    execute immediate 'drop table '||c_tables.SCR_REJECT_TAB||' purge';
-  end if;
-  execute immediate 'select listagg(i_attr_name||'' ''||data_type, '',''||chr(10)) within group (order by line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_fii;
-  execute immediate 'select listagg('', ''||i_attr_name||'' ''||data_type, chr(10)) within group (order by line_id) from '||c_tables.META||' where label like ''ATTR^_%'' escape ''^'' or label like ''UE_STEUER''' into v_fal;
-    v_sql :='CREATE TABLE '||c_tables.scr_reject_tab||' '||chr(10)||
-            '( '||chr(10)||
-             v_fii||' '||chr(10)||
-             v_fal||' '||chr(10)||
-            ', {FLAG_ABSCHL} {FLAG_ABSCHL_TYP} '||chr(10)||
-            ', {GUELT_VON_DAT_I}	{DATE_DAT_TYP} '||chr(10)||
-            ', guelt_bis_dat_korr {DATE_DAT_TYP} '||chr(10)||
-            ', {ERSTEL_DAT_I} {DATE_DAT_TYP} '||chr(10)||
-            ', reason_code number '||chr(10)||
-            ') nologging parallel storage (next 16M) ';
-else
-  v_sql := ' select ''KA'' from dual';
-end if;
-
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
+	atoracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
+	atoracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
+	atoracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
+	atoracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
+	atoracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
+	atoracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
+	atoracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
+	atoracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
+	atoracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
+	atoracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
+	atoracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
+	atoracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
+	atoracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
+	atoracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
+	atoracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
+	atoracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
+	atoracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
+	atoracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
+	atoracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
+	atjava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atjava.util.concurrent.FutureTask.run(FutureTask.java:266)
+	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	atjava.lang.Thread.run(Thread.java:750)
+Caused by: Sql = 
+INSERT 
+  /*+  APPEND PARALLEL  */ 
+  INTO SSC41WH_FST.W309_WRK_MAT_TN_PRELADETAB
+  (
+    KNT_ID ,
+    MAT_ED ,
+    CVL_LFDNR ,
+    MAT_ZAEHL_DAT ,
+    MAT_REHA ,
+    MAT_SB_GL ,
+    MAT_VERBLEIB ,
+    MAT_ART_ZUWEISUNG ,
+    MAT_ZUWEISUNGSTN_ID ,
+    MAT_MIND_6_WOC_EINGEGL ,
+    MAT_MIND_3_MON_EINGEGL ,
+    MAT_MIND_6_MON_EINGEGL ,
+    MAT_KUERZUNG_EINGL_HON ,
+    MAT_PROZ_GEKUERZT_EINGL ,
+    MAT_NICHT_IN_WARTEZT_ALO ,
+    MAT_KOSTEN_KINDERBETR ,
+    MAT_KOSTEN_FAHRKOSTEN ,
+    MAT_KOSTEN_WEITERE ,
+    MAT_OHNE_ERSTAUS ,
+    MAT_SCHULPF_ERF ,
+    MAT_VORZ_BEEND ,
+    MAT_MNZIEL ,
+    MAT_IND_FBEDARF1 ,
+    MAT_IND_FBEDARF2 ,
+    MAT_IND_FBEDARF3 ,
+    MAT_IND_FBEDARF4 ,
+    MAT_IND_FBEDARF5 ,
+    MAT_BEFRAGUNG ,
+    MAT_BEFRAGUNG_PW ,
+    MAT_GESAMTSUMME ,
+    MAT_SUMME_FAHRKOSTEN ,
+    MAT_SUMME_KIBETRKOSTEN ,
+    MAT_SUMME_WEITKOSTEN ,
+    MAT_ZUW_VERLANG ,
+    MAT_ART_EINGL ,
+    MAT_TAG_ARBEITS_AUFNAHME ,
+    MAT_ZAHLUNG_RATE_1 ,
+    MAT_ZAHLUNG_RATE_2 ,
+    MAT_ZAHLUNG_RISIKOAUSGL ,
+    MAT_ZAHLUNG_ZUS_PAUSCH ,
+    MAT_ZUS_PAUSCH ,
+    MAT_PAUSCH_SUMME ,
+    MAT_KOSTENEV_ZEILEN_SUMME ,
+    MAT_ABSCHL_ARB_VERTRAG ,
+    MAT_TEILNAHMEMODUS ,
+    MAT_PLAUS_STATUS ,
+    MAT_PROT_STATUS ,
+    MAT_ABGW_STATUS 
+  ) 
+SELECT 
+  DIST.KNT_ID ,
+  DIST.MAT_ED ,
+  DIST.CVL_LFDNR ,
+  DIST.MAT_ZAEHL_DAT ,
+  DIST.MAT_REHA ,
+  DIST.MAT_SB_GL ,
+  DIST.MAT_VERBLEIB ,
+  DIST.MAT_ART_ZUWEISUNG ,
+  DIST.MAT_ZUWEISUNGSTN_ID ,
+  DIST.MAT_MIND_6_WOC_EINGEGL ,
+  DIST.MAT_MIND_3_MON_EINGEGL ,
+  DIST.MAT_MIND_6_MON_EINGEGL ,
+  DIST.MAT_KUERZUNG_EINGL_HON ,
+  DIST.MAT_PROZ_GEKUERZT_EINGL ,
+  DIST.MAT_NICHT_IN_WARTEZT_ALO ,
+  DIST.MAT_KOSTEN_KINDERBETR ,
+  DIST.MAT_KOSTEN_FAHRKOSTEN ,
+  DIST.MAT_KOSTEN_WEITERE ,
+  DIST.MAT_OHNE_ERSTAUS ,
+  DIST.MAT_SCHULPF_ERF ,
+  DIST.MAT_VORZ_BEEND ,
+  DIST.MAT_MNZIEL ,
+  DIST.MAT_IND_FBEDARF1 ,
+  DIST.MAT_IND_FBEDARF2 ,
+  DIST.MAT_IND_FBEDARF3 ,
+  DIST.MAT_IND_FBEDARF4 ,
+  DIST.MAT_IND_FBEDARF5 ,
+  DIST.MAT_BEFRAGUNG ,
+  DIST.MAT_BEFRAGUNG_PW ,
+  DIST.MAT_GESAMTSUMME ,
+  DIST.MAT_SUMME_FAHRKOSTEN ,
+  DIST.MAT_SUMME_KIBETRKOSTEN ,
+  DIST.MAT_SUMME_WEITKOSTEN ,
+  DIST.MAT_ZUW_VERLANG ,
+  DIST.MAT_ART_EINGL ,
+  DIST.MAT_TAG_ARBEITS_AUFNAHME ,
+  DIST.MAT_ZAHLUNG_RATE_1 ,
+  DIST.MAT_ZAHLUNG_RATE_2 ,
+  DIST.MAT_ZAHLUNG_RISIKOAUSGL ,
+  DIST.MAT_ZAHLUNG_ZUS_PAUSCH ,
+  DIST.MAT_ZUS_PAUSCH ,
+  DIST.MAT_PAUSCH_SUMME ,
+  DIST.MAT_KOSTENEV_ZEILEN_SUMME ,
+  DIST.MAT_ABSCHL_ARB_VERTRAG ,
+  DIST.MAT_TEILNAHMEMODUS ,
+  DIST.MAT_PLAUS_STATUS ,
+  DIST.MAT_PROT_STATUS ,
+  DIST.MAT_ABGW_STATUS  
+FROM 
+  (
+SELECT 
+  DISTINCT 
+  A.KNT_ID AS KNT_ID ,
+  L_MAX_1.MAT_ED_TAG AS MAT_ED ,
+  A.CVL_LFDNR AS CVL_LFDNR ,
+  A.MAT_ZAEHL_DAT AS MAT_ZAEHL_DAT ,
+  A.MAT_REHA AS MAT_REHA ,
+  A.MAT_SB_GL AS MAT_SB_GL ,
+  A.MAT_VERBLEIB AS MAT_VERBLEIB ,
+  A.MAT_ART_ZUWEISUNG AS MAT_ART_ZUWEISUNG ,
+  A.MAT_ZUWEISUNGSTN_ID AS MAT_ZUWEISUNGSTN_ID ,
+  A.MAT_MIND_6_WOC_EINGEGL AS MAT_MIND_6_WOC_EINGEGL ,
+  A.MAT_MIND_3_MON_EINGEGL AS MAT_MIND_3_MON_EINGEGL ,
+  A.MAT_MIND_6_MON_EINGEGL AS MAT_MIND_6_MON_EINGEGL ,
+  A.MAT_KUERZUNG_EINGL_HON AS MAT_KUERZUNG_EINGL_HON ,
+  A.MAT_PROZ_GEKUERZT_EINGL AS MAT_PROZ_GEKUERZT_EINGL ,
+  A.MAT_NICHT_IN_WARTEZT_ALO AS MAT_NICHT_IN_WARTEZT_ALO ,
+  A.MAT_KOSTEN_KINDERBETR AS MAT_KOSTEN_KINDERBETR ,
+  A.MAT_KOSTEN_FAHRKOSTEN AS MAT_KOSTEN_FAHRKOSTEN ,
+  A.MAT_KOSTEN_WEITERE AS MAT_KOSTEN_WEITERE ,
+  A.MAT_OHNE_ERSTAUS AS MAT_OHNE_ERSTAUS ,
+  A.MAT_SCHULPF_ERF AS MAT_SCHULPF_ERF ,
+  A.MAT_VORZ_BEEND AS MAT_VORZ_BEEND ,
+  A.MAT_MNZIEL AS MAT_MNZIEL ,
+  A.MAT_IND_FBEDARF1 AS MAT_IND_FBEDARF1 ,
+  A.MAT_IND_FBEDARF2 AS MAT_IND_FBEDARF2 ,
+  A.MAT_IND_FBEDARF3 AS MAT_IND_FBEDARF3 ,
+  A.MAT_IND_FBEDARF4 AS MAT_IND_FBEDARF4 ,
+  A.MAT_IND_FBEDARF5 AS MAT_IND_FBEDARF5 ,
+  A.MAT_BEFRAGUNG AS MAT_BEFRAGUNG ,
+  A.MAT_BEFRAGUNG_PW AS MAT_BEFRAGUNG_PW ,
+  A.MAT_GESAMTSUMME AS MAT_GESAMTSUMME ,
+  A.MAT_SUMME_FAHRKOSTEN AS MAT_SUMME_FAHRKOSTEN ,
+  A.MAT_SUMME_KIBETRKOSTEN AS MAT_SUMME_KIBETRKOSTEN ,
+  A.MAT_SUMME_WEITKOSTEN AS MAT_SUMME_WEITKOSTEN ,
+  A.MAT_ZUW_VERLANG AS MAT_ZUW_VERLANG ,
+  A.MAT_ART_EINGL AS MAT_ART_EINGL ,
+  A.MAT_TAG_ARBEITS_AUFNAHME AS MAT_TAG_ARBEITS_AUFNAHME ,
+  A.MAT_ZAHLUNG_RATE_1 AS MAT_ZAHLUNG_RATE_1 ,
+  A.MAT_ZAHLUNG_RATE_2 AS MAT_ZAHLUNG_RATE_2 ,
+  A.MAT_ZAHLUNG_RISIKOAUSGL AS MAT_ZAHLUNG_RISIKOAUSGL ,
+  A.MAT_ZAHLUNG_ZUS_PAUSCH AS MAT_ZAHLUNG_ZUS_PAUSCH ,
+  A.MAT_ZUS_PAUSCH AS MAT_ZUS_PAUSCH ,
+  A.MAT_PAUSCH_SUMME AS MAT_PAUSCH_SUMME ,
+  A.MAT_KOSTENEV_ZEILEN_SUMME AS MAT_KOSTENEV_ZEILEN_SUMME ,
+  A.MAT_ABSCHL_ARB_VERTRAG AS MAT_ABSCHL_ARB_VERTRAG ,
+  A.MAT_TEILNAHMEMODUS AS MAT_TEILNAHMEMODUS ,
+  A.MAT_PLAUS_STATUS AS MAT_PLAUS_STATUS ,
+  A.MAT_PROT_STATUS AS MAT_PROT_STATUS ,
+  A.MAT_ABGW_STATUS AS MAT_ABGW_STATUS   
+FROM 
+  SVS41WL_FST.TL_DWL_MATT A ,  (
+SELECT 
+  L_MAX.KNT_ID AS KNT_ID ,
+  (trunc(L_MAX.MAT_ED)) AS MAT_ED_TAG ,
+  max(L_MAX.MAT_ED) AS MAT_ED_MAX   
+FROM 
+  SVS41WL_FST.TL_DWL_MATT L_MAX  
+WHERE
+  (L_MAX.META_MON_ID = #GLOBAL.GV_MON_ID
+) 
+GROUP BY
+  L_MAX.KNT_ID,(trunc(L_MAX.MAT_ED)) 
+  ) L_MAX_1       
+WHERE
+  (A.KNT_ID = L_MAX_1.KNT_ID
+     AND    A.MAT_ED = L_MAX_1.MAT_ED_MAX
+) AND   (A.META_MON_ID = #GLOBAL.GV_MON_ID
+) 
+  ) DIST  
+WHERE
+  (1 = 1
+) 
         
-	v_sql := replace(v_sql,'{INPUT_TAB}',v_INPUT_TAB);
-	v_sql := replace(v_sql,'{HIST_TAB}',v_HIST_TAB);
-	v_sql := replace(v_sql,'{HIST_TAB_OUT}',v_HIST_TAB_OUT);
-	v_sql := replace(v_sql,'{REJECT_TAB}',v_REJECT_TAB);
-	v_sql := replace(v_sql,'{ATTR_DEFS}',v_ATTR_DEFS);
-	v_sql := replace(v_sql,'{STEUER_PARAMS}',v_STEUER_PARAMS);
-	v_sql := replace(v_sql,'{HIST_TAB_OUT_NAME}',v_HIST_TAB_OUT_NAME);
-	v_sql := replace(v_sql,'{CONNECT_IDENT_ROWS}',v_CONNECT_IDENT_ROWS);
-	v_sql := replace(v_sql,'{DO_WITH_KORR_ROWS}',v_DO_WITH_KORR_ROWS);
-	v_sql := replace(v_sql,'{PREFER_ABSCHL_SATZ}',v_PREFER_ABSCHL_SATZ);
-	v_sql := replace(v_sql,'{VORWERT_UE}',v_VORWERT_UE);
-
-	v_sql := replace(v_sql,'{ERSTEL_DAT_I}',v_ERSTEL_DAT_I);
-	v_sql := replace(v_sql,'{ERSTEL_DAT_H}',v_ERSTEL_DAT_H);
-	v_sql := replace(v_sql,'{ERSTEL_DAT_TYP}',v_ERSTEL_DAT_TYP);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_I}',v_GUELT_VON_DAT_I);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_H}',v_GUELT_VON_DAT_H);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_TYP}',v_GUELT_VON_DAT_TYP);
-	v_sql := replace(v_sql,'{GUELT_VON_NEU_I}',v_GUELT_VON_NEU_I);
-	v_sql := replace(v_sql,'{GUELT_VON_NEU_TYP}',v_GUELT_VON_NEU_TYP);
-	v_sql := replace(v_sql,'{GUELT_BIS_DAT_H}',v_GUELT_BIS_DAT_H);
-	v_sql := replace(v_sql,'{GUELT_BIS_DAT_TYP}',v_GUELT_BIS_DAT_TYP);
-	v_sql := replace(v_sql,'{KORR_DAT_H}',v_KORR_DAT_H);
-	v_sql := replace(v_sql,'{KORR_DAT_TYP}',v_KORR_DAT_TYP);
-	v_sql := replace(v_sql,'{UPDATE_DAT_H}',v_UPDATE_DAT_H);
-	v_sql := replace(v_sql,'{UPDATE_DAT_TYP}',v_UPDATE_DAT_TYP);
-	v_sql := replace(v_sql,'{FLAG_ABSCHL}',v_FLAG_ABSCHL);
-	v_sql := replace(v_sql,'{FLAG_ABSCHL_TYP}',v_FLAG_ABSCHL_TYP);
-	if v_sql is null
-	then
-		v_sql := 'select ''SQL string is not defined'' from dual';
-	end if;
-	v_sql := replace(v_sql,'{HIST_ID}',v_HIST_ID);
-	v_sql := replace(v_sql,'{HIST_ID_TYP}',v_HIST_ID_TYP);
-	v_sql := replace(v_sql,'{LIST_IDENT_ID_I}',v_LIST_IDENT_ID_I);
-	v_sql := replace(v_sql,'{LIST_IDENT_ID_H}',v_LIST_IDENT_ID_H);
-    v_sql := replace(v_sql,'{DATE_UNGUELTIG}',v_DATE_UNGUELTIG_LOC);
-	v_sql := replace(v_sql,'{DATE_MINIMUM}',v_DATE_MINIMUM_LOC);
-	v_sql := replace(v_sql,'{DATE_MAXIMUM}',v_DATE_MAXIMUM_LOC);
-	v_sql := replace(v_sql,'{DATE_DAT_TYP}',v_DATE_DAT_TYP);
-	v_sql := replace(v_sql,'{MIN_DAT_INTERVAL}',v_MIN_DAT_INTERVAL);
-	
-	execute immediate 'insert into '||c_tables.PROT_KM_USING||' values '||chr(10)||
-	'( '||chr(10)||
-	'systimestamp '||chr(10)||
-	', ''BA IKM FST HIST5D UPD HISTORIE5D'' '||chr(10)||
-	', ''MAP_DWH_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D'' '||chr(10)||
-	', :1 '||chr(10)||
-	', ''CT_ESTAT_FST_41'' '||chr(10)||
-	', ''AGT_W_FST_E_B05_Q0000288_52255'' '||chr(10)||
-	', ''2026-09-15 11:24:25.557'' '||chr(10)||
-	', ''50603'' '||chr(10)||
-	', ''EPS_DWH_FST_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D'' '||chr(10)||
-	')' using v_sql;
-	commit;
-    begin
-        execute immediate v_sql;
-        commit;
-    exception when others then
-              raise_application_error(
-                                      -20002
-                                    , chr(10)||rpad('=',20,'=')||chr(10)||
-                                      SQLERRM||
-                                      chr(10)||rpad('=',20,'=')||chr(10)||
-                                      v_sql||
-                                      chr(10)||rpad('=',20,'=')||chr(10)
-                                      );
-	end;
-        end loop;
-end;  , OriginalSql = declare
-	v_count number;
-	v_sql varchar2(32000);
-	c_timestamp_to_datetime varchar2(4000) := 'to_date(to_char([arg],''yyyymmdd hh24:mi:ss''),''yyyymmdd hh24:mi:ss'')';
-	c_timestamp_to_date varchar2(4000) := 'trunc(to_date(to_char([arg],''yyyymmdd hh24:mi:ss''),''yyyymmdd hh24:mi:ss''),''DD'')';
-	c_datetime_to_date varchar2(4000) := 'trunc([arg],''DD'')';
-	v_convert_datum varchar2(4000);
-	V_KM_RUN_TYPE 	varchar2(100) := 'ST';
-        V_KM_SCRIPT_LVL varchar2(100) := 'fst_mabe_W309_MN_LT';
-        v_PARAM_ODI_REJECT_TAB varchar2(100);
-	v_INPUT_TAB 	varchar2(100);	
-	v_HIST_TAB 		varchar2(100);	
-	v_HIST_TAB_OUT 	varchar2(100);	
-	v_REJECT_TAB 	varchar2(100);	
-					
-					
-					
-	v_ATTR_DEFS 	varchar2(100);	
-	v_STEUER_PARAMS varchar2(100);	
-
-	v_HIST_TAB_OUT_NAME varchar2(100);
-
-	v_CONNECT_IDENT_ROWS 	varchar2(100) := 'YES'; 	 
-	v_DO_WITH_KORR_ROWS 	varchar2(100) := 'REJECT'; 	 
-	v_PREFER_ABSCHL_SATZ 	varchar2(100) := 'NO'; 		 
-	v_VORWERT_UE 			varchar2(100) := 'N'; 		 
-	v_NO_CONNECT_IDENT_ROWS varchar2(100); 
-
-
-
-
-
-
-
-
-
-
-	v_ERSTEL_DAT_I 		varchar2(100);
-	v_ERSTEL_DAT_H 		varchar2(100);
-	v_ERSTEL_DAT_TYP 	varchar2(100);
-	v_GUELT_VON_DAT_I 	varchar2(100);
-	v_GUELT_VON_DAT_H 	varchar2(100);
-	v_GUELT_VON_DAT_TYP     varchar2(100);
-	v_GUELT_VON_NEU_I 	varchar2(100);
-	v_GUELT_VON_NEU_TYP     varchar2(100);
-	v_GUELT_BIS_DAT_H 	varchar2(100);
-	v_GUELT_BIS_DAT_TYP     varchar2(100);
-	v_KORR_DAT_H 		varchar2(100);
-	v_KORR_DAT_TYP 		varchar2(100);
-	v_UPDATE_DAT_H 		varchar2(100);
-	v_UPDATE_DAT_TYP 	varchar2(100);
-	v_FLAG_ABSCHL 		varchar2(100);
-	v_FLAG_ABSCHL_TYP 	varchar2(100);
-	v_HIST_ID 		varchar2(100);
-	v_HIST_ID_TYP 		varchar2(100);
-	v_LIST_IDENT_ID_I 	varchar2(100);
-	v_LIST_IDENT_ID_H 	varchar2(100);
-	v_ERSTEL_DAT_TYP_TRUNC 		varchar2(100);
-	v_GUELT_VON_DAT_TYP_TRUNC 	varchar2(100);
-	v_GUELT_VON_NEU_TYP_TRUNC 	varchar2(100);
-	v_GUELT_BIS_DAT_TYP_TRUNC 	varchar2(100);
-	v_KORR_DAT_TYP_TRUNC 		varchar2(100);
-	v_UPDATE_DAT_TYP_TRUNC 		varchar2(100);
-	v_DATE_DAT_TYP 			varchar2(100);
-	v_DATE_DAT_TYP_TRUNC 		varchar2(100);
-
-	c_DATE_UNGUELTIG_LOC 	varchar2(100) := 'to_timestamp(''1899-12-31 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	c_DATE_MINIMUM_LOC 	varchar2(100) := 'to_timestamp(''1900-01-01 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	c_DATE_MAXIMUM_LOC 	varchar2(100) := 'to_timestamp(''9999-12-31 00:00:00.000'',''yyyy-mm-dd hh24:mi:ss.Ff3'')'; 
-	v_DATE_UNGUELTIG_LOC 	varchar2(400);
-	v_DATE_MINIMUM_LOC 	varchar2(400);
-	v_DATE_MAXIMUM_LOC 	varchar2(400);
-
-	v_MIN_DAT_INTERVAL      varchar2(100);
-	
-	v_fal varchar2(32000);
-	
-	v_fii varchar2(32000);
-begin
-	v_HIST_TAB_OUT := 'SSC41WH_FST.W309_MN_LT_OUT';
-	v_HIST_TAB_OUT_NAME := v_HIST_TAB_OUT;
-	for c_tables in
-        (
-        select 'SVS41EB_ODIKM.LFST_UPD5D_MN_LADETAB' AS META
-,'SSC41WH_FST.W309_WRK_MAT_MNLADETAB' AS SCR_INPUT_TAB
-,'SVS41WH_FST.TH_DWH_MASSNAHME_MAT' AS SCR_HIST_TAB
-,'SSC41WH_FST.W309_MN_LT_REJECT_TAB' AS SCR_REJECT_TAB
-,'SSC41WH_FST.W309_MN_LT_HIST_MAX_GUELT_VON' AS SCR_TMP_HIST_MAX_GUELT_VON
-,'SSC41WH_FST.W309_MN_LT_TMP_HIST_IN' AS SCR_TMP_HIST_IN
-,'SSC41WH_FST.W309_MN_LT_TMP_HIST_RAND' AS SCR_TMP_HIST_RAND
-,'SSC41WH_FST.W309_MN_LT_INWRK_GUELTVON_MIN' AS SCR_TMP_INPT_WRK_GUELT_VON_MIN
-,'SSC41WH_FST.W309_MN_LT_INWRK_MINEDAT_KORR' AS SCR_TMP_INPT_WRK_MIN_EDAT_KORR
-,'SSC41WH_FST.W309_MN_LT_IN_STZ_MITMIN_NCHF' AS SCR_TMP_INPT_SATZ_MITMIN_NCHF
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID' AS SCR_TMP_INPUT_WRK_MIT_ID
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID2' AS SCR_TMP_INPUT_WRK_MIT_ID2
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID3' AS SCR_TMP_INPUT_WRK_MIT_ID3
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID4' AS SCR_TMP_INPUT_WRK_MIT_ID4
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID5' AS SCR_TMP_INPUT_WRK_MIT_ID5
-,'SSC41WH_FST.W309_MN_LT_INPUT_WRK_MIT_ID6' AS SCR_TMP_INPUT_WRK_MIT_ID6
-,'SSC41WH_FST.W309_MN_LT_TMP_INPUT_MAX_GV' AS SCR_TMP_INPUT_MAX_GV
-,'SSC41WH_FST.W309_MN_LT_TMP_INPUT_MAX_GV2' AS SCR_TMP_INPUT_MAX_GV2
-,'SSC41WH_FST.W309_MN_LT_INWRK_GV_KORREKTUR' AS SCR_TMP_INPUT_WRK_GV_KORREKTUR
-,'SSC41WH_FST.W309_MN_LT_TMP_ANFAENGE' AS SCR_TMP_ANFAENGE
-,'SSC41WH_FST.W309_MN_LT_TMP_HILF_ANFAENGE' AS SCR_TMP_HILF_ANFAENGE
-,'SSC41WH_FST.W309_MN_LT_TMP_ENDEN' AS SCR_TMP_ENDEN
-,'SSC41WH_FST.W309_MN_LT_TMP_HILF_ENDEN' AS SCR_TMP_HILF_ENDEN
-,'SVS41EB_ODIKM.GFST_STPARAM_HIST5D' AS ST_PARAM
-,'SVS41EB_ODIKM.PROT_KM_USING' AS PROT_KM_USING
-,'SVS41EB_ODIKM.LFST_Z5DEX_MN_LADETAB' AS META_5DEX
-,'SSC41WH_FST.W309_MN_LT_TMP_GV_MEHRF' AS SCR_TMP_GV_MEHRF
-,'SSC41WH_FST.W309_MN_LT_HIST_STZ_MIT_VG_NF' AS SCR_TMP_HIST_SAETZE_MIT_VG_NF
-,'SSC41WH_FST.W309_MN_LT_UE_STZ_MTGRP_ANFVG' AS SCR_TMP_UE_SATZ_MITGRP_ANF_VG
-,'SSC41WH_FST.W309_MN_LT_UE_STZ_MTGRP_ANF' AS SCR_TMP_UE_SAETZE_MIT_GRP_ANF
- from dual
-        ) loop
-	v_INPUT_TAB 	:= c_tables.SCR_INPUT_TAB;
-	v_HIST_TAB 	:= c_tables.SCR_HIST_TAB;
-	v_REJECT_TAB 	:= c_tables.SCR_REJECT_TAB;
-	
-	execute immediate
-	'select  '||
-	'    case when PARAM_NO_CONNECT_IDENT_ROWS is not null then ''NO'' else  ''YES'' end PARAM_CONNECT_IDENT_ROWS '||
-	'  , case when PARAM_NO_CONNECT_IDENT_ROWS is not null then ''NO'' end PARAM_NO_CONNECT_IDENT_ROWS '||
-	'  , case when PARAM_DO_WITH_KORR_ROWS is not null then replace(upper(PARAM_DO_WITH_KORR_ROWS),''DO_WITH_KORR_ROWS='') else  ''REJECT'' end PARAM_DO_WITH_KORR_ROWS '||
-	'  , case when PARAM_PREFER_ABSCHL_SATZ is not null then replace(upper(PARAM_PREFER_ABSCHL_SATZ),''PREFER_ABSCHL_SATZ='') else  ''NO'' end PARAM_PREFER_ABSCHL_SATZ '||
-	'  , case when PARAM_VORWERT_UE is not null then replace(upper(PARAM_VORWERT_UE),''VORWERT_UE='') else  ''N'' end PARAM_VORWERT_UE '||
-        '  , PARAM_ODI_REJECT_TAB '|| 
-	'from '||c_tables.ST_PARAM||
-	' where PRIMARY_KEY = '''||V_KM_RUN_TYPE||'_'||V_KM_SCRIPT_LVL||''''
-        into  v_CONNECT_IDENT_ROWS
-			, v_NO_CONNECT_IDENT_ROWS
-			, v_DO_WITH_KORR_ROWS
-			, v_PREFER_ABSCHL_SATZ
-			, v_VORWERT_UE
-                        , v_PARAM_ODI_REJECT_TAB;
-	
-        execute immediate 'select I_ATTR_NAME, H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''ERSTEL_DAT''' into v_ERSTEL_DAT_I, v_ERSTEL_DAT_H, v_ERSTEL_DAT_TYP, v_ERSTEL_DAT_TYP_TRUNC;
-	execute immediate 'select I_ATTR_NAME, H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''GUELT_VON_DAT''' into v_GUELT_VON_DAT_I, v_GUELT_VON_DAT_H, v_GUELT_VON_DAT_TYP, v_GUELT_VON_DAT_TYP_TRUNC;
-  execute immediate 'select count(*) from '||c_tables.meta||' where label = ''GUELT_VON_NEU''' into v_count;
-  if v_count = 1 then
-    execute immediate 'select I_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.meta||' where label = ''GUELT_VON_NEU''' into v_guelt_von_neu_i, v_guelt_von_neu_typ, v_guelt_von_neu_typ_trunc;
-  else
-    v_guelt_von_neu_i := to_char(null);
-    v_guelt_von_neu_typ := v_erstel_dat_typ;
-    v_guelt_von_neu_typ_trunc := v_erstel_dat_typ_trunc;
-  end if;
-        execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''GUELT_BIS_DAT''' into v_GUELT_BIS_DAT_H, v_GUELT_BIS_DAT_TYP, v_GUELT_BIS_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''KORR_DAT''' into v_KORR_DAT_H, v_KORR_DAT_TYP, v_KORR_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE), upper(TRUNC_DATE_TO_DAY) from '||c_tables.META||' where label = ''UPDATE_DAT''' into v_UPDATE_DAT_H, v_UPDATE_DAT_TYP, v_UPDATE_DAT_TYP_TRUNC;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE) from '||c_tables.META||' where label = ''FLAG_ABSCHL''' into v_FLAG_ABSCHL, v_FLAG_ABSCHL_TYP;
-	execute immediate 'select H_ATTR_NAME, upper(DATA_TYPE) from '||c_tables.META||' where label = ''HIST_ID''' into v_HIST_ID, v_HIST_ID_TYP;
-        execute immediate 'select LISTAGG(I_ATTR_NAME, '', '') WITHIN GROUP (ORDER BY line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_LIST_IDENT_ID_I;
-	execute immediate 'select LISTAGG(H_ATTR_NAME, '', '') WITHIN GROUP (ORDER BY line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_LIST_IDENT_ID_H;
-	if 	nvl(v_ERSTEL_DAT_TYP, 'null') = nvl(v_GUELT_VON_DAT_TYP, 'null')
-		and nvl(v_GUELT_VON_DAT_TYP, 'null') = nvl(v_GUELT_VON_NEU_TYP, 'null')
-		and nvl(v_GUELT_VON_NEU_TYP, 'null') = nvl(v_GUELT_BIS_DAT_TYP, 'null')
-		and nvl(v_GUELT_BIS_DAT_TYP, 'null') = nvl(v_KORR_DAT_TYP, 'null')
-		and nvl(v_KORR_DAT_TYP, 'null') = nvl(v_UPDATE_DAT_TYP, 'null')
-	then
-		v_DATE_DAT_TYP := v_UPDATE_DAT_TYP;
-	else
-		RAISE_APPLICATION_ERROR(-20001,'FEHLER in sr_sql_update_historie5D(): -> Datümer haben nicht den gleichen Datentyp!');
-	end if;
-	if 	nvl(v_ERSTEL_DAT_TYP_TRUNC, 'null') = nvl(v_GUELT_VON_DAT_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_VON_DAT_TYP_TRUNC, 'null') = nvl(v_GUELT_VON_NEU_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_VON_NEU_TYP_TRUNC, 'null') = nvl(v_GUELT_BIS_DAT_TYP_TRUNC, 'null')
-		and nvl(v_GUELT_BIS_DAT_TYP_TRUNC, 'null') = nvl(v_KORR_DAT_TYP_TRUNC, 'null')
-		and nvl(v_KORR_DAT_TYP_TRUNC, 'null') = nvl(v_UPDATE_DAT_TYP_TRUNC, 'null')
-	then
-		v_DATE_DAT_TYP_TRUNC := v_UPDATE_DAT_TYP_TRUNC;
-	else
-		RAISE_APPLICATION_ERROR(-20001,'FEHLER in sr_sql_update_historie5D(): -> [TRUNC] Datümer haben nicht den gleichen Datentyp!');
-	end if;
-	if v_DATE_DAT_TYP = 'DATE' and v_DATE_DAT_TYP_TRUNC is not null and v_DATE_DAT_TYP_TRUNC = 'J'
-	then
-		v_DATE_UNGUELTIG_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_UNGUELTIG_LOC);
-		v_DATE_MINIMUM_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_MINIMUM_LOC);
-		v_DATE_MAXIMUM_LOC 	:= replace(c_timestamp_to_date, '[arg]', c_DATE_MAXIMUM_LOC);
-		v_MIN_DAT_INTERVAL := '1';
-	end if;
-	if v_DATE_DAT_TYP = 'DATE' and (v_DATE_DAT_TYP_TRUNC is null or v_DATE_DAT_TYP_TRUNC != 'J')
-	then
-		v_DATE_UNGUELTIG_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_UNGUELTIG_LOC);
-		v_DATE_MINIMUM_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_MINIMUM_LOC);
-		v_DATE_MAXIMUM_LOC 	:= replace(c_timestamp_to_datetime, '[arg]', c_DATE_MAXIMUM_LOC);
-		v_MIN_DAT_INTERVAL := '1/(24*60*60)';
-	end if;
-
-
-
-
-if v_PARAM_ODI_REJECT_TAB = 'YES'
-then
-  execute immediate 'select count(*) from dba_tables where owner||''.''||table_name = '''||c_tables.SCR_REJECT_TAB||'''' into v_count;
-  if v_count = 1
-  then
-    execute immediate 'drop table '||c_tables.SCR_REJECT_TAB||' purge';
-  end if;
-  execute immediate 'select listagg(i_attr_name||'' ''||data_type, '',''||chr(10)) within group (order by line_id) from '||c_tables.META||' where label like ''IDENT_ID''' into v_fii;
-  execute immediate 'select listagg('', ''||i_attr_name||'' ''||data_type, chr(10)) within group (order by line_id) from '||c_tables.META||' where label like ''ATTR^_%'' escape ''^'' or label like ''UE_STEUER''' into v_fal;
-    v_sql :='CREATE TABLE '||c_tables.scr_reject_tab||' '||chr(10)||
-            '( '||chr(10)||
-             v_fii||' '||chr(10)||
-             v_fal||' '||chr(10)||
-            ', {FLAG_ABSCHL} {FLAG_ABSCHL_TYP} '||chr(10)||
-            ', {GUELT_VON_DAT_I}	{DATE_DAT_TYP} '||chr(10)||
-            ', guelt_bis_dat_korr {DATE_DAT_TYP} '||chr(10)||
-            ', {ERSTEL_DAT_I} {DATE_DAT_TYP} '||chr(10)||
-            ', reason_code number '||chr(10)||
-            ') nologging parallel storage (next 16M) ';
-else
-  v_sql := ' select ''KA'' from dual';
-end if;
-
-        
-	v_sql := replace(v_sql,'{INPUT_TAB}',v_INPUT_TAB);
-	v_sql := replace(v_sql,'{HIST_TAB}',v_HIST_TAB);
-	v_sql := replace(v_sql,'{HIST_TAB_OUT}',v_HIST_TAB_OUT);
-	v_sql := replace(v_sql,'{REJECT_TAB}',v_REJECT_TAB);
-	v_sql := replace(v_sql,'{ATTR_DEFS}',v_ATTR_DEFS);
-	v_sql := replace(v_sql,'{STEUER_PARAMS}',v_STEUER_PARAMS);
-	v_sql := replace(v_sql,'{HIST_TAB_OUT_NAME}',v_HIST_TAB_OUT_NAME);
-	v_sql := replace(v_sql,'{CONNECT_IDENT_ROWS}',v_CONNECT_IDENT_ROWS);
-	v_sql := replace(v_sql,'{DO_WITH_KORR_ROWS}',v_DO_WITH_KORR_ROWS);
-	v_sql := replace(v_sql,'{PREFER_ABSCHL_SATZ}',v_PREFER_ABSCHL_SATZ);
-	v_sql := replace(v_sql,'{VORWERT_UE}',v_VORWERT_UE);
-
-	v_sql := replace(v_sql,'{ERSTEL_DAT_I}',v_ERSTEL_DAT_I);
-	v_sql := replace(v_sql,'{ERSTEL_DAT_H}',v_ERSTEL_DAT_H);
-	v_sql := replace(v_sql,'{ERSTEL_DAT_TYP}',v_ERSTEL_DAT_TYP);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_I}',v_GUELT_VON_DAT_I);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_H}',v_GUELT_VON_DAT_H);
-	v_sql := replace(v_sql,'{GUELT_VON_DAT_TYP}',v_GUELT_VON_DAT_TYP);
-	v_sql := replace(v_sql,'{GUELT_VON_NEU_I}',v_GUELT_VON_NEU_I);
-	v_sql := replace(v_sql,'{GUELT_VON_NEU_TYP}',v_GUELT_VON_NEU_TYP);
-	v_sql := replace(v_sql,'{GUELT_BIS_DAT_H}',v_GUELT_BIS_DAT_H);
-	v_sql := replace(v_sql,'{GUELT_BIS_DAT_TYP}',v_GUELT_BIS_DAT_TYP);
-	v_sql := replace(v_sql,'{KORR_DAT_H}',v_KORR_DAT_H);
-	v_sql := replace(v_sql,'{KORR_DAT_TYP}',v_KORR_DAT_TYP);
-	v_sql := replace(v_sql,'{UPDATE_DAT_H}',v_UPDATE_DAT_H);
-	v_sql := replace(v_sql,'{UPDATE_DAT_TYP}',v_UPDATE_DAT_TYP);
-	v_sql := replace(v_sql,'{FLAG_ABSCHL}',v_FLAG_ABSCHL);
-	v_sql := replace(v_sql,'{FLAG_ABSCHL_TYP}',v_FLAG_ABSCHL_TYP);
-	if v_sql is null
-	then
-		v_sql := 'select ''SQL string is not defined'' from dual';
-	end if;
-	v_sql := replace(v_sql,'{HIST_ID}',v_HIST_ID);
-	v_sql := replace(v_sql,'{HIST_ID_TYP}',v_HIST_ID_TYP);
-	v_sql := replace(v_sql,'{LIST_IDENT_ID_I}',v_LIST_IDENT_ID_I);
-	v_sql := replace(v_sql,'{LIST_IDENT_ID_H}',v_LIST_IDENT_ID_H);
-    v_sql := replace(v_sql,'{DATE_UNGUELTIG}',v_DATE_UNGUELTIG_LOC);
-	v_sql := replace(v_sql,'{DATE_MINIMUM}',v_DATE_MINIMUM_LOC);
-	v_sql := replace(v_sql,'{DATE_MAXIMUM}',v_DATE_MAXIMUM_LOC);
-	v_sql := replace(v_sql,'{DATE_DAT_TYP}',v_DATE_DAT_TYP);
-	v_sql := replace(v_sql,'{MIN_DAT_INTERVAL}',v_MIN_DAT_INTERVAL);
-	
-	execute immediate 'insert into '||c_tables.PROT_KM_USING||' values '||chr(10)||
-	'( '||chr(10)||
-	'systimestamp '||chr(10)||
-	', ''BA IKM FST HIST5D UPD HISTORIE5D'' '||chr(10)||
-	', ''MAP_DWH_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D'' '||chr(10)||
-	', :1 '||chr(10)||
-	', ''CT_ESTAT_FST_41'' '||chr(10)||
-	', ''AGT_W_FST_E_B05_Q0000288_52255'' '||chr(10)||
-	', ''2026-09-15 11:24:25.557'' '||chr(10)||
-	', ''50603'' '||chr(10)||
-	', ''EPS_DWH_FST_W309_003_MAT_MN_KM_SQL_UPD_HISTORIE5D'' '||chr(10)||
-	')' using v_sql;
-	commit;
-    begin
-        execute immediate v_sql;
-        commit;
-    exception when others then
-              raise_application_error(
-                                      -20002
-                                    , chr(10)||rpad('=',20,'=')||chr(10)||
-                                      SQLERRM||
-                                      chr(10)||rpad('=',20,'=')||chr(10)||
-                                      v_sql||
-                                      chr(10)||rpad('=',20,'=')||chr(10)
-                                      );
-	end;
-        end loop;
-end;  , Error Msg = ORA-00942: Tabelle oder View nicht vorhanden
-ORA-06512: in Zeile 120
-ORA-06512: in Zeile 120
-
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:514)
-	... 36 more
+, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00904: "MAT_TEILNAHMEMODUS": ungültige ID
