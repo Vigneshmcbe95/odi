@@ -1,0 +1,11 @@
+Hallo Jörn,
+
+morgen früh habe ich Zeit für ein kurzes Gespräch.
+
+Kurzer Status:
+- W334 und W346: vollständig erfolgreich abgeschlossen.
+- W309 (altes HIST5D-Modul) und W301: aktuell im Test, dabei ein paar fehlende Tabellen/Spalten im Sandbox-Schema gefunden, werden gerade behoben.
+- Plan bis Freitag: erst jeden einzelnen Ordner sauber durchlaufen lassen, dann den kompletten Gesamt-Job starten, sobald alle einzeln laufen.
+
+Viele Grüße,
+Nils
