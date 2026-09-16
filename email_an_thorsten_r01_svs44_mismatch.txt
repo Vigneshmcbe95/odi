@@ -1,0 +1,22 @@
+Betreff: B05 - Mapping (R01) vs. DB-Objekte (SVS44) passen nicht zusammen
+
+Hallo Thorsten,
+
+beim Testen von W335 (MAP_DWH_W335_021_WRK_TLN_EVL_COACH) sind wir auf
+ORA-01400 (META_MON_ID NOT NULL) gestossen. Jörn hat dazu erklärt:
+
+Die ODI-Mappings kommen aus R01 (davon wurde das ODI-Repo für B05
+geklont), die DB-Objekte in B05 haben wir aber von SVS44 geholt. Wenn
+sich die Tabellenstruktur zwischen R01 und SVS44 unterscheidet (siehe
+Beispiel SCR_DWH_FST.W335_EVLB_LOAD vs. SSC41WH_FST.W335_EVLB_LOAD),
+passt das Mapping nicht mehr zur tatsächlichen Tabelle.
+
+Das erklärt vermutlich auch einige der anderen fehlenden Spalten/
+Tabellen, die wir diese Woche schon gefixt haben (W334, W346, W309).
+
+Frage: Wie gehen wir damit am besten um? Sollen wir die DB-Objekte in
+B05 eher an R01 angleichen, oder gibt es einen anderen empfohlenen
+Weg, dieses Mapping/DB-Mismatch zu lösen?
+
+Viele Grüße,
+Nils
