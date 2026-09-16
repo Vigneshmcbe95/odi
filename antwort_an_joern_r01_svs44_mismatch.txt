@@ -1,0 +1,5 @@
+Hallo Jörn,
+
+danke, das erklärt einiges — macht Sinn, dass das nicht zusammenpasst, wenn Mappings von R01 aber die DB-Objekte von SVS44 stammen.
+
+Wir können das ja mal bei Thorsten ansprechen, wie wir das am besten angehen.
