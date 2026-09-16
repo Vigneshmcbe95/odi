@@ -1,0 +1,1 @@
+Hallo Thorsten, beim Ausführen von Job W309 (Legacy HIST5D-Modul) kommt ORA-00942, weil SVS41EB_ODIKM als Schema für B05 gar nicht angelegt wurde (im Gegensatz zu SVS43/44/45EB_ODIKM) — sollen wir dieses Schema für B05 neu anlegen?
