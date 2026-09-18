@@ -14,7 +14,7 @@ Tag 13 (4 Punkte) — 16.09.2026 (Nachmittag) — Fehlerkette weiterverfolgt
 1. Neu gestartet, MMZ_ID/TMM_ID fehlten auf TH_DWH_TEILNAHME_MAT — ohne Drop ergänzt
 2. Neu gestartet, FLAG_ABSCHL-Fehler auf W309_WRK_MABE_TH_DWH_MN_TKM behoben
 3. Neu gestartet, META_MON_ID NOT-NULL-Fehler auf W335_EVLB_LOAD — Constraint gelockert
-4. Muster an Jörn und Thorsten gemeldet — Klärung: SCR_DWH_FST ist jetzt die korrekte Referenz
+4. Muster im Team gemeldet — Klärung: SCR_DWH_FST ist jetzt die korrekte Referenz
 
 Tag 14 (4 Punkte) — 18.09.2026 — W105/W305, bis zur Ursache verfolgt
 1. W105-Job, ORA-00942 auf W105_TMP_BAK_LOAD — Objekt aus SCR_DWH_FST nachgebaut
