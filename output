@@ -1,150 +1,68 @@
-ODI-1226: Schritt MAP_DWH_W335_021_WRK_TLN_EVL_COACH nach 1 Versuch(en) nicht erfolgreich.
-ODI-1240: Flow MAP_DWH_W335_021_WRK_TLN_EVL_COACH beim Ausführen eines Insert new rows-IKM Oracle Insert-Load W335_EVLB_LOAD-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W335_WRK_HIST_TLN_EVL_COACH.
-ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (60)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (70)" fehlerhaft ist.
-ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (70)" nicht erfolgreich, da die untergeordnete Aufgabe "Insert new rows-IKM Oracle Insert-Load W335_EVLB_LOAD (80)" fehlerhaft ist.
-ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W335_EVLB_LOAD bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused By: java.sql.SQLIntegrityConstraintViolationException: ORA-01400: Einfügen von NULL in ("SSC41WH_FST"."W335_EVLB_LOAD"."META_MON_ID") nicht möglich
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load L_1 bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
 
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
-	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
-	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
-	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
-	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
-	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
-	at oracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
-	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
-	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
-	at oracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
-	at oracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
-	at oracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
-	at oracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
-	at oracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
-	at oracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
-	at oracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
-	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
-	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
-	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
-	at oracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
-	at oracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-Caused by: Error : 1400, Position : 0, Sql = 
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
+	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
+	atoracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
+	atoracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
+	atoracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
+	atoracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
+	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
+	atoracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
+	atoracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
+	atoracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
+	atoracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
+	atoracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
+	atoracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
+	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
+	atoracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
+	atoracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
+	atoracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
+	atoracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
+	atoracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
+	atoracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
+	atoracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
+	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
+	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
+	atoracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
+	atoracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
+	atjava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	atjava.util.concurrent.FutureTask.run(FutureTask.java:266)
+	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	atjava.lang.Thread.run(Thread.java:750)
+Caused by: Sql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W335_EVLB_LOAD
+  INTO SSC41WH_FST.W105_TMP_BAK_LOAD
   (
-    ELB_ID ,
-    KNT_ID ,
-    KMN_ID ,
-    ELB_ED ,
-    ELB_COACHING_DURCH ,
-    ELB_UMFANG ,
-    ELB_UMFANG_MONAT ,
-    ELB_UMFANG_ZEITRAUM ,
-    ELB_VON ,
-    ELB_BIS ,
-    ELB_WERTEINHEIT ,
-    ELB_LOE_KEN 
+    BAK_ID ,
+    CZK_COSACHNT_SCHL ,
+    CZK_GUELT_VON_DAT 
   ) 
 SELECT 
-  TL_DWL_EVLB.ELB_ID ,
-  TL_DWL_EVLB.KNT_ID ,
-  TL_DWL_EVLB.KMN_ID ,
-  TL_DWL_EVLB1_1.ELB_ED_TAG ,
-  TL_DWL_EVLB.ELB_COACHING_DURCH ,
-  TL_DWL_EVLB.ELB_UMFANG ,
-  TL_DWL_EVLB.ELB_UMFANG_MONAT ,
-  TL_DWL_EVLB.ELB_UMFANG_ZEITRAUM ,
-  TL_DWL_EVLB.ELB_VON ,
-  TL_DWL_EVLB.ELB_BIS ,
-  TL_DWL_EVLB.ELB_WERTEINHEIT ,
-  TL_DWL_EVLB.ELB_LOE_KEN  
+  DIST.BAK_ID ,
+  DIST.CFK_ID ,
+  DIST.CFK_ED  
 FROM 
-  SVS41WL_FST.TL_DWL_EVLB TL_DWL_EVLB  INNER JOIN  (
-SELECT 
-  TL_DWL_EVLB1.ELB_ID AS ELB_ID ,
-  TRUNC(TL_DWL_EVLB1.ELB_ED,'DD') AS ELB_ED_TAG ,
-  MAX(TL_DWL_EVLB1.ELB_ED) AS ELB_ED_MAX   
-FROM 
-  SVS41WL_FST.TL_DWL_EVLB TL_DWL_EVLB1  
-WHERE
-  (TL_DWL_EVLB1.META_MON_ID = 202607
-) 
-GROUP BY
-  TL_DWL_EVLB1.ELB_ID,(TRUNC(TL_DWL_EVLB1.ELB_ED,'DD')) 
-  ) TL_DWL_EVLB1_1  
-    ON  TL_DWL_EVLB.ELB_ID = TL_DWL_EVLB1_1.ELB_ID
-AND
-TL_DWL_EVLB.ELB_ED = TL_DWL_EVLB1_1.ELB_ED_MAX
-WHERE
-  (TL_DWL_EVLB.META_MON_ID = 202607
-) 
-       , OriginalSql = 
-INSERT 
-  /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W335_EVLB_LOAD
   (
-    ELB_ID ,
-    KNT_ID ,
-    KMN_ID ,
-    ELB_ED ,
-    ELB_COACHING_DURCH ,
-    ELB_UMFANG ,
-    ELB_UMFANG_MONAT ,
-    ELB_UMFANG_ZEITRAUM ,
-    ELB_VON ,
-    ELB_BIS ,
-    ELB_WERTEINHEIT ,
-    ELB_LOE_KEN 
-  ) 
 SELECT 
-  TL_DWL_EVLB.ELB_ID ,
-  TL_DWL_EVLB.KNT_ID ,
-  TL_DWL_EVLB.KMN_ID ,
-  TL_DWL_EVLB1_1.ELB_ED_TAG ,
-  TL_DWL_EVLB.ELB_COACHING_DURCH ,
-  TL_DWL_EVLB.ELB_UMFANG ,
-  TL_DWL_EVLB.ELB_UMFANG_MONAT ,
-  TL_DWL_EVLB.ELB_UMFANG_ZEITRAUM ,
-  TL_DWL_EVLB.ELB_VON ,
-  TL_DWL_EVLB.ELB_BIS ,
-  TL_DWL_EVLB.ELB_WERTEINHEIT ,
-  TL_DWL_EVLB.ELB_LOE_KEN  
+  DISTINCT 
+  TD_DWH_BA_KUNDE.BAK_ID AS BAK_ID ,
+  L.CFK_ID AS CFK_ID ,
+  L.CFK_ED AS CFK_ED   
 FROM 
-  SVS41WL_FST.TL_DWL_EVLB TL_DWL_EVLB  INNER JOIN  (
-SELECT 
-  TL_DWL_EVLB1.ELB_ID AS ELB_ID ,
-  TRUNC(TL_DWL_EVLB1.ELB_ED,'DD') AS ELB_ED_TAG ,
-  MAX(TL_DWL_EVLB1.ELB_ED) AS ELB_ED_MAX   
-FROM 
-  SVS41WL_FST.TL_DWL_EVLB TL_DWL_EVLB1  
+  SSC41WH_FST.W105_WRK_LOAD_COSACHNT_KUNDE L ,  SVS41WH_BA_TRS.TD_DWH_BA_KUNDE TD_DWH_BA_KUNDE       
 WHERE
-  (TL_DWL_EVLB1.META_MON_ID = 202607
+  (TD_DWH_BA_KUNDE.BAK_KUNDEN_NR = L.CFK_KUNDEN_NR
 ) 
-GROUP BY
-  TL_DWL_EVLB1.ELB_ID,(TRUNC(TL_DWL_EVLB1.ELB_ED,'DD')) 
-  ) TL_DWL_EVLB1_1  
-    ON  TL_DWL_EVLB.ELB_ID = TL_DWL_EVLB1_1.ELB_ID
-AND
-TL_DWL_EVLB.ELB_ED = TL_DWL_EVLB1_1.ELB_ED_MAX
-WHERE
-  (TL_DWL_EVLB.META_MON_ID = 202607
-) 
-       , Error Msg = ORA-01400: Einfügen von NULL in ("SSC41WH_FST"."W335_EVLB_LOAD"."META_MON_ID") nicht möglich
-
-	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:514)
-	... 36 more
+  ) DIST  
+        
+, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
