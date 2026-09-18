@@ -1,23 +1,23 @@
-Tag 11 (4 Punkte) — 15.09.2026 — UC4-Jobläufe gegen B05, Strukturfehler behoben
-1. UC4-Job gegen B05 gestartet, ORA-12899 (Spalte zu klein) auf HDZ_DURCHFUEHRUNGSORT_STRHSNR/_PLZ aufgetreten
-2. Spaltengröße korrigiert, Job neu gestartet, gleicher Fehlertyp auf W346_TH_DWH_TN_DFZ_TRS erneut aufgetreten
-3. Systemweite Suche nach allen zu klein dimensionierten *_DURCHFUEHRUNGSORT-Spalten ergänzt, um Wiederholfehler in Folgeläufen zu vermeiden
-4. Job erneut gestartet, dabei Legacy-HIST5D-Modultabellen als fehlend erkannt und per Synonym gegen SVS41EB_ODIKM nachgezogen
+Tag 11 (4 Punkte) — 15.09.2026 — UC4-Job gegen B05, Strukturfehler behoben
+1. Job gestartet, ORA-12899 auf HDZ_DURCHFUEHRUNGSORT_STRHSNR/_PLZ — Spaltengröße korrigiert
+2. Neu gestartet, gleicher Fehler auf W346_TH_DWH_TN_DFZ_TRS — erneut behoben
+3. Systemweite Suche nach allen zu kleinen *_DURCHFUEHRUNGSORT-Spalten ergänzt
+4. Neu gestartet, fehlende HIST5D-Tabellen erkannt und per Synonym gegen SVS41EB_ODIKM gelöst
 
-Tag 12 (4 Punkte) — 16.09.2026 (Vormittag) — UC4-Job blockiert durch fehlendes Schema/Rechte
-1. UC4-Job schlug fehl, da Schema SVS41EB_ODIKM in B05 komplett fehlte — Schema als eigene Sandbox angelegt (Klon aus SVS43EB_ODIKM)
-2. Job neu gestartet, ORA-00904 auf MAT_TEILNAHMEMODUS aufgetreten — Ursache zwischen Synonym-, Grant- und echtem Strukturproblem sauber eingegrenzt
-3. Fehlenden SELECT-Grant auf PSD1_DWL_FST.TL_DWL_MATT für odi_bsg_default ergänzt, Job erneut gestartet
-4. Fehler bestand weiter — echte fehlende Spalte MAT_TEILNAHMEMODUS auf W309_WRK_MAT_TN_PRELADETAB gefunden, Tabelle korrekt aus SSC45WH_FST-Referenz nachgezogen
+Tag 12 (4 Punkte) — 16.09.2026 (Vormittag) — Job blockiert durch fehlendes Schema/Rechte
+1. Schema SVS41EB_ODIKM fehlte komplett — als Sandbox angelegt (Klon aus SVS43EB_ODIKM)
+2. Neu gestartet, ORA-00904 auf MAT_TEILNAHMEMODUS — Synonym-/Grant-/Strukturursache eingegrenzt
+3. Fehlenden Grant auf PSD1_DWL_FST.TL_DWL_MATT ergänzt, erneut gestartet
+4. Fehler blieb — echte fehlende Spalte auf W309_WRK_MAT_TN_PRELADETAB gefunden und aus Referenz nachgezogen
 
-Tag 13 (4 Punkte) — 16.09.2026 (Nachmittag) — UC4-Job weitergeführt, Folgefehler in der Kette behoben
-1. Job nach vorherigem Fix neu gestartet, nächster Fehler in der Kette: fehlende Spalten MMZ_ID/TMM_ID auf TH_DWH_TEILNAHME_MAT (persistent, ohne Drop ergänzt)
-2. Job neu gestartet, FLAG_ABSCHL-Fehler auf W309_WRK_MABE_TH_DWH_MN_TKM aufgetreten und behoben
-3. Job neu gestartet, ORA-01400 (NOT NULL) auf META_MON_ID in W335_EVLB_LOAD aufgetreten — Constraint gelockert, da Mapping die Spalte nachweislich nicht befüllt
-4. Wiederkehrendes Muster (Mapping passt nicht zu DB-Objekt) an Jörn Kulessa und Thorsten Senft zurückgemeldet — Klärung erhalten: SCR_DWH_FST ist ab jetzt die korrekte Referenzquelle statt SVN/SVS44
+Tag 13 (4 Punkte) — 16.09.2026 (Nachmittag) — Fehlerkette weiterverfolgt
+1. Neu gestartet, MMZ_ID/TMM_ID fehlten auf TH_DWH_TEILNAHME_MAT — ohne Drop ergänzt
+2. Neu gestartet, FLAG_ABSCHL-Fehler auf W309_WRK_MABE_TH_DWH_MN_TKM behoben
+3. Neu gestartet, META_MON_ID NOT-NULL-Fehler auf W335_EVLB_LOAD — Constraint gelockert
+4. Muster an Jörn und Thorsten gemeldet — Klärung: SCR_DWH_FST ist jetzt die korrekte Referenz
 
-Tag 14 (4 Punkte) — 18.09.2026 — UC4-Job W105/W305, Fehlerkette bis zur Ursache verfolgt
-1. UC4-Job (W105) gestartet, ORA-00942 auf W105_TMP_BAK_LOAD — fehlendes Objekt anhand der neuen SCR_DWH_FST-Referenz identifiziert und nachgebaut
-2. Job neu gestartet, gleicher Fehlertyp auf W105_TMP_HIST_GUELTIG-Folgeschritt — fehlende Objekte in SVS41WH_BA_TRS, SVS41WH_FST und SVS41_DWH_FST aus THM_DWH_BA_TRS/THM_DWH_FST nachgebaut (persistente Schemas, kein Drop bestehender Daten)
-3. UC4-Job (W305) gestartet, ORA-01476 (Divisor ist Null) durch fehlende Laufzeitvariable FSC_KA
-4. Ursache im ODI Operator zurückverfolgt: nicht die Datenbank fehlerhaft, sondern Ausführungsreihenfolge — PCK_DWH_W305_000_SET_LOCAL_VARIABLES muss vor PCK_DWH_W305_001_006 laufen; Fix ohne DB-Änderung gefunden
+Tag 14 (4 Punkte) — 18.09.2026 — W105/W305, bis zur Ursache verfolgt
+1. W105-Job, ORA-00942 auf W105_TMP_BAK_LOAD — Objekt aus SCR_DWH_FST nachgebaut
+2. Neu gestartet, gleicher Fehler auf Folgeschritt — fehlende Objekte in drei SVS41-Schemas aus THM_* nachgebaut
+3. W305-Job, ORA-01476 durch fehlende Laufzeitvariable FSC_KA
+4. Ursache gefunden: falsche Ausführungsreihenfolge, nicht die DB — PCK_DWH_W305_000 muss vor _001_006 laufen
