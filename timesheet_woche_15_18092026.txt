@@ -6,9 +6,9 @@ Tag 11 (4 Punkte) — 15.09.2026 — UC4-Job gegen B05, Strukturfehler behoben
 
 Tag 12 (4 Punkte) — 16.09.2026 (Vormittag) — Job blockiert durch fehlendes Schema/Rechte
 1. Schema SVS41EB_ODIKM fehlte komplett — als Sandbox angelegt (Klon aus SVS43EB_ODIKM)
-2. Neu gestartet, ORA-00904 auf MAT_TEILNAHMEMODUS — Synonym-/Grant-/Strukturursache eingegrenzt
-3. Fehlenden Grant auf PSD1_DWL_FST.TL_DWL_MATT ergänzt, erneut gestartet
-4. Fehler blieb — echte fehlende Spalte auf W309_WRK_MAT_TN_PRELADETAB gefunden und aus Referenz nachgezogen
+2. Neu gestartet, ORA-00904 auf MAT_TEILNAHMEMODUS — Synonym- vs. Strukturursache eingegrenzt
+3. Echte fehlende Spalte auf W309_WRK_MAT_TN_PRELADETAB gefunden und aus Referenz nachgezogen
+4. Fehlendes Quellobjekt für W301-Job geprüft und identifiziert
 
 Tag 13 (4 Punkte) — 16.09.2026 (Nachmittag) — Fehlerkette weiterverfolgt
 1. Neu gestartet, MMZ_ID/TMM_ID fehlten auf TH_DWH_TEILNAHME_MAT — ohne Drop ergänzt
