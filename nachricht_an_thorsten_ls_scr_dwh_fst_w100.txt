@@ -1,20 +1,2 @@
-Hallo Thorsten,
-
-beim Testen der W1xx-Jobs gegen B05 bekomme ich wiederholt (heute erneut) folgenden Fehler:
-
-ODI-1222: Session konnte nicht auf Agent AGT_W_FST_E_B05_Q0000288_52255 gestartet werden:
-Logisches Schema LS_SCR_DWH_FST_W100 nicht im Master-Repository gefunden.
-
-Das ist kein Tabellen-/Strukturfehler wie die letzten Sachen (W105/W305), sondern ein Registrierungsproblem:
-das logische Schema LS_SCR_DWH_FST_W100 existiert offenbar gar nicht im Master-Repository, die Session kann
-deshalb nicht mal starten.
-
-Vermutung: der W100-Ordner wurde beim Aufbau von B05 noch nicht (oder nicht vollständig) über den
-MetaDB-Importer registriert bzw. in der Topology/im Kontext CT_ESTAT_FST_41 verknüpft, im Gegensatz zu den
-Ordnern, die wir schon erfolgreich getestet haben (W105, W305).
-
-Kannst du kurz prüfen, ob LS_SCR_DWH_FST_W100 für B05 in der Topology angelegt und im Kontext gemappt ist?
-Falls nicht: sollen wir das selbst über den MetaDB-Importer nachholen, oder machst du das von deiner Seite?
-
-Danke,
-Vignesh
+Hallo Thorsten, W100-Job gegen B05 bricht mit ODI-1222 ab: logisches Schema LS_SCR_DWH_FST_W100 ist nicht im Master-Repository registriert.
+Ist der W100-Ordner schon über den MetaDB-Importer/Topology für B05 angelegt, oder sollen wir das nachholen?
