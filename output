@@ -1,5 +1,5 @@
-ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load L_1 bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load N bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "H"."KMH_VORZEITIG_BEENDET_AM": ungültige ID
 
 	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
 	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
@@ -41,28 +41,62 @@ Caused by: java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht 
 Caused by: Sql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W105_TMP_BAK_LOAD
+  INTO SSC41WH_FST.W301_TMP_HIST_NEU
   (
-    BAK_ID ,
-    CZK_COSACHNT_SCHL ,
-    CZK_GUELT_VON_DAT 
+    KMD_ID ,
+    KMH_GUELT_VON_DAT ,
+    KMH_ERSTEL_DAT ,
+    AFT_ID ,
+    MSS_ID ,
+    KMA_ID ,
+    UMS_ID ,
+    KMA_ID_OLD ,
+    SGS_ID_ERF ,
+    SGS_ID_ZUST ,
+    STS_ID ,
+    KMH_GEN ,
+    KMH_LOESCH_DAT ,
+    KMH_TRG_DST ,
+    KMH_BEGINN_DAT ,
+    KMH_ENDE_DAT ,
+    KMH_VERLAENGERUNG_BIS ,
+    KMH_ENDE_DAT_TATS ,
+    KMH_DAUER ,
+    KMH_ZUWEISUNGSKORRIDOR_VON ,
+    KMH_ZUWEISUNGSKORRIDOR_BIS ,
+    KMH_VORZEITIG_BEENDET_AM 
   ) 
 SELECT 
-  DIST.BAK_ID ,
-  DIST.CFK_ID ,
-  DIST.CFK_ED  
+  H.KMD_ID ,
+  X.KMN_ED ,
+  (TO_DATE(#GLOBAL.GV_STICHTAG_CHR8,'YYYYMMDD')) ,
+  H.AFT_ID ,
+  H.MSS_ID ,
+  H.KMA_ID ,
+  H.UMS_ID ,
+  H.KMA_ID_OLD ,
+  H.SGS_ID_ERF ,
+  H.SGS_ID_ZUST ,
+  H.STS_ID ,
+  H.KMH_GEN ,
+  X.KMN_ED ,
+  H.KMH_TRG_DST ,
+  H.KMH_BEGINN_DAT ,
+  H.KMH_ENDE_DAT ,
+  H.KMH_VERLAENGERUNG_BIS ,
+  H.KMH_ENDE_DAT_TATS ,
+  H.KMH_DAUER ,
+  H.KMH_ZUWEISUNGSKORRIDOR_VON ,
+  H.KMH_ZUWEISUNGSKORRIDOR_BIS ,
+  H.KMH_VORZEITIG_BEENDET_AM  
 FROM 
-  (
-SELECT 
-  DISTINCT 
-  TD_DWH_BA_KUNDE.BAK_ID AS BAK_ID ,
-  L.CFK_ID AS CFK_ID ,
-  L.CFK_ED AS CFK_ED   
-FROM 
-  SSC41WH_FST.W105_WRK_LOAD_COSACHNT_KUNDE L ,  SVS41WH_BA_TRS.TD_DWH_BA_KUNDE TD_DWH_BA_KUNDE       
+  SSC41WH_FST.W301_TMP_LOESCH_MIN X ,  SSC41WH_FST.W301_TD_DWH_MASSNAHME_L01_IN T      ,  SSC41WH_FST.W301_MNKERN_OUT H       
 WHERE
-  (TD_DWH_BA_KUNDE.BAK_KUNDEN_NR = L.CFK_KUNDEN_NR
+  (X.KMN_ID = T.KMD_COSACHNT_SCHL
+AND    T.KMD_ID = H.KMD_ID
+AND    H.KMH_ERSTEL_DAT    <= TO_DATE(#GLOBAL.GV_STICHTAG_CHR8,'YYYYMMDD')
+AND    H.KMH_GUELT_VON_DAT <  X.KMN_ED
+AND    H.KMH_GUELT_BIS_DAT IS NULL
 ) 
-  ) DIST  
         
-, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00942: Tabelle oder View nicht vorhanden
+, Error Msg = java.sql.SQLSyntaxErrorException: ORA-00904: "H"."KMH_VORZEITIG_BEENDET_AM": ungültige ID
