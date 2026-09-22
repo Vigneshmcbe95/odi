@@ -1,2 +1,2 @@
-Hallo Thorsten, W100-Job gegen B05 bricht mit ODI-1222 ab: logisches Schema LS_SCR_DWH_FST_W100 ist nicht im Master-Repository registriert.
-Ist der W100-Ordner schon über den MetaDB-Importer/Topology für B05 angelegt, oder sollen wir das nachholen?
+Hallo Thorsten, jetzt auch W300: gleicher ODI-1222-Fehler wie bei W100, logisches Schema LS_SCR_DWH_FST_W300 ist nicht im Master-Repository registriert.
+Sieht nach einem systematischeren Registrierungs-Gap aus, nicht nur ein Einzelfall — welche Wxxx-Ordnungsnummern-Gruppen sind für B05 im MetaDB-Importer/Topology schon angelegt, und welche fehlen noch?
