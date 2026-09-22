@@ -7,6 +7,13 @@ SET SERVEROUTPUT ON
 -- damit der Platz tatsaechlich an die Tablespace zurueckgegeben wird.
 -- Sicher, da SSC* Scratch/temporaer ist -- Struktur bleibt erhalten,
 -- wird beim naechsten Ladelauf sowieso neu befuellt.
+--
+-- WICHTIG (Lehre aus 2026-09-22): *_LOADED_VARIABLES-Tabellen sind
+-- KEIN normaler Scratch-Inhalt -- sie werden von einem eigenen
+-- _000_SET_LOCAL_VARIABLES-Job pro Ordner befuellt und NICHT beim
+-- naechsten Ladelauf automatisch neu erzeugt. Ein blindes Truncate
+-- hat W301/W302/W304/W310 gleichzeitig kaputtgemacht (ORA-01476).
+-- Deshalb hier explizit ausgenommen.
 
 declare
 v_geleert   integer := 0;
@@ -17,6 +24,7 @@ begin
         select table_name
         from dba_tables
         where owner = 'SSC41WH_FST'
+              and table_name not like '%LOADED_VARIABLES%'
         order by table_name
     ) loop
 

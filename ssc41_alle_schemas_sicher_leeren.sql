@@ -12,6 +12,13 @@ SET SERVEROUTPUT ON
 -- Deckt alle Schemas ab, die mit SSC41 beginnen (SSC41WH_FST,
 -- SSC41M_STAT_FST, SSC41WH_STAT_FST, SSC41LL_FST, etc.) -- nicht nur
 -- SSC41WH_FST.
+--
+-- WICHTIG (Lehre aus 2026-09-22): *_LOADED_VARIABLES-Tabellen sind
+-- KEIN normaler Scratch-Inhalt -- sie werden von einem eigenen
+-- _000_SET_LOCAL_VARIABLES-Job pro Ordner befuellt und NICHT beim
+-- naechsten Ladelauf automatisch neu erzeugt. Ein blindes Truncate
+-- hat W301/W302/W304/W310 gleichzeitig kaputtgemacht (ORA-01476).
+-- Deshalb hier explizit ausgenommen.
 
 declare
 v_geleert   integer := 0;
@@ -22,6 +29,7 @@ begin
         select owner, table_name
         from dba_tables
         where owner like 'SSC41%'
+              and table_name not like '%LOADED_VARIABLES%'
         order by owner, table_name
     ) loop
 
