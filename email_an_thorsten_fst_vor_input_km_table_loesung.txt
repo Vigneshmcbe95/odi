@@ -2,10 +2,10 @@ Betreff: FST_VOR_INPUT_KM_TABLE in B05 gelöst
 
 Hallo Thorsten,
 
-SVS41WH_FST.FST_VOR_INPUT_KM_TABLE hatte keine Daten, nur die Struktur wurde am 10.09. angelegt.
-Kein ODI-Job befüllt diese Tabelle, "Populated By" ist leer, also manuell gepflegt.
-Ursprung war ein Namensfilter im Massenkopieren vom 31.08., der die Tabelle ausschloss.
-Daten einmalig aus THM_DWH_FST kopiert, alle Wxxx_000_SET_LOCAL_VARIABLES-Jobs sollten jetzt funktionieren.
+Beim Testen von W305 zeigte der Set-Variables-Job einen Fehler wegen fehlender Daten.
+Zurückverfolgt bis SVS41WH_FST.FST_VOR_INPUT_KM_TABLE, dort war die Tabelle komplett leer.
+In ODI zeigt "Populated By" nichts, kein Job befüllt diese Tabelle automatisch.
+Also manuell aus THM_DWH_FST befüllt, Wxxx_000_SET_LOCAL_VARIABLES-Jobs sollten jetzt funktionieren.
 
 Viele Grüße
 Vignesh
