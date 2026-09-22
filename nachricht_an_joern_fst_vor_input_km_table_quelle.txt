@@ -1,0 +1,1 @@
+Hallo Jörn, Ursache gefunden: FST_VOR_INPUT_KM_TABLE wurde am 31.08. beim THM→SVS41-Massenkopieren bewusst per Namensfilter ausgeschlossen (FST_VOR_INPUT%), deshalb leer. Quelle laut ODI-Modell ist THM_DWH_FST — ich habe die Daten von dort nach SVS41WH_FST kopiert.
