@@ -14,9 +14,13 @@ SET SERVEROUTPUT ON
 -- WICHTIG -- FIX (Lehre vom ersten Lauf): urspruengliche Version hatte
 -- KEINE Duplikatpruefung und wurde versehentlich 2x ausgefuehrt --
 -- Zeilen haben sich dadurch verdreifacht (934 -> 1868 -> 2802). Diese
--- Version macht TRUNCATE + INSERT statt reinem INSERT, damit ein
+-- Version macht DELETE + INSERT statt reinem INSERT, damit ein
 -- erneuter Lauf immer den exakten Stand von THM_DWH_FST spiegelt,
--- egal wie oft das Skript ausgefuehrt wird.
+-- egal wie oft das Skript ausgefuehrt wird. DELETE statt TRUNCATE,
+-- weil TRUNCATE in diesem Umfeld fehlgeschlagen ist (vermutlich
+-- Fremdschluessel-Referenz oder fehlendes TRUNCATE-Recht) -- bei
+-- Fehlschlag sprang die Exception vor dem INSERT raus, Tabelle blieb
+-- unveraendert bei den bereits vorhandenen Duplikaten.
 
 declare
 v_source_owner varchar2(30) := 'THM_DWH_FST';
@@ -30,7 +34,7 @@ begin
     into v_vorher;
   dbms_output.put_line('Vorher: '||v_target_owner||'.'||v_table_name||' hat '||v_vorher||' Zeilen.');
 
-  execute immediate 'TRUNCATE TABLE '||v_target_owner||'.'||v_table_name;
+  execute immediate 'DELETE FROM '||v_target_owner||'.'||v_table_name;
 
   execute immediate
     'INSERT INTO '||v_target_owner||'.'||v_table_name||' '||
