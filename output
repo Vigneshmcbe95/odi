@@ -1,6 +1,7 @@
-ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W302_TH_DWH_TEILNAHME_L03_IN bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused by: java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P0GC angezeigt
-ORA-01652: Temp-Segment kann nicht um 8192 in Tablespace STAT_DWH_SCR erweitert werden
+ODI-1228: Aufgabe Insert GET_COL_INHALT-BA IKM FST SET LOCAL VARIABLES-Load W309_LOADED_VARIABLES bei Zielverbindung DS_ESTAT nicht erfolgreich.
+Caused by: java.sql.SQLException: ORA-20002: DBA_BA :: select 'DBA_BA' variable_name , 'GET_COL_INHALT' variable_type , 'NUMBER' variable_data_type , row_number() over(order by dba_id) var_value_id , count(*) over() var_value_count , to_char(null) var_data_varchar2, dba_id var_data_number, to_date(null) var_data_date, 'ALL' variable_script_kurz  FROM SVS41WH_UEB_DIM.TD_DWH_BERAUSB_B WHERE dba_ba_schl = 'BA' :: ORA-12801: Fehler in parallelem Abfrage-Server P0ET angezeigt
+ORA-06512: in Zeile 77
+ORA-06512: in Zeile 77
 
 	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
 	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
@@ -39,172 +40,87 @@ ORA-01652: Temp-Segment kann nicht um 8192 in Tablespace STAT_DWH_SCR erweitert 
 	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	atjava.lang.Thread.run(Thread.java:750)
-Caused by: Sql = 
-INSERT 
-  /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W302_TH_DWH_TEILNAHME_L03_IN
-  (
-    KTH_ID ,
-    KTD_ID ,
-    AFT_ID ,
-    KMD_ID ,
-    KMA_ID ,
-    KMA_ID_ORIG ,
-    TNS_ID ,
-    WEG_ID ,
-    SGS_ID_ERF ,
-    SGS_ID_ZUST ,
-    STS_ID ,
-    FAA_ID ,
-    CZK_COSACHNT_SCHL ,
-    KTH_GEN ,
-    KTH_LOESCH_DAT ,
-    KTH_FOERDERFELD_BER ,
-    KTH_TRG_DST ,
-    KTH_EINTRITT_DAT ,
-    KTH_AUSTRITT_DAT ,
-    KTH_VERLAENGERUNG_BIS ,
-    KTH_LETZTER_TAG ,
-    KTH_ENDE_DAT_TATS ,
-    KTH_DAUER ,
-    KTH_GUELT_VON_DAT ,
-    KTH_GUELT_BIS_DAT ,
-    KTH_ERSTEL_DAT ,
-    KTH_UPDATE_DAT ,
-    KTH_KORR_DAT ,
-    TN_HIST_ID ,
-    MAT_QUELL_VERF ,
-    FDF_ID ,
-    UTS_ID ,
-    KMA_ID_OLD 
-  ) 
-SELECT 
-  SET_UNION_ALL_IN2.KTH_ID ,
-  SET_UNION_ALL_IN2.KTD_ID ,
-  SET_UNION_ALL_IN2.AFT_ID ,
-  SET_UNION_ALL_IN2.KMD_ID ,
-  SET_UNION_ALL_IN2.KMA_ID ,
-  SET_UNION_ALL_IN2.KMA_ID_ORIG ,
-  SET_UNION_ALL_IN2.TNS_ID ,
-  SET_UNION_ALL_IN2.WEG_ID ,
-  SET_UNION_ALL_IN2.SGS_ID_ERF ,
-  SET_UNION_ALL_IN2.SGS_ID_ZUST ,
-  SET_UNION_ALL_IN2.STS_ID ,
-  SET_UNION_ALL_IN2.FAA_ID ,
-  SET_UNION_ALL_IN2.CZK_COSACHNT_SCHL ,
-  SET_UNION_ALL_IN2.KTH_GEN ,
-  SET_UNION_ALL_IN2.KTH_LOESCH_DAT ,
-  SET_UNION_ALL_IN2.KTH_FOERDERFELD_BER ,
-  SET_UNION_ALL_IN2.KTH_TRG_DST ,
-  SET_UNION_ALL_IN2.KTH_EINTRITT_DAT ,
-  SET_UNION_ALL_IN2.KTH_AUSTRITT_DAT ,
-  SET_UNION_ALL_IN2.KTH_VERLAENGERUNG_BIS ,
-  SET_UNION_ALL_IN2.KTH_LETZTER_TAG ,
-  SET_UNION_ALL_IN2.KTH_ENDE_DAT_TATS ,
-  SET_UNION_ALL_IN2.KTH_DAUER ,
-  SET_UNION_ALL_IN2.KTH_GUELT_VON_DAT ,
-  SET_UNION_ALL_IN2.KTH_GUELT_BIS_DAT ,
-  SET_UNION_ALL_IN2.KTH_ERSTEL_DAT ,
-  SET_UNION_ALL_IN2.KTH_UPDATE_DAT ,
-  SET_UNION_ALL_IN2.KTH_KORR_DAT ,
-  SET_UNION_ALL_IN2.TN_HIST_ID ,
-  SET_UNION_ALL_IN2.MAT_QUELL_VERF ,
-  SET_UNION_ALL_IN2.FDF_ID ,
-  SET_UNION_ALL_IN2.UTS_ID ,
-  SET_UNION_ALL_IN2.KMA_ID_OLD  
-FROM 
-  (
-SELECT 
-  HT5.KTH_ID AS KTH_ID ,
-  HT5.KTD_ID AS KTD_ID ,
-  HT5.AFT_ID AS AFT_ID ,
-  HT5.KMD_ID AS KMD_ID ,
-  HT5.KMA_ID AS KMA_ID ,
-  HT5.KMA_ID_ORIG AS KMA_ID_ORIG ,
-  HT5.TNS_ID AS TNS_ID ,
-  HT5.WEG_ID AS WEG_ID ,
-  HT5.SGS_ID_ERF AS SGS_ID_ERF ,
-  HT5.SGS_ID_ZUST AS SGS_ID_ZUST ,
-  HT5.STS_ID AS STS_ID ,
-  HT5.FAA_ID AS FAA_ID ,
-  HT5.CZK_COSACHNT_SCHL AS CZK_COSACHNT_SCHL ,
-  HT5.KTH_GEN AS KTH_GEN ,
-  HT5.KTH_LOESCH_DAT AS KTH_LOESCH_DAT ,
-  HT5.KTH_FOERDERFELD_BER AS KTH_FOERDERFELD_BER ,
-  HT5.KTH_EINTRITT_DAT AS KTH_EINTRITT_DAT ,
-  HT5.KTH_AUSTRITT_DAT AS KTH_AUSTRITT_DAT ,
-  HT5.KTH_VERLAENGERUNG_BIS AS KTH_VERLAENGERUNG_BIS ,
-  HT5.KTH_LETZTER_TAG AS KTH_LETZTER_TAG ,
-  HT5.KTH_ENDE_DAT_TATS AS KTH_ENDE_DAT_TATS ,
-  HT5.KTH_DAUER AS KTH_DAUER ,
-  HT5.KTH_GUELT_VON_DAT AS KTH_GUELT_VON_DAT ,
-  (CASE WHEN W302_TMP_KMA_MN_TN_1.KTH_ID IS NOT NULL 
-     THEN W302_TMP_KMA_MN_TN_1.KMH_GUELT_VON_DAT - 1
-     ELSE HT5.KTH_GUELT_BIS_DAT
-END) AS KTH_GUELT_BIS_DAT ,
-  HT5.KTH_ERSTEL_DAT AS KTH_ERSTEL_DAT ,
-  (CASE WHEN W302_TMP_KMA_MN_TN_1.KTH_ID IS NOT NULL 
-     THEN TO_DATE(#GLOBAL.GV_STICHTAG_CHR8,'YYYYMMDD')
-     ELSE HT5.KTH_UPDATE_DAT
-END) AS KTH_UPDATE_DAT ,
-  HT5.KTH_KORR_DAT AS KTH_KORR_DAT ,
-  HT5.TN_HIST_ID AS TN_HIST_ID ,
-  HT5.MAT_QUELL_VERF AS MAT_QUELL_VERF ,
-  HT5.FDF_ID AS FDF_ID ,
-  HT5.UTS_ID AS UTS_ID ,
-  HT5.KTH_TRG_DST AS KTH_TRG_DST ,
-  HT5.KMA_ID_OLD AS KMA_ID_OLD   
-FROM 
-  SSC41WH_FST.W302_TH_DWH_TEILNAHME_L02_UPD HT5 ,  SSC41WH_FST.W302_TMP_KMA_MN_TN W302_TMP_KMA_MN_TN_1       
-WHERE
-  (HT5.KTH_ID = W302_TMP_KMA_MN_TN_1.KTH_ID (+)
-) 
-UNION ALL 
-SELECT 
-  W302_TH_DWH_TEILNAHME_L02_UP_1.KTH_ID + rownum AS KTH_ID ,
-  W302_TMP_KMA_MN_TN.KTD_ID AS KTD_ID ,
-  W302_TMP_KMA_MN_TN.AFT_ID AS AFT_ID ,
-  W302_TMP_KMA_MN_TN.KMD_ID AS KMD_ID ,
-  W302_TMP_KMA_MN_TN.KMA_ID_MN AS KMA_ID ,
-  W302_TMP_KMA_MN_TN.KMA_ID_ORIG AS KMA_ID_ORIG ,
-  W302_TMP_KMA_MN_TN.TNS_ID AS TNS_ID ,
-  W302_TMP_KMA_MN_TN.WEG_ID AS WEG_ID ,
-  W302_TMP_KMA_MN_TN.SGS_ID_ERF AS SGS_ID_ERF ,
-  W302_TMP_KMA_MN_TN.SGS_ID_ZUST AS SGS_ID_ZUST ,
-  W302_TMP_KMA_MN_TN.STS_ID AS STS_ID ,
-  W302_TMP_KMA_MN_TN.FAA_ID AS FAA_ID ,
-  W302_TMP_KMA_MN_TN.CZK_COSACHNT_SCHL AS CZK_COSACHNT_SCHL ,
-  W302_TMP_KMA_MN_TN.KTH_GEN AS KTH_GEN ,
-  W302_TMP_KMA_MN_TN.KTH_LOESCH_DAT AS KTH_LOESCH_DAT ,
-  W302_TMP_KMA_MN_TN.KTH_FOERDERFELD_BER AS KTH_FOERDERFELD_BER ,
-  W302_TMP_KMA_MN_TN.KTH_EINTRITT_DAT AS KTH_EINTRITT_DAT ,
-  W302_TMP_KMA_MN_TN.KTH_AUSTRITT_DAT AS KTH_AUSTRITT_DAT ,
-  W302_TMP_KMA_MN_TN.KTH_VERLAENGERUNG_BIS AS KTH_VERLAENGERUNG_BIS ,
-  W302_TMP_KMA_MN_TN.KTH_LETZTER_TAG AS KTH_LETZTER_TAG ,
-  W302_TMP_KMA_MN_TN.KTH_ENDE_DAT_TATS AS KTH_ENDE_DAT_TATS ,
-  W302_TMP_KMA_MN_TN.KTH_DAUER AS KTH_DAUER ,
-  W302_TMP_KMA_MN_TN.KMH_GUELT_VON_DAT AS KTH_GUELT_VON_DAT ,
-  null AS KTH_GUELT_BIS_DAT ,
-  TO_DATE(#GLOBAL.GV_STICHTAG_CHR8,'YYYYMMDD') AS KTH_ERSTEL_DAT ,
-  null AS KTH_UPDATE_DAT ,
-  null AS KTH_KORR_DAT ,
-  null AS TN_HIST_ID ,
-  null AS MAT_QUELL_VERF ,
-  W302_TMP_KMA_MN_TN.FDF_ID AS FDF_ID ,
-  W302_TMP_KMA_MN_TN.UTS_ID AS UTS_ID ,
-  W302_TMP_KMA_MN_TN.KTH_TRG_DST AS KTH_TRG_DST ,
-  W302_TMP_KMA_MN_TN.KMA_ID_OLD AS KMA_ID_OLD   
-FROM 
-  (
-SELECT 
-  NVL(MAX(W302_TH_DWH_TEILNAHME_L02_UPD1.KTH_ID),0) AS KTH_ID   
-FROM 
-  SSC41WH_FST.W302_TH_DWH_TEILNAHME_L02_UPD W302_TH_DWH_TEILNAHME_L02_UPD1  
-  ) W302_TH_DWH_TEILNAHME_L02_UP_1 ,  SSC41WH_FST.W302_TMP_KMA_MN_TN W302_TMP_KMA_MN_TN       
-WHERE
-  (1 = 1
-) 
-  ) SET_UNION_ALL_IN2  
-        
-, Error Msg = java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P0GC angezeigt
-ORA-01652: Temp-Segment kann nicht um 8192 in Tablespace STAT_DWH_SCR erweitert werden
+Caused by: Sql = declare
+  v_sql varchar2(32000);
+  function get_replace_lschema (p_sql in varchar2) return varchar2
+  is
+    v_sql varchar2(32000);
+  begin
+      v_sql := replace(p_sql, 'LS_THM_DWH_AST_AV_BEWA.',        'THM_DWH_AST_AV_BEWA.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_AST_BB_BEWA.',        'THM_DWH_AST_BB_BEWA.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_DEUEV.', 	        'THM_DWH_DEUEV.'		);
+      v_sql := replace(v_sql, 'LS_THM_DWH_BA_TRS.', 		'SVS41WH_BA_TRS.'		);
+      v_sql := replace(v_sql, 'LS_THM_DWH_FST.', 		'SVS41WH_FST.'		);
+      v_sql := replace(v_sql, 'LS_THM_DWH_STAT_AST_AV_BEWA.', 	'THM_DWH_STAT_AST_AV_BEWA.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_STAT_BST.', 		'THM_DWH_STAT_BST.'		);
+      v_sql := replace(v_sql, 'LS_THM_DWH_STAT_ESP_KUNDE.', 	'ANO1_DWH_STAT_ESP_KUNDE.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_BERUFE.', 	'THM_DWH_UEB_BERUFE.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_BETRIEBE.', 	'THM_DWH_UEB_BETRIEBE.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_DIM.', 		'SVS41WH_UEB_DIM.'		);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_GEBIETE.', 	'THM_DWH_UEB_GEBIETE.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_KUNDE.', 	        'THM_DWH_UEB_KUNDE.'	);
+      v_sql := replace(v_sql, 'LS_THM_DWH_UEB_MODULE.', 	'THM_DWH_UEB_MODULE.'	);    
+      v_sql := replace(v_sql, '[LOADED_VARIABLES_TABLE]',       'SSC41WH_FST.W309_LOADED_VARIABLES');
+      return v_sql;
+  end;
+begin
+    for gci in
+      (
+      select variable_name
+           , variable_type
+           , variable_data_type
+           , 'select '''||variable_name||''' variable_name '||
+                  ', '''||variable_type||''' variable_type '||
+                  ', '''||variable_data_type||''' variable_data_type '||
+                  case when upper(col_inhalt_in_select) like 'MAX%' or upper(col_inhalt_in_select) like 'MIN%'
+                       then ', 1 var_value_id '
+                       else ', row_number() over(order by '||col_inhalt_in_select||') var_value_id '
+                   end ||
+                  case when upper(col_inhalt_in_select) like 'MAX%' or upper(col_inhalt_in_select) like 'MIN%'
+                       then ', 1 var_value_count '
+                       else ', count(*) over() var_value_count '
+                   end ||
+                    case when variable_data_type = 'VARCHAR2' then ', '||col_inhalt_in_select||' var_data_varchar2' 
+                         when variable_data_type = 'DATE' then ', to_char('||col_inhalt_in_select||', ''yyyymmdd'') var_data_varchar2' 
+                         else ', to_char(null) var_data_varchar2' 
+                         end||
+                    case when variable_data_type = 'NUMBER' then ', '||col_inhalt_in_select||' var_data_number' 
+                         when variable_data_type = 'DATE' then ', to_number(to_char('||col_inhalt_in_select||', ''yyyymmdd'')) var_data_number' 
+                         else ', to_number(null) var_data_number' 
+                         end||
+                    case when variable_data_type = 'DATE' then ', '||col_inhalt_in_select||' var_data_date' else ', to_date(null) var_data_date' end||
+                    ', '''||variable_script_kurz||''' variable_script_kurz '||
+                  ' FROM '||col_inhalt_in_from||
+                  ' '||col_inhalt_in_where   SQL_INSERT
+      from SVS41WH_FST.FST_VOR_INPUT_KM_TABLE a
+      where variable_type = 'GET_COL_INHALT' 
+            AND (
+                 (
+                  upper(variable_script_kurz) = 'ALL'
+                  and not exists (
+                                  Select 1 
+                                  from SVS41WH_FST.FST_VOR_INPUT_KM_TABLE b 
+                                  where a.variable_name = b.variable_name 
+                                        and upper(b.variable_script_kurz) = upper('W309')
+                                 )
+                 )
+                  or 
+                 upper(variable_script_kurz) = upper('W309')
+                )
+      order by variable_id
+      ) loop
+            v_sql := get_replace_lschema(gci.SQL_INSERT);
+            begin
+                execute immediate 'insert into SSC41WH_FST.W309_LOADED_VARIABLES '||v_sql;
+                commit;
+            exception when others then
+              /* dbms_output.put_line(v_sql||';'); */
+              /* dbms_output.put_line(','''||gci.variable_name||''''); */
+              raise_application_error(-20002, gci.variable_name||' :: '||v_sql||' :: '||sqlerrm);
+            end;
+        end loop;
+        commit;  
+end;    
+, Error Msg = java.sql.SQLException: ORA-20002: DBA_BA :: select 'DBA_BA' variable_name , 'GET_COL_INHALT' variable_type , 'NUMBER' variable_data_type , row_number() over(order by dba_id) var_value_id , count(*) over() var_value_count , to_char(null) var_data_varchar2, dba_id var_data_number, to_date(null) var_data_date, 'ALL' variable_script_kurz  FROM SVS41WH_UEB_DIM.TD_DWH_BERAUSB_B WHERE dba_ba_schl = 'BA' :: ORA-12801: Fehler in parallelem Abfrage-Server P0ET angezeigt
+ORA-06512: in Zeile 77
+ORA-06512: in Zeile 77
