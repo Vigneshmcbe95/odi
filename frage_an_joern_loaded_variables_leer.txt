@@ -1,0 +1,1 @@
+Hallo Jörn, mehrere W3xx-Jobs (W301, W302, W310) brechen mit ORA-01476 ab, weil die jeweiligen *_LOADED_VARIABLES-Tabellen in SSC41WH_FST fast leer sind (z.B. W310 nur noch 1 statt 1142 Zeilen) — hast du beim SSC-Leeren heute die *_LOADED_VARIABLES-Tabellen mit erwischt?
