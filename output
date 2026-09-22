@@ -1,4 +1,4 @@
-ODI-1217: Session EPS_DWH_FST_W305_001_006_TH_DWH_MN_BEB (50947) nicht erfolgreich mit Return Code ODI-1298.
+ODI-1217: Session EPS_DWH_FST_W305_001_006_TH_DWH_MN_BEB (50956) nicht erfolgreich mit Return Code ODI-1298.
 ODI-1226: Schritt MAP_DWH_W305_002_WRK_BEB_MN nach 1 Versuch(en) nicht erfolgreich.
 ODI-1240: Flow MAP_DWH_W305_002_WRK_BEB_MN beim Ausführen eines Insert new rows-IKM Oracle Insert-Load W305_WRK_BEB_MN-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W305_WRK_BEB_MN.
 ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (40)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (50)" fehlerhaft ist.
