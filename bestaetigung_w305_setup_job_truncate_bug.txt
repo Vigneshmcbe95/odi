@@ -1,0 +1,13 @@
+Bestätigt (2026-09-22): Der W305_000_SET_LOCAL_VARIABLES-Job truncatet
+SSC41WH_FST.W305_loaded_variables in seinem ersten Schritt, befüllt sie
+danach aber nicht wieder — echter Bug im Job, keine Reihenfolge-/
+Registrierungsfrage.
+
+Workaround, der funktioniert hat: Zeilen manuell aus SSC45WH_FST nach
+SSC41WH_FST.W305_loaded_variables kopiert (siehe
+loaded_variables_kopieren_generisch.sql), danach W305-Job erneut
+gestartet — lief erfolgreich durch.
+
+Vermutlich gilt der gleiche Bug für die anderen betroffenen Wxxx_000-
+Jobs (W301, W302, W304, W310) — dort ebenfalls prüfen, ob der jeweilige
+_000_SET_LOCAL_VARIABLES-Job nur truncatet statt neu zu befüllen.
