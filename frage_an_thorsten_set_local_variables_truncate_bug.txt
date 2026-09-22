@@ -1,0 +1,1 @@
+Hallo Thorsten, die _000_SET_LOCAL_VARIABLES-Jobs (W301/302/304/305/310) truncaten die jeweilige loaded_variables-Tabelle, befüllen sie danach aber nicht neu — ist das ein bekannter Bug oder Konfigurationsfehler in B05?
