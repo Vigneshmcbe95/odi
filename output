@@ -1,9 +1,9 @@
-ODI-1217: Session EPS_DWH_FST_W304_001_015_WRK_HIST_VB_LISTE (50917) nicht erfolgreich mit Return Code ODI-1298.
-ODI-1226: Schritt MAP_DWH_W304_005_006_TH_DWH_TEILNAHME_INS nach 1 Versuch(en) nicht erfolgreich.
-ODI-1240: Flow MAP_DWH_W304_005_006_TH_DWH_TEILNAHME_INS beim Ausführen eines Insert new rows-IKM Oracle Insert-Load W304_TD_DWH_TEILNAHME_INS-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W304_TH_DWH_TEILNAHME_INS.
-ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (50)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (60)" fehlerhaft ist.
-ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (60)" nicht erfolgreich, da die untergeordnete Aufgabe "Insert new rows-IKM Oracle Insert-Load W304_TD_DWH_TEILNAHME_INS (70)" fehlerhaft ist.
-ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W304_TD_DWH_TEILNAHME_INS bei Zielverbindung DS_ESTAT nicht erfolgreich.
+ODI-1217: Session EPS_DWH_FST_W305_001_006_TH_DWH_MN_BEB (50941) nicht erfolgreich mit Return Code ODI-1298.
+ODI-1226: Schritt MAP_DWH_W305_002_WRK_BEB_MN nach 1 Versuch(en) nicht erfolgreich.
+ODI-1240: Flow MAP_DWH_W305_002_WRK_BEB_MN beim Ausführen eines Insert new rows-IKM Oracle Insert-Load W305_WRK_BEB_MN-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W305_WRK_BEB_MN.
+ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (40)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (50)" fehlerhaft ist.
+ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (50)" nicht erfolgreich, da die untergeordnete Aufgabe "Insert new rows-IKM Oracle Insert-Load W305_WRK_BEB_MN (60)" fehlerhaft ist.
+ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W305_WRK_BEB_MN bei Zielverbindung DS_ESTAT nicht erfolgreich.
 Caused By: java.sql.SQLDataException: ORA-01476: Divisor ist Null
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
@@ -43,276 +43,190 @@ Caused By: java.sql.SQLDataException: ORA-01476: Divisor ist Null
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-Caused by: Error : 1476, Position : 2248, Sql = 
+Caused by: Error : 1476, Position : 1453, Sql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W304_TD_DWH_TEILNAHME_INS
+  INTO SSC41WH_FST.W305_WRK_BEB_MN
   (
-    KTD_ID ,
-    EWE_ID_EIN ,
-    ORT_ID_AUS ,
-    GST_ID_AUS ,
-    STR_ID_AUS ,
-    STS_ID_AUS ,
-    STS_ID_PRS_AUS ,
-    GEM_ID_AUS ,
-    SGT_ID_AUS ,
-    KTD_COSACHNT_SCHL ,
-    KTD_COSACHNTBB_SCHL ,
-    KTD_ZU_ZAEHL ,
-    KTD_AB_ZAEHL ,
-    KTD_V_ZAEHL ,
-    KTD_REAKT_ZAEHL ,
-    KTD_ERSTEL_DAT ,
-    MAT_ID ,
-    MAT_QUELL_VERF 
+    KMD_ID ,
+    BRM_ED ,
+    BRM_ED_TAG ,
+    FSC_ID_ZUGW ,
+    FSC_ID_KOOP ,
+    BSN_ID ,
+    BRM_SOLL ,
+    BRM_KOSTENSATZ 
   ) 
 SELECT 
-  SET_UNION_TD.KTD_ID ,
-  SET_UNION_TD.EWE_ID_EIN ,
-  SET_UNION_TD.ORT_ID_AUS ,
-  SET_UNION_TD.GST_ID_AUS ,
-  SET_UNION_TD.STR_ID_AUS ,
-  SET_UNION_TD.STS_ID_AUS ,
-  SET_UNION_TD.STS_ID_PRS_AUS ,
-  SET_UNION_TD.GEM_ID_AUS ,
-  SET_UNION_TD.SGT_ID_AUS ,
-  SET_UNION_TD.KTD_COSACHNT_SCHL ,
-  SET_UNION_TD.KTD_COSACHNTBB_SCHL ,
-  SET_UNION_TD.KTD_ZU_ZAEHL ,
-  SET_UNION_TD.KTD_AB_ZAEHL ,
-  SET_UNION_TD.KTD_V_ZAEHL ,
-  SET_UNION_TD.KTD_REAKT_ZAEHL ,
-  SET_UNION_TD.KTD_ERSTEL_DAT ,
-  SET_UNION_TD.MAT_ID ,
-  SET_UNION_TD.MAT_QUELL_VERF  
+  DISTINCT_.KMD_ID ,
+  DISTINCT_.BRM_ED ,
+  DISTINCT_.BRM_ED_TAG ,
+  DISTINCT_.FSC_ID_ZUGW ,
+  DISTINCT_.FSC_ID_KOOP ,
+  DISTINCT_.BSN_ID ,
+  DISTINCT_.BRM_SOLL ,
+  DISTINCT_.BRM_KOSTENSATZ  
 FROM 
   (
 SELECT 
-  TD_DWH_TEILNAHME.KTD_ID AS KTD_ID ,
-  TD_DWH_TEILNAHME.EWE_ID_EIN AS EWE_ID_EIN ,
-  TD_DWH_TEILNAHME.ORT_ID_AUS AS ORT_ID_AUS ,
-  TD_DWH_TEILNAHME.GST_ID_AUS AS GST_ID_AUS ,
-  TD_DWH_TEILNAHME.STR_ID_AUS AS STR_ID_AUS ,
-  TD_DWH_TEILNAHME.STS_ID_AUS AS STS_ID_AUS ,
-  TD_DWH_TEILNAHME.STS_ID_PRS_AUS AS STS_ID_PRS_AUS ,
-  TD_DWH_TEILNAHME.GEM_ID_AUS AS GEM_ID_AUS ,
-  TD_DWH_TEILNAHME.SGT_ID_AUS AS SGT_ID_AUS ,
-  TD_DWH_TEILNAHME.KTD_COSACHNT_SCHL AS KTD_COSACHNT_SCHL ,
-  TD_DWH_TEILNAHME.KTD_COSACHNTBB_SCHL AS KTD_COSACHNTBB_SCHL ,
-  TD_DWH_TEILNAHME.KTD_ZU_ZAEHL AS KTD_ZU_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_AB_ZAEHL AS KTD_AB_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_V_ZAEHL AS KTD_V_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_REAKT_ZAEHL AS KTD_REAKT_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_ERSTEL_DAT AS KTD_ERSTEL_DAT ,
-  TD_DWH_TEILNAHME.MAT_ID AS MAT_ID ,
-  TD_DWH_TEILNAHME.MAT_QUELL_VERF AS MAT_QUELL_VERF   
+  DISTINCT 
+  INLINE_VIEW.KMD_ID AS KMD_ID ,
+  INLINE_VIEW.BRM_ED AS BRM_ED ,
+  TO_DATE(TO_CHAR(INLINE_VIEW.BRM_ED,'YYYYMMDD'),'YYYYMMDD') AS BRM_ED_TAG ,
+  NVL(TD_DWH_BEB_SCHULNAME.BSN_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('BSN_KA')) x from dual) b
+where a.var_name = upper('BSN_KA') and b.x is not null
+)
+) AS BSN_ID ,
+  NVL(TD_DWH_FST_SCHULART.FSC_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('FSC_KA')) x from dual) b
+where a.var_name = upper('FSC_KA') and b.x is not null
+)
+) AS FSC_ID_ZUGW ,
+  NVL(TD_DWH_FST_SCHULART1.FSC_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('FSC_KA')) x from dual) b
+where a.var_name = upper('FSC_KA') and b.x is not null
+)
+) AS FSC_ID_KOOP ,
+  INLINE_VIEW.BRM_SOLL AS BRM_SOLL ,
+  INLINE_VIEW.BRM_KOSTENSATZ AS BRM_KOSTENSATZ   
 FROM 
-  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME  
-UNION 
+  (((
 SELECT 
-  (TD_DWH_TEILNAHME_SELECT_MAX_1.MAX_KTD_ID + rownum) AS KTD_ID ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('EWE_KA')) x from dual) b
-where a.var_name = upper('EWE_KA') and b.x is not null
-) AS EWE_ID_EIN ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('ORT_KA')) x from dual) b
-where a.var_name = upper('ORT_KA') and b.x is not null
-) AS ORT_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('GST_KA')) x from dual) b
-where a.var_name = upper('GST_KA') and b.x is not null
-) AS GST_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('SGB_TRG_KA')) x from dual) b
-where a.var_name = upper('SGB_TRG_KA') and b.x is not null
-) AS STR_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('STS_KA')) x from dual) b
-where a.var_name = upper('STS_KA') and b.x is not null
-) AS STS_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('STS_KA')) x from dual) b
-where a.var_name = upper('STS_KA') and b.x is not null
-) AS STS_ID_PRS_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('GEM_KA')) x from dual) b
-where a.var_name = upper('GEM_KA') and b.x is not null
-) AS GEM_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('SGB_TRG_KA')) x from dual) b
-where a.var_name = upper('SGB_TRG_KA') and b.x is not null
-) AS SGT_ID_AUS ,
-  W304_TMP_TLN_KERN_NEU_FOR_TD.KNT_ID AS KTD_COSACHNT_SCHL ,
-  to_char(null) AS KTD_COSACHNTBB_SCHL ,
-  to_date(null) AS KTD_ZU_ZAEHL ,
-  to_date(null) AS KTD_AB_ZAEHL ,
-  to_date(null) AS KTD_V_ZAEHL ,
-  to_date(null) AS KTD_REAKT_ZAEHL ,
-  (to_date('20260414','yyyymmdd')) AS KTD_ERSTEL_DAT ,
-  to_number(null) AS MAT_ID ,
-  to_number(null) AS MAT_QUELL_VERF   
+  W305_WRK_LOAD_BEB_MN.KMN_ID AS KMN_ID ,
+  W305_WRK_LOAD_BEB_MN.BRM_ED AS BRM_ED ,
+  W305_WRK_LOAD_BEB_MN.BRM_SOLL AS BRM_SOLL ,
+  W305_WRK_LOAD_BEB_MN.BRM_SCHULART AS BRM_SCHULART ,
+  W305_WRK_LOAD_BEB_MN.BRM_KOOPSCHULART AS BRM_KOOPSCHULART ,
+  W305_WRK_LOAD_BEB_MN.BRM_KOSTENSATZ AS BRM_KOSTENSATZ ,
+  W305_WRK_LOAD_BEB_MN.BRM_SCHUL_NR AS BRM_SCHUL_NR ,
+  TD_DWH_MASSNAHME.KMD_ID AS KMD_ID ,
+  TD_DWH_MASSNAHME.KMD_COSACHNT_SCHL AS KMD_COSACHNT_SCHL ,
+  TH_DWH_MASSNAHME.KMD_ID AS KMD_ID_1 ,
+  TH_DWH_MASSNAHME.KMH_GUELT_VON_DAT AS KMH_GUELT_VON_DAT ,
+  TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT AS KMH_GUELT_BIS_DAT ,
+  TH_DWH_MASSNAHME.KMH_ERSTEL_DAT AS KMH_ERSTEL_DAT ,
+  TH_DWH_MASSNAHME.KMH_UPDATE_DAT AS KMH_UPDATE_DAT ,
+  TH_DWH_MASSNAHME.KMH_KORR_DAT AS KMH_KORR_DAT   
 FROM 
-  SSC41WH_FST.W304_TMP_TLN_KERN_NEU W304_TMP_TLN_KERN_NEU_FOR_TD  INNER JOIN  (
-SELECT 
-  NVL(max(TD_DWH_TEILNAHME_SELECT_MAX.KTD_ID),0) AS MAX_KTD_ID   
-FROM 
-  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME_SELECT_MAX  
-  ) TD_DWH_TEILNAHME_SELECT_MAX_1  
-    ON  1 = 1
-  ) SET_UNION_TD  
+  (SSC41WH_FST.W305_WRK_LOAD_BEB_MN W305_WRK_LOAD_BEB_MN  INNER JOIN  SVS41WH_FST.TD_DWH_MASSNAHME TD_DWH_MASSNAHME  
+    ON  W305_WRK_LOAD_BEB_MN.KMN_ID = TD_DWH_MASSNAHME.KMD_COSACHNT_SCHL
+     )  INNER JOIN  SVS41WH_FST.TH_DWH_MASSNAHME TH_DWH_MASSNAHME  
+    ON  TD_DWH_MASSNAHME.KMD_ID = TH_DWH_MASSNAHME.KMD_ID
+WHERE
+  (TH_DWH_MASSNAHME.KMH_GUELT_VON_DAT <= TO_DATE('20260414','YYYYMMDD') 
+AND (TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT >= TO_DATE('20260414','YYYYMMDD') OR
+     TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT IS NULL                                         OR
+     TH_DWH_MASSNAHME.KMH_UPDATE_DAT    >  TO_DATE('20260414','YYYYMMDD') )
+AND  TH_DWH_MASSNAHME.KMH_ERSTEL_DAT    <= TO_DATE('20260414','YYYYMMDD')
+AND (TH_DWH_MASSNAHME.KMH_KORR_DAT      >  TO_DATE('20260414','YYYYMMDD') OR
+     TH_DWH_MASSNAHME.KMH_KORR_DAT      IS NULL                                         )
+) 
+  ) INLINE_VIEW  LEFT OUTER JOIN  SVS41WH_FST.TD_DWH_BEB_SCHULNAME TD_DWH_BEB_SCHULNAME  
+    ON  INLINE_VIEW.BRM_SCHUL_NR = TD_DWH_BEB_SCHULNAME.BSN_ID
+     )  LEFT OUTER JOIN  SVS41WH_UEB_DIM.TD_DWH_FST_SCHULART TD_DWH_FST_SCHULART  
+    ON  INLINE_VIEW.BRM_SCHULART = TD_DWH_FST_SCHULART.FSC_BA_SCHL
+     )  LEFT OUTER JOIN  SVS41WH_UEB_DIM.TD_DWH_FST_SCHULART TD_DWH_FST_SCHULART1  
+    ON  INLINE_VIEW.BRM_KOOPSCHULART = TD_DWH_FST_SCHULART1.FSC_BA_SCHL
+  ) DISTINCT_  
        , OriginalSql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO SSC41WH_FST.W304_TD_DWH_TEILNAHME_INS
+  INTO SSC41WH_FST.W305_WRK_BEB_MN
   (
-    KTD_ID ,
-    EWE_ID_EIN ,
-    ORT_ID_AUS ,
-    GST_ID_AUS ,
-    STR_ID_AUS ,
-    STS_ID_AUS ,
-    STS_ID_PRS_AUS ,
-    GEM_ID_AUS ,
-    SGT_ID_AUS ,
-    KTD_COSACHNT_SCHL ,
-    KTD_COSACHNTBB_SCHL ,
-    KTD_ZU_ZAEHL ,
-    KTD_AB_ZAEHL ,
-    KTD_V_ZAEHL ,
-    KTD_REAKT_ZAEHL ,
-    KTD_ERSTEL_DAT ,
-    MAT_ID ,
-    MAT_QUELL_VERF 
+    KMD_ID ,
+    BRM_ED ,
+    BRM_ED_TAG ,
+    FSC_ID_ZUGW ,
+    FSC_ID_KOOP ,
+    BSN_ID ,
+    BRM_SOLL ,
+    BRM_KOSTENSATZ 
   ) 
 SELECT 
-  SET_UNION_TD.KTD_ID ,
-  SET_UNION_TD.EWE_ID_EIN ,
-  SET_UNION_TD.ORT_ID_AUS ,
-  SET_UNION_TD.GST_ID_AUS ,
-  SET_UNION_TD.STR_ID_AUS ,
-  SET_UNION_TD.STS_ID_AUS ,
-  SET_UNION_TD.STS_ID_PRS_AUS ,
-  SET_UNION_TD.GEM_ID_AUS ,
-  SET_UNION_TD.SGT_ID_AUS ,
-  SET_UNION_TD.KTD_COSACHNT_SCHL ,
-  SET_UNION_TD.KTD_COSACHNTBB_SCHL ,
-  SET_UNION_TD.KTD_ZU_ZAEHL ,
-  SET_UNION_TD.KTD_AB_ZAEHL ,
-  SET_UNION_TD.KTD_V_ZAEHL ,
-  SET_UNION_TD.KTD_REAKT_ZAEHL ,
-  SET_UNION_TD.KTD_ERSTEL_DAT ,
-  SET_UNION_TD.MAT_ID ,
-  SET_UNION_TD.MAT_QUELL_VERF  
+  DISTINCT_.KMD_ID ,
+  DISTINCT_.BRM_ED ,
+  DISTINCT_.BRM_ED_TAG ,
+  DISTINCT_.FSC_ID_ZUGW ,
+  DISTINCT_.FSC_ID_KOOP ,
+  DISTINCT_.BSN_ID ,
+  DISTINCT_.BRM_SOLL ,
+  DISTINCT_.BRM_KOSTENSATZ  
 FROM 
   (
 SELECT 
-  TD_DWH_TEILNAHME.KTD_ID AS KTD_ID ,
-  TD_DWH_TEILNAHME.EWE_ID_EIN AS EWE_ID_EIN ,
-  TD_DWH_TEILNAHME.ORT_ID_AUS AS ORT_ID_AUS ,
-  TD_DWH_TEILNAHME.GST_ID_AUS AS GST_ID_AUS ,
-  TD_DWH_TEILNAHME.STR_ID_AUS AS STR_ID_AUS ,
-  TD_DWH_TEILNAHME.STS_ID_AUS AS STS_ID_AUS ,
-  TD_DWH_TEILNAHME.STS_ID_PRS_AUS AS STS_ID_PRS_AUS ,
-  TD_DWH_TEILNAHME.GEM_ID_AUS AS GEM_ID_AUS ,
-  TD_DWH_TEILNAHME.SGT_ID_AUS AS SGT_ID_AUS ,
-  TD_DWH_TEILNAHME.KTD_COSACHNT_SCHL AS KTD_COSACHNT_SCHL ,
-  TD_DWH_TEILNAHME.KTD_COSACHNTBB_SCHL AS KTD_COSACHNTBB_SCHL ,
-  TD_DWH_TEILNAHME.KTD_ZU_ZAEHL AS KTD_ZU_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_AB_ZAEHL AS KTD_AB_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_V_ZAEHL AS KTD_V_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_REAKT_ZAEHL AS KTD_REAKT_ZAEHL ,
-  TD_DWH_TEILNAHME.KTD_ERSTEL_DAT AS KTD_ERSTEL_DAT ,
-  TD_DWH_TEILNAHME.MAT_ID AS MAT_ID ,
-  TD_DWH_TEILNAHME.MAT_QUELL_VERF AS MAT_QUELL_VERF   
+  DISTINCT 
+  INLINE_VIEW.KMD_ID AS KMD_ID ,
+  INLINE_VIEW.BRM_ED AS BRM_ED ,
+  TO_DATE(TO_CHAR(INLINE_VIEW.BRM_ED,'YYYYMMDD'),'YYYYMMDD') AS BRM_ED_TAG ,
+  NVL(TD_DWH_BEB_SCHULNAME.BSN_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('BSN_KA')) x from dual) b
+where a.var_name = upper('BSN_KA') and b.x is not null
+)
+) AS BSN_ID ,
+  NVL(TD_DWH_FST_SCHULART.FSC_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('FSC_KA')) x from dual) b
+where a.var_name = upper('FSC_KA') and b.x is not null
+)
+) AS FSC_ID_ZUGW ,
+  NVL(TD_DWH_FST_SCHULART1.FSC_ID,(
+select  a.var_data_number  
+from SSC41WH_FST.W305_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W305_loaded_variables b where b.var_name = upper('FSC_KA')) x from dual) b
+where a.var_name = upper('FSC_KA') and b.x is not null
+)
+) AS FSC_ID_KOOP ,
+  INLINE_VIEW.BRM_SOLL AS BRM_SOLL ,
+  INLINE_VIEW.BRM_KOSTENSATZ AS BRM_KOSTENSATZ   
 FROM 
-  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME  
-UNION 
+  (((
 SELECT 
-  (TD_DWH_TEILNAHME_SELECT_MAX_1.MAX_KTD_ID + rownum) AS KTD_ID ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('EWE_KA')) x from dual) b
-where a.var_name = upper('EWE_KA') and b.x is not null
-) AS EWE_ID_EIN ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('ORT_KA')) x from dual) b
-where a.var_name = upper('ORT_KA') and b.x is not null
-) AS ORT_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('GST_KA')) x from dual) b
-where a.var_name = upper('GST_KA') and b.x is not null
-) AS GST_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('SGB_TRG_KA')) x from dual) b
-where a.var_name = upper('SGB_TRG_KA') and b.x is not null
-) AS STR_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('STS_KA')) x from dual) b
-where a.var_name = upper('STS_KA') and b.x is not null
-) AS STS_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('STS_KA')) x from dual) b
-where a.var_name = upper('STS_KA') and b.x is not null
-) AS STS_ID_PRS_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('GEM_KA')) x from dual) b
-where a.var_name = upper('GEM_KA') and b.x is not null
-) AS GEM_ID_AUS ,
-  (
-select  a.var_data_number  
-from SSC41WH_FST.w304_loaded_variables a 
-, (select 1/(select count(*) r from SSC41WH_FST.w304_loaded_variables b where b.var_name = upper('SGB_TRG_KA')) x from dual) b
-where a.var_name = upper('SGB_TRG_KA') and b.x is not null
-) AS SGT_ID_AUS ,
-  W304_TMP_TLN_KERN_NEU_FOR_TD.KNT_ID AS KTD_COSACHNT_SCHL ,
-  to_char(null) AS KTD_COSACHNTBB_SCHL ,
-  to_date(null) AS KTD_ZU_ZAEHL ,
-  to_date(null) AS KTD_AB_ZAEHL ,
-  to_date(null) AS KTD_V_ZAEHL ,
-  to_date(null) AS KTD_REAKT_ZAEHL ,
-  (to_date('20260414','yyyymmdd')) AS KTD_ERSTEL_DAT ,
-  to_number(null) AS MAT_ID ,
-  to_number(null) AS MAT_QUELL_VERF   
+  W305_WRK_LOAD_BEB_MN.KMN_ID AS KMN_ID ,
+  W305_WRK_LOAD_BEB_MN.BRM_ED AS BRM_ED ,
+  W305_WRK_LOAD_BEB_MN.BRM_SOLL AS BRM_SOLL ,
+  W305_WRK_LOAD_BEB_MN.BRM_SCHULART AS BRM_SCHULART ,
+  W305_WRK_LOAD_BEB_MN.BRM_KOOPSCHULART AS BRM_KOOPSCHULART ,
+  W305_WRK_LOAD_BEB_MN.BRM_KOSTENSATZ AS BRM_KOSTENSATZ ,
+  W305_WRK_LOAD_BEB_MN.BRM_SCHUL_NR AS BRM_SCHUL_NR ,
+  TD_DWH_MASSNAHME.KMD_ID AS KMD_ID ,
+  TD_DWH_MASSNAHME.KMD_COSACHNT_SCHL AS KMD_COSACHNT_SCHL ,
+  TH_DWH_MASSNAHME.KMD_ID AS KMD_ID_1 ,
+  TH_DWH_MASSNAHME.KMH_GUELT_VON_DAT AS KMH_GUELT_VON_DAT ,
+  TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT AS KMH_GUELT_BIS_DAT ,
+  TH_DWH_MASSNAHME.KMH_ERSTEL_DAT AS KMH_ERSTEL_DAT ,
+  TH_DWH_MASSNAHME.KMH_UPDATE_DAT AS KMH_UPDATE_DAT ,
+  TH_DWH_MASSNAHME.KMH_KORR_DAT AS KMH_KORR_DAT   
 FROM 
-  SSC41WH_FST.W304_TMP_TLN_KERN_NEU W304_TMP_TLN_KERN_NEU_FOR_TD  INNER JOIN  (
-SELECT 
-  NVL(max(TD_DWH_TEILNAHME_SELECT_MAX.KTD_ID),0) AS MAX_KTD_ID   
-FROM 
-  SVS41WH_FST.TD_DWH_TEILNAHME TD_DWH_TEILNAHME_SELECT_MAX  
-  ) TD_DWH_TEILNAHME_SELECT_MAX_1  
-    ON  1 = 1
-  ) SET_UNION_TD  
+  (SSC41WH_FST.W305_WRK_LOAD_BEB_MN W305_WRK_LOAD_BEB_MN  INNER JOIN  SVS41WH_FST.TD_DWH_MASSNAHME TD_DWH_MASSNAHME  
+    ON  W305_WRK_LOAD_BEB_MN.KMN_ID = TD_DWH_MASSNAHME.KMD_COSACHNT_SCHL
+     )  INNER JOIN  SVS41WH_FST.TH_DWH_MASSNAHME TH_DWH_MASSNAHME  
+    ON  TD_DWH_MASSNAHME.KMD_ID = TH_DWH_MASSNAHME.KMD_ID
+WHERE
+  (TH_DWH_MASSNAHME.KMH_GUELT_VON_DAT <= TO_DATE('20260414','YYYYMMDD') 
+AND (TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT >= TO_DATE('20260414','YYYYMMDD') OR
+     TH_DWH_MASSNAHME.KMH_GUELT_BIS_DAT IS NULL                                         OR
+     TH_DWH_MASSNAHME.KMH_UPDATE_DAT    >  TO_DATE('20260414','YYYYMMDD') )
+AND  TH_DWH_MASSNAHME.KMH_ERSTEL_DAT    <= TO_DATE('20260414','YYYYMMDD')
+AND (TH_DWH_MASSNAHME.KMH_KORR_DAT      >  TO_DATE('20260414','YYYYMMDD') OR
+     TH_DWH_MASSNAHME.KMH_KORR_DAT      IS NULL                                         )
+) 
+  ) INLINE_VIEW  LEFT OUTER JOIN  SVS41WH_FST.TD_DWH_BEB_SCHULNAME TD_DWH_BEB_SCHULNAME  
+    ON  INLINE_VIEW.BRM_SCHUL_NR = TD_DWH_BEB_SCHULNAME.BSN_ID
+     )  LEFT OUTER JOIN  SVS41WH_UEB_DIM.TD_DWH_FST_SCHULART TD_DWH_FST_SCHULART  
+    ON  INLINE_VIEW.BRM_SCHULART = TD_DWH_FST_SCHULART.FSC_BA_SCHL
+     )  LEFT OUTER JOIN  SVS41WH_UEB_DIM.TD_DWH_FST_SCHULART TD_DWH_FST_SCHULART1  
+    ON  INLINE_VIEW.BRM_KOOPSCHULART = TD_DWH_FST_SCHULART1.FSC_BA_SCHL
+  ) DISTINCT_  
        , Error Msg = ORA-01476: Divisor ist Null
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:514)
