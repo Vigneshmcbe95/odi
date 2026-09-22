@@ -1,7 +1,7 @@
 SET FEEDBACK ON
 SET SERVEROUTPUT ON
 
--- Kopiert fuer ALLE Ordner W301 bis W310 die fehlenden Zeilen in
+-- Kopiert fuer ALLE Ordner W301 bis W320 die fehlenden Zeilen in
 -- Wxxx_LOADED_VARIABLES von SSC43WH_FST nach SSC41WH_FST -- Fix fuer
 -- den Truncate-Unfall vom 2026-09-22 (hat W301/W302/W304/W310
 -- gleichzeitig geleert, vermutlich auch weitere Ordner dazwischen).
@@ -21,7 +21,7 @@ v_exists_41 integer;
 v_exists_43 integer;
 begin
 
-  for i in 301..310 loop
+  for i in 301..320 loop
 
     v_table_ssc41 := 'W'||i||'_LOADED_VARIABLES';
     v_table_ssc43 := v_table_ssc41;
@@ -69,7 +69,7 @@ declare
 v_c41 integer;
 v_c43 integer;
 begin
-  for i in 301..310 loop
+  for i in 301..320 loop
     begin
       execute immediate 'SELECT COUNT(*) FROM SSC41WH_FST.W'||i||'_LOADED_VARIABLES' into v_c41;
       execute immediate 'SELECT COUNT(*) FROM SSC43WH_FST.W'||i||'_LOADED_VARIABLES' into v_c43;
