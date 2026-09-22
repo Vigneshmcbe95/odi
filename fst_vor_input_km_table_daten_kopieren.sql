@@ -9,10 +9,15 @@ SET SERVEROUTPUT ON
 -- dieser Tabelle, finden nichts, truncaten ihre Ziel-loaded_variables-
 -- Tabelle und befuellen sie nicht neu.
 --
--- Kopiert die fehlenden Daten von SVS43WH_FST nach SVS41WH_FST.
+-- QUELLE KORRIGIERT (2026-09-22, bestaetigt ueber ODI Designer-Modell-
+-- Metadaten): W304_LOADED_VARIABLES ist dort als "Populated By"
+-- MF_FST_THM.THM_DWH_FST.FST_VOR_INPUT_KM_TABLE dokumentiert -- die
+-- offizielle Quelle ist also THM_DWH_FST, NICHT SVS43WH_FST (das war
+-- nur eine Vermutung basierend auf der urspruenglichen Struktur-Klon-
+-- Quelle). Kopiert die fehlenden Daten von THM_DWH_FST nach SVS41WH_FST.
 
 declare
-v_source_owner varchar2(30) := 'SVS43WH_FST';
+v_source_owner varchar2(30) := 'THM_DWH_FST';
 v_target_owner varchar2(30) := 'SVS41WH_FST';
 v_table_name   varchar2(30) := 'FST_VOR_INPUT_KM_TABLE';
 v_vorher       integer;
@@ -39,7 +44,7 @@ exception
 end;
 /
 
--- Kontrolle: Zeilenzahl SVS41 vs. SVS43 zum Vergleich.
+-- Kontrolle: Zeilenzahl SVS41 vs. THM_DWH_FST zum Vergleich.
 SELECT 'SVS41WH_FST' AS schema, COUNT(*) AS anzahl FROM SVS41WH_FST.FST_VOR_INPUT_KM_TABLE
 UNION ALL
-SELECT 'SVS43WH_FST', COUNT(*) FROM SVS43WH_FST.FST_VOR_INPUT_KM_TABLE;
+SELECT 'THM_DWH_FST', COUNT(*) FROM THM_DWH_FST.FST_VOR_INPUT_KM_TABLE;
