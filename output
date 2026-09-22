@@ -1,44 +1,49 @@
+ODI-1217: Session EPS_DWH_FST_W310_011_017_HIST_LESL_AB_200909 (51038) nicht erfolgreich mit Return Code ODI-1298.
+ODI-1226: Schritt MAP_DWH_W310_012_TMP_TLN_KERN_NEU nach 1 Versuch(en) nicht erfolgreich.
+ODI-1240: Flow MAP_DWH_W310_012_TMP_TLN_KERN_NEU beim Ausführen eines Insert new rows-IKM Oracle Insert-Load W310_TH_DWH_TEILNAHME_INS-Vorgangs nicht erfolgreich. Dieser Flow lädt Zieltabelle W310_TH_DWH_TEILNAHME_INS.
+ODI-1298: Serielle Aufgabe "SERIAL-MAP_MAIN- (70)" nicht erfolgreich, da die untergeordnete Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (80)" fehlerhaft ist.
+ODI-1298: Serielle Aufgabe "SERIAL-EU-LS_SCR_DWH_FST_UNIT (80)" nicht erfolgreich, da die untergeordnete Aufgabe "Insert new rows-IKM Oracle Insert-Load W310_TH_DWH_TEILNAHME_INS (120)" fehlerhaft ist.
 ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W310_TH_DWH_TEILNAHME_INS bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused by: java.sql.SQLDataException: ORA-01476: Divisor ist Null
+Caused By: java.sql.SQLDataException: ORA-01476: Divisor ist Null
 
-	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
-	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
-	atoracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
-	atoracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
-	atoracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
-	atoracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
-	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
-	atoracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
-	atoracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
-	atoracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
-	atoracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
-	atoracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
-	atoracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
-	atoracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
-	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
-	atoracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
-	atoracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
-	atoracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
-	atoracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
-	atoracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
-	atoracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
-	atoracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
-	atoracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
-	atoracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
-	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
-	atoracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
-	atoracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
-	atoracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
-	atjava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	atoracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
-	atjava.util.concurrent.FutureTask.run(FutureTask.java:266)
-	atjava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	atjava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	atjava.lang.Thread.run(Thread.java:750)
-Caused by: Sql = 
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:462)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1105)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:551)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:269)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:656)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:230)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:42)
+	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:929)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1280)
+	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1921)
+	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1876)
+	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:304)
+	at oracle.odi.runtime.agent.execution.sql.SQLCommand.execute(SQLCommand.java:271)
+	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:142)
+	at oracle.odi.runtime.agent.execution.sql.SQLExecutor.execute(SQLExecutor.java:28)
+	at oracle.odi.runtime.agent.execution.TaskExecutionHandler.handleTask(TaskExecutionHandler.java:52)
+	at oracle.odi.runtime.agent.execution.SessionTask.processTask(SessionTask.java:217)
+	at oracle.odi.runtime.agent.execution.SessionTask.doExecuteTask(SessionTask.java:129)
+	at oracle.odi.runtime.agent.execution.AbstractSessionTask.execute(AbstractSessionTask.java:892)
+	at oracle.odi.runtime.agent.execution.SessionExecutor$SerialTrain.runTasks(SessionExecutor.java:2264)
+	at oracle.odi.runtime.agent.execution.SessionExecutor.executeSession(SessionExecutor.java:630)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:718)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor$1.doAction(TaskExecutorAgentRequestProcessor.java:611)
+	at oracle.odi.core.persistence.dwgobject.DwgObjectTemplate.execute(DwgObjectTemplate.java:203)
+	at oracle.odi.runtime.agent.processor.TaskExecutorAgentRequestProcessor.doProcessStartAgentTask(TaskExecutorAgentRequestProcessor.java:800)
+	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor.access$2700(StartScenRequestProcessor.java:85)
+	at oracle.odi.runtime.agent.processor.impl.StartScenRequestProcessor$StartScenTask.doExecute(StartScenRequestProcessor.java:923)
+	at oracle.odi.runtime.agent.processor.task.AgentTask.execute(AgentTask.java:180)
+	at oracle.odi.runtime.agent.support.DefaultAgentTaskExecutor$2.run(DefaultAgentTaskExecutor.java:108)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	at oracle.odi.runtime.agent.execution.job.OdiJob.call(OdiJob.java:73)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: Error : 1476, Position : 3717, Sql = 
 INSERT 
   /*+  APPEND PARALLEL  */ 
   INTO SSC41WH_FST.W310_TH_DWH_TEILNAHME_INS
@@ -223,9 +228,9 @@ where a.var_name = upper('FAA_KA') and b.x is not null
   TO_DATE(NULL) AS KTH_LETZTER_TAG ,
   TO_DATE(NULL) AS KTH_ENDE_DAT_TATS ,
   NULL AS KTH_DAUER ,
-  TO_DATE(#GLOBAL.GV_STICHTAG_VM_CHR8,'YYYYMMDD') AS KTH_GUELT_VON_DAT ,
+  TO_DATE('20260312','YYYYMMDD') AS KTH_GUELT_VON_DAT ,
   TO_DATE(NULL) AS KTH_GUELT_BIS_DAT ,
-  TO_DATE(#GLOBAL.GV_STICHTAG_CHR8,'YYYYMMDD') AS KTH_ERSTEL_DAT ,
+  TO_DATE('20260414','YYYYMMDD') AS KTH_ERSTEL_DAT ,
   TO_DATE(NULL) AS KTH_UPDATE_DAT ,
   TO_DATE(NULL) AS KTH_KORR_DAT ,
   NULL AS TN_HIST_ID ,
@@ -243,5 +248,212 @@ FROM
   ) TH_DWH_TEILNAHME_1     )  INNER JOIN  SSC41WH_FST.W310_TD_DWH_TEILNAHME_INS W310_TD_DWH_TEILNAHME_INS1  
     ON  W310_TD_DWH_TEILNAHME_INS1.KTD_COSACHNT_SCHL = W310_TMP_TLN_KERN_NEU.KNT_ID
   ) SET_1  
-         
-, Error Msg = java.sql.SQLDataException: ORA-01476: Divisor ist Null
+       , OriginalSql = 
+INSERT 
+  /*+  APPEND PARALLEL  */ 
+  INTO SSC41WH_FST.W310_TH_DWH_TEILNAHME_INS
+  (
+    KTH_ID ,
+    KTD_ID ,
+    AFT_ID ,
+    KTH_GUELT_VON_DAT ,
+    KTH_GUELT_BIS_DAT ,
+    KTH_ERSTEL_DAT ,
+    KTH_UPDATE_DAT ,
+    KTH_KORR_DAT ,
+    KMD_ID ,
+    KMA_ID ,
+    KMA_ID_ORIG ,
+    TNS_ID ,
+    WEG_ID ,
+    SGS_ID_ERF ,
+    SGS_ID_ZUST ,
+    STS_ID ,
+    FAA_ID ,
+    CZK_COSACHNT_SCHL ,
+    KTH_GEN ,
+    KTH_LOESCH_DAT ,
+    KTH_FOERDERFELD_BER ,
+    KTH_TRG_DST ,
+    KTH_EINTRITT_DAT ,
+    KTH_AUSTRITT_DAT ,
+    KTH_VERLAENGERUNG_BIS ,
+    KTH_LETZTER_TAG ,
+    KTH_ENDE_DAT_TATS ,
+    KTH_DAUER ,
+    TN_HIST_ID ,
+    MAT_QUELL_VERF ,
+    FDF_ID ,
+    UTS_ID ,
+    KMA_ID_OLD 
+  ) 
+SELECT 
+  SET_1.KTH_ID ,
+  SET_1.KTD_ID ,
+  SET_1.AFT_ID ,
+  SET_1.KTH_GUELT_VON_DAT ,
+  SET_1.KTH_GUELT_BIS_DAT ,
+  SET_1.KTH_ERSTEL_DAT ,
+  SET_1.KTH_UPDATE_DAT ,
+  SET_1.KTH_KORR_DAT ,
+  SET_1.KMD_ID ,
+  SET_1.KMA_ID ,
+  SET_1.KMA_ID_ORIG ,
+  SET_1.TNS_ID ,
+  SET_1.WEG_ID ,
+  SET_1.SGS_ID_ERF ,
+  SET_1.SGS_ID_ZUST ,
+  SET_1.STS_ID ,
+  SET_1.FAA_ID ,
+  SET_1.CZK_COSACHNT_SCHL ,
+  SET_1.KTH_GEN ,
+  SET_1.KTH_LOESCH_DAT ,
+  SET_1.KTH_FOERDERFELD_BER ,
+  SET_1.KTH_TRG_DST ,
+  SET_1.KTH_EINTRITT_DAT ,
+  SET_1.KTH_AUSTRITT_DAT ,
+  SET_1.KTH_VERLAENGERUNG_BIS ,
+  SET_1.KTH_LETZTER_TAG ,
+  SET_1.KTH_ENDE_DAT_TATS ,
+  SET_1.KTH_DAUER ,
+  SET_1.TN_HIST_ID ,
+  SET_1.MAT_QUELL_VERF ,
+  SET_1.FDF_ID ,
+  SET_1.UTS_ID ,
+  SET_1.KMA_ID_OLD  
+FROM 
+  (
+SELECT 
+  TH_DWH_TEILNAHME.KTH_ID AS KTH_ID ,
+  TH_DWH_TEILNAHME.KTD_ID AS KTD_ID ,
+  TH_DWH_TEILNAHME.AFT_ID AS AFT_ID ,
+  TH_DWH_TEILNAHME.KMD_ID AS KMD_ID ,
+  TH_DWH_TEILNAHME.KMA_ID AS KMA_ID ,
+  TH_DWH_TEILNAHME.KMA_ID_ORIG AS KMA_ID_ORIG ,
+  TH_DWH_TEILNAHME.TNS_ID AS TNS_ID ,
+  TH_DWH_TEILNAHME.WEG_ID AS WEG_ID ,
+  TH_DWH_TEILNAHME.SGS_ID_ERF AS SGS_ID_ERF ,
+  TH_DWH_TEILNAHME.SGS_ID_ZUST AS SGS_ID_ZUST ,
+  TH_DWH_TEILNAHME.STS_ID AS STS_ID ,
+  TH_DWH_TEILNAHME.FAA_ID AS FAA_ID ,
+  TH_DWH_TEILNAHME.CZK_COSACHNT_SCHL AS CZK_COSACHNT_SCHL ,
+  TH_DWH_TEILNAHME.KTH_GEN AS KTH_GEN ,
+  TH_DWH_TEILNAHME.KTH_LOESCH_DAT AS KTH_LOESCH_DAT ,
+  TH_DWH_TEILNAHME.KTH_FOERDERFELD_BER AS KTH_FOERDERFELD_BER ,
+  TH_DWH_TEILNAHME.KTH_EINTRITT_DAT AS KTH_EINTRITT_DAT ,
+  TH_DWH_TEILNAHME.KTH_AUSTRITT_DAT AS KTH_AUSTRITT_DAT ,
+  TH_DWH_TEILNAHME.KTH_VERLAENGERUNG_BIS AS KTH_VERLAENGERUNG_BIS ,
+  TH_DWH_TEILNAHME.KTH_LETZTER_TAG AS KTH_LETZTER_TAG ,
+  TH_DWH_TEILNAHME.KTH_ENDE_DAT_TATS AS KTH_ENDE_DAT_TATS ,
+  TH_DWH_TEILNAHME.KTH_DAUER AS KTH_DAUER ,
+  TH_DWH_TEILNAHME.KTH_GUELT_VON_DAT AS KTH_GUELT_VON_DAT ,
+  TH_DWH_TEILNAHME.KTH_GUELT_BIS_DAT AS KTH_GUELT_BIS_DAT ,
+  TH_DWH_TEILNAHME.KTH_ERSTEL_DAT AS KTH_ERSTEL_DAT ,
+  TH_DWH_TEILNAHME.KTH_UPDATE_DAT AS KTH_UPDATE_DAT ,
+  TH_DWH_TEILNAHME.KTH_KORR_DAT AS KTH_KORR_DAT ,
+  TH_DWH_TEILNAHME.TN_HIST_ID AS TN_HIST_ID ,
+  TH_DWH_TEILNAHME.MAT_QUELL_VERF AS MAT_QUELL_VERF ,
+  TH_DWH_TEILNAHME.FDF_ID AS FDF_ID ,
+  TH_DWH_TEILNAHME.UTS_ID AS UTS_ID ,
+  TH_DWH_TEILNAHME.KTH_TRG_DST AS KTH_TRG_DST ,
+  TH_DWH_TEILNAHME.KMA_ID_OLD AS KMA_ID_OLD   
+FROM 
+  SVS41WH_FST.TH_DWH_TEILNAHME TH_DWH_TEILNAHME  
+UNION ALL 
+SELECT 
+  (TH_DWH_TEILNAHME_1.KTH_ID + rownum) AS KTH_ID ,
+  W310_TD_DWH_TEILNAHME_INS1.KTD_ID AS KTD_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('AFT_KA')) x from dual) b
+where a.var_name = upper('AFT_KA') and b.x is not null
+) AS AFT_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('KMD_KA')) x from dual) b
+where a.var_name = upper('KMD_KA') and b.x is not null
+) AS KMD_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('KMA_LES')) x from dual) b
+where a.var_name = upper('KMA_LES') and b.x is not null
+) AS KMA_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('KMA_LES')) x from dual) b
+where a.var_name = upper('KMA_LES') and b.x is not null
+) AS KMA_ID_ORIG ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('TNS_KA')) x from dual) b
+where a.var_name = upper('TNS_KA') and b.x is not null
+) AS TNS_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('WEG_KA')) x from dual) b
+where a.var_name = upper('WEG_KA') and b.x is not null
+) AS WEG_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('SGS_KA')) x from dual) b
+where a.var_name = upper('SGS_KA') and b.x is not null
+) AS SGS_ID_ERF ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('SGS_KA')) x from dual) b
+where a.var_name = upper('SGS_KA') and b.x is not null
+) AS SGS_ID_ZUST ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('STS_KA')) x from dual) b
+where a.var_name = upper('STS_KA') and b.x is not null
+) AS STS_ID ,
+  (
+select  a.var_data_number  
+from SSC41WH_FST.W310_loaded_variables a 
+, (select 1/(select count(*) r from SSC41WH_FST.W310_loaded_variables b where b.var_name = upper('FAA_KA')) x from dual) b
+where a.var_name = upper('FAA_KA') and b.x is not null
+) AS FAA_ID ,
+  '-1' AS CZK_COSACHNT_SCHL ,
+  2 AS KTH_GEN ,
+  TO_DATE(NULL) AS KTH_LOESCH_DAT ,
+  NULL AS KTH_FOERDERFELD_BER ,
+  TO_DATE(NULL) AS KTH_EINTRITT_DAT ,
+  TO_DATE(NULL) AS KTH_AUSTRITT_DAT ,
+  TO_DATE(NULL) AS KTH_VERLAENGERUNG_BIS ,
+  TO_DATE(NULL) AS KTH_LETZTER_TAG ,
+  TO_DATE(NULL) AS KTH_ENDE_DAT_TATS ,
+  NULL AS KTH_DAUER ,
+  TO_DATE('20260312','YYYYMMDD') AS KTH_GUELT_VON_DAT ,
+  TO_DATE(NULL) AS KTH_GUELT_BIS_DAT ,
+  TO_DATE('20260414','YYYYMMDD') AS KTH_ERSTEL_DAT ,
+  TO_DATE(NULL) AS KTH_UPDATE_DAT ,
+  TO_DATE(NULL) AS KTH_KORR_DAT ,
+  NULL AS TN_HIST_ID ,
+  NULL AS MAT_QUELL_VERF ,
+  9999 AS FDF_ID ,
+  9997 AS UTS_ID ,
+  NULL AS KTH_TRG_DST ,
+  9997 AS KMA_ID_OLD   
+FROM 
+  (SSC41WH_FST.W310_TMP_TLN_KERN_NEU W310_TMP_TLN_KERN_NEU  CROSS JOIN  (
+SELECT 
+  NVL(MAX(TH_DWH_TEILNAHME.KTH_ID),0) AS KTH_ID   
+FROM 
+  SVS41WH_FST.TH_DWH_TEILNAHME TH_DWH_TEILNAHME  
+  ) TH_DWH_TEILNAHME_1     )  INNER JOIN  SSC41WH_FST.W310_TD_DWH_TEILNAHME_INS W310_TD_DWH_TEILNAHME_INS1  
+    ON  W310_TD_DWH_TEILNAHME_INS1.KTD_COSACHNT_SCHL = W310_TMP_TLN_KERN_NEU.KNT_ID
+  ) SET_1  
+       , Error Msg = ORA-01476: Divisor ist Null
+
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:514)
+	... 36 more
