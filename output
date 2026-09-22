@@ -1,5 +1,5 @@
 ODI-1228: Aufgabe Insert new rows-IKM Oracle Insert-Load W302_TH_DWH_TEILNAHME_L03_IN bei Zielverbindung DS_ESTAT nicht erfolgreich.
-Caused by: java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P00J angezeigt
+Caused by: java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P0GC angezeigt
 ORA-01652: Temp-Segment kann nicht um 8192 in Tablespace STAT_DWH_SCR erweitert werden
 
 	atoracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:510)
@@ -206,5 +206,5 @@ WHERE
 ) 
   ) SET_UNION_ALL_IN2  
         
-, Error Msg = java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P00J angezeigt
+, Error Msg = java.sql.SQLException: ORA-12801: Fehler in parallelem Abfrage-Server P0GC angezeigt
 ORA-01652: Temp-Segment kann nicht um 8192 in Tablespace STAT_DWH_SCR erweitert werden
