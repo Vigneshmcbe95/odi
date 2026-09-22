@@ -5,7 +5,7 @@ Hallo Thorsten,
 Beim Testen von W305 zeigte der Set-Variables-Job einen Fehler wegen fehlender Daten.
 Zurückverfolgt bis SVS41WH_FST.FST_VOR_INPUT_KM_TABLE, dort war die Tabelle komplett leer.
 In ODI zeigt "Populated By" nichts, kein Job befüllt diese Tabelle automatisch.
-Ich habe sie manuell aus THM_DWH_FST befüllt — ist das für dich so in Ordnung?
+Wir haben sie manuell aus THM_DWH_FST befüllt — ist das für dich so in Ordnung?
 
 Viele Grüße
 Vignesh
