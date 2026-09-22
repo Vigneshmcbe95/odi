@@ -8,9 +8,9 @@ SET SERVEROUTPUT ON
 -- sonst bei jedem Vorkommen einzeln nach oder werfen Syntaxfehler.
 
 declare
-  v_source_owner varchar2(30) := 'SSC41WH_FST';
-  v_target_owner varchar2(30) := 'SSC45WH_FST';
-  v_table_name   varchar2(30) := 'W301_LOADED_VARIABLES';
+  v_source_owner varchar2(30) := 'SSC45WH_FST';
+  v_target_owner varchar2(30) := 'SSC41WH_FST';
+  v_table_name   varchar2(30) := 'W305_LOADED_VARIABLES';
   v_anzahl       integer;
 begin
 
