@@ -1,1 +1,1 @@
-Hallo Thorsten, Antwort selbst gefunden: FST_VOR_INPUT_KM_TABLE hat kein "Populated By" in ODI — wird also nicht von einem Job befüllt, sondern manuell gepflegt. Ich habe die Daten einmalig aus THM_DWH_FST nach SVS41WH_FST kopiert, das sollte als Fix reichen.
+Hallo Thorsten, FST_VOR_INPUT_KM_TABLE hat kein "Populated By" in ODI — wird die also tatsächlich nicht von einem Job befüllt, sondern manuell gepflegt?
