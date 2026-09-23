@@ -1,0 +1,1 @@
+Hallo Thorsten, in W327 fehlt die Spalte TNF_DKZID auf PSD1_DWL_FST.TL_DWL_FBWT — kannst du das bestätigen?
