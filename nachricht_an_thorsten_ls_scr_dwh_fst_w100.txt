@@ -1,1 +1,2 @@
 Hallo Thorsten, W100 und jetzt auch W300 fehlen als logisches Schema im Master-Repository (ODI-1222) — welche Wxxx-Gruppen sind für B05 überhaupt registriert?
+Update: W321 hängt jetzt auch dran, betrifft also den ganzen W300-Bereich — könntest du dir das kurz ansehen?
