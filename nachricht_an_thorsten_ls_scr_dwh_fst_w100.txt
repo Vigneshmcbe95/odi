@@ -1,2 +1,1 @@
-Hallo Thorsten, W100 und jetzt auch W300 fehlen als logisches Schema im Master-Repository (ODI-1222) — welche Wxxx-Gruppen sind für B05 überhaupt registriert?
-Update: W321 hängt jetzt auch dran, betrifft also den ganzen W300-Bereich — könntest du dir das kurz ansehen?
+Hallo Thorsten, ODI-1222 (Logisches Schema LS_SCR_DWH_FST_W300 nicht im Master-Repository gefunden) betrifft jetzt W306, W321 und W100 — kannst du das für B05 prüfen?
