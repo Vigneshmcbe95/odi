@@ -14,10 +14,10 @@ Tag 17 (4 Punkte) — 23.09.2026 — Fehlerkette weiter fortgesetzt, neue Ordner
 1. Job lief bis W312 durch, ORA-00904 auf fehlender Spalte — Struktur ergänzt statt Tabelle komplett neu angelegt
 2. Sicheres Skript geschrieben, das fehlende Tabellen und Spalten ergänzt, ohne bestehende Daten zu löschen
 3. Job lief bis W327 durch, erneut fehlende Spalte — Zielobjekt als Synonym erkannt, echte Basistabelle identifiziert
-4. Fehlende Spalte auf der echten Basistabelle zur Klärung zurückgemeldet
+4. Prüfskript für die fehlende Spalte auf der echten Basistabelle erstellt
 
 Tag 18 (4 Punkte) — 24.09.2026 — Registrierungslücke über mehrere Ordner bestätigt
 1. W306 und W100 zuvor bereits an ODI-1222 gescheitert, W321 heute erneut betroffen
 2. Dazwischen liefen W312 und W327 sauber durch, nur bestimmte Ordnergruppen betroffen
 3. Bestehende Rückmeldung zur Registrierungslücke um W321 ergänzt und zusammengefasst
-4. Offene Punkte aus der Woche konsolidiert und zur weiteren Klärung vorgelegt
+4. Wochenübersicht mit allen erledigten und offenen Fehlern erstellt
