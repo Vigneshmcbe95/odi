@@ -17,7 +17,7 @@ Tag 17 (4 Punkte) — 23.09.2026 — Fehlerkette weiter fortgesetzt, neue Ordner
 4. Fehlende Spalte auf der echten Basistabelle zur Klärung zurückgemeldet
 
 Tag 18 (4 Punkte) — 24.09.2026 — Registrierungslücke über mehrere Ordner bestätigt
-1. Bekannter Registrierungsfehler (logisches Schema nicht im Repository) trat erneut in einem weiteren Ordner auf
-2. Bestätigt, dass der Fehler mehrere Ordnungsnummern-Gruppen gleichzeitig betrifft, nicht nur einen Einzelfall
-3. Bestehende Rückmeldung zur Registrierungslücke aktualisiert und zusammengefasst
+1. W306 und W100 zuvor bereits an ODI-1222 gescheitert, W321 heute erneut betroffen
+2. Dazwischen liefen W312 und W327 sauber durch, nur bestimmte Ordnergruppen betroffen
+3. Bestehende Rückmeldung zur Registrierungslücke um W321 ergänzt und zusammengefasst
 4. Offene Punkte aus der Woche konsolidiert und zur weiteren Klärung vorgelegt
