@@ -1,23 +1,23 @@
-Tag 15 (4 Punkte) — 21.09.2026
-1. Fehlende Tabelle behoben, Insert-Fehler gelöst
-2. Tablespace-Speicherfehler behoben, Job blockiert nicht mehr
-3. Fehlende Laufzeitvariable ergänzt, Job lief weiter
-4. Zweite fehlende Variable gefunden, tieferes Problem vermutet
+Tag 15 (4 Punkte) — 21.09.2026 — UC4-Job W301/W302, Fehlerkette bis zur Ursache verfolgt
+1. Job neu gestartet, ORA-00904 auf W301_MNKERN_OUT — Tabelle aus Referenz nachgebaut, versehentlich gedroppt und wiederhergestellt
+2. Job neu gestartet, ORA-01652 (Temp-Segment voll) auf STAT_DWH_SCR — Tablespace-Erweiterung vorbereitet
+3. Job neu gestartet, ODI-17511 durch fehlende Laufzeitvariable W302_FOERDERART — Zeile nachgezogen
+4. Neu gestartet, zweite fehlende Variable FBW_QUELLE gefunden — Hinweis auf systematisches Problem in der Variablen-Befüllung
 
-Tag 16 (4 Punkte) — 22.09.2026
-1. Fehlerkette bis zur Konfigurationstabelle zurückverfolgt
-2. Konfigurationstabelle wiederhergestellt, mehrere Ordner entblockt
-3. Fehlerhaftes Aufräumskript korrigiert, Daten wiederhergestellt
-4. Fehlende Referenzzeile ergänzt, Job kam weiter
+Tag 16 (4 Punkte) — 22.09.2026 — Root Cause der Variablen-Fehlerkette gefunden und behoben
+1. Fehlerkette über mehrere Ordner (W301/W302/W304/W310) auf eine gemeinsame leere Konfigurationstabelle zurückgeführt
+2. Ursache bestätigt: Tabelle wird nicht automatisch befüllt, sondern manuell gepflegt — einmalig aus Referenzschema nachgezogen
+3. Aufräum-Skript für Tablespace-Speicherplatz hatte versehentlich Variablen-Tabellen mitgeleert — Skript korrigiert, Duplikate bereinigt
+4. Folgefehler behoben: fehlende Referenzzeile in einer Kerntabelle nachgezogen, Job lief bis zum nächsten Ordner durch
 
-Tag 17 (4 Punkte) — 23.09.2026
-1. Fehlende Spalte ergänzt, nächster Ordner erreicht
-2. Sicheres Skript für fehlende Tabellen/Spalten gebaut
-3. Job kam weiter, erneut fehlende Spalte
-4. Synonym zurückverfolgt zur echten Basistabelle
+Tag 17 (4 Punkte) — 23.09.2026 — Fehlerkette weiter fortgesetzt, neue Ordner erreicht
+1. Job lief bis W312 durch, ORA-00904 auf fehlender Spalte — Struktur ergänzt statt Tabelle komplett neu angelegt
+2. Sicheres Skript geschrieben, das fehlende Tabellen und Spalten ergänzt, ohne bestehende Daten zu löschen
+3. Job lief bis W327 durch, erneut fehlende Spalte — Zielobjekt als Synonym erkannt, echte Basistabelle identifiziert
+4. Fehlende Spalte auf der echten Basistabelle zur Klärung zurückgemeldet
 
-Tag 18 (4 Punkte) — 24.09.2026
-1. Bekannte Registrierungslücke in neuem Ordner bestätigt
-2. Lücke betrifft mehrere Ordnungsnummern-Gruppen gleichzeitig
-3. Offene Punkte fürs Nachfassen zusammengefasst
-4. Statusübersicht der Woche aktualisiert
+Tag 18 (4 Punkte) — 24.09.2026 — Registrierungslücke über mehrere Ordner bestätigt
+1. Bekannter Registrierungsfehler (logisches Schema nicht im Repository) trat erneut in einem weiteren Ordner auf
+2. Bestätigt, dass der Fehler mehrere Ordnungsnummern-Gruppen gleichzeitig betrifft, nicht nur einen Einzelfall
+3. Bestehende Rückmeldung zur Registrierungslücke aktualisiert und zusammengefasst
+4. Offene Punkte aus der Woche konsolidiert und zur weiteren Klärung vorgelegt
