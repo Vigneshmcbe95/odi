@@ -20,4 +20,4 @@ Tag 18 (4 Punkte) — 24.09.2026 — Registrierungslücke über mehrere Ordner b
 1. W306 und W100 zuvor bereits an ODI-1222 gescheitert, W321 heute erneut betroffen
 2. Dazwischen liefen W312 und W327 sauber durch, nur bestimmte Ordnergruppen betroffen
 3. Bestehende Rückmeldung zur Registrierungslücke um W321 ergänzt und zusammengefasst
-4. Job W321 dokumentiert, Registrierungsfehler an Thorsten gemeldet
+4. W321-Job über UC4 gestartet, Session-Start durch Registrierungslücke blockiert
