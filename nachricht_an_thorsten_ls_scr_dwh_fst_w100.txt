@@ -1,1 +1,2 @@
 Hallo Thorsten, ODI-1222 (Logisches Schema LS_SCR_DWH_FST_W300 nicht im Master-Repository gefunden) betrifft jetzt W306, W321 und W100 — kannst du das für B05 prüfen?
+Update: jetzt auch W103 betroffen — sieht nach der ganzen W100-Ordnergruppe aus, nicht nur einem Ordner.
