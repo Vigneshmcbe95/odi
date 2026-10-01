@@ -1,0 +1,15 @@
+Tag 19 (2 Punkte) — 25.09.2026
+1. W103-Variable TBR_KZM nachgezogen
+2. Registrierungslücke auf W100-Gruppe bestätigt
+
+Tag 20 (2 Punkte) — 26.09.2026
+1. Root Cause ODI-1222 gefunden
+2. Fachkonzept-Diagramme in Innovator erkundet
+
+Tag 21 (2 Punkte) — 29.09.2026
+1. W103-Job erneut getestet
+2. ETL-Schichtenmodell fachlich durchgearbeitet
+
+Tag 22 (2 Punkte) — 01.10.2026
+1. Variable TBR_KZM erneut geprüft
+2. ETL-Datenfluss bis Report erklärt
