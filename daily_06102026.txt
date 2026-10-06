@@ -1,0 +1,15 @@
+Daily 06.10.2026 (Nils)
+
+Jira:
+1. Created own PD test tables and ODI mappings in B05.
+2. Testing the PD load via database link.
+
+Worklog (DE):
+1. DWH-Architektur und PD-Datenfluss in Confluence dokumentiert.
+2. PD-Testladung in ODI aufgebaut und simuliert.
+
+Daily-Meeting (DE):
+Gestern habe ich die Architektur vom DWH und den Datenfluss von der PD mit Joern durchgesprochen und dokumentiert. Danach habe ich mir eigene Testtabellen und Mappings unter W400 angelegt und teste jetzt die Ladung aus der PD ueber den DB-Link. Keine Blocker.
+
+Daily meeting (EN):
+Yesterday I went through the DWH architecture and the PD data flow with Joern and documented it. Then I created my own test tables and mappings under W400, and I'm now testing the load from PD via the database link. No blockers.
