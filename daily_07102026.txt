@@ -2,6 +2,6 @@ Daily 07.10.2026
 
 Ich habe den PD-Test abgeschlossen. Ich habe beide Varianten getestet, also das LKM mit DB-Link und das LKM über JDBC. Beide laden die 74 Zeilen aus der PD-Testview korrekt in meine Testtabellen.
 
-Als Nächstes lese ich die Doku der Förderplattform zu den Events und zu Kafka. Außerdem arbeite ich mich in das neue DWH-Konzept im Innovator ein. Dann bin ich für die echten PD-Views vorbereitet.
+Als Nächstes teste ich die Anbindung an die PD-Schicht auf die gleiche Weise auf der B05. Dabei prüfe ich, welche zugehörigen Mappings dort noch fehlen. Diese lege ich an und teste sie.
 
-Falls es woanders gerade mehr brennt, zum Beispiel bei der B05-Jobkette, übernehme ich gerne auch das.
+Jörn zieht heute das Mapping W999_FST_WERT auf die B05, weil es Teil der Gesamt-Jobkette ist. Dabei unterstütze ich gerne, zum Beispiel beim Testen der Jobkette auf der B05.
