@@ -1,0 +1,29 @@
+Tag 23 (4 Punkte) — 02.10.2026
+1. FPL-Kickoff-Protokoll in Confluence dokumentiert
+2. KM-Optionen für PD-Ladung analysiert
+3. Innovator-Datenmodell V2 erkundet
+4. W333-Übernahme B02 nach B05 nachvollzogen
+
+Tag 24 (4 Punkte) — 05.10.2026
+1. DWH-Architektur mit Jörn besprochen
+2. Meeting-Aufnahme transkribiert und ausgewertet
+3. Architekturseite in Confluence erstellt
+4. PD-Testladung unter W400 geplant
+
+Tag 25 (4 Punkte) — 06.10.2026
+1. PD-Testtabellen in SVS41WH_FST angelegt
+2. ODI-Mappings unter W400 erstellt
+3. PD-Ladung per DB-Link getestet
+4. PD-Ladung per JDBC aufgebaut
+
+Tag 26 (4 Punkte) — 07.10.2026
+1. PD-Test beider LKMs abgeschlossen
+2. 74 Zeilen in Testtabellen verifiziert
+3. Förderplattform-Doku in Confluence ausgewertet
+4. Ablösung der Altquelle analysiert
+
+Tag 27 (4 Punkte) — 08.10.2026
+1. PD-Test auf B05 vorbereitet
+2. Fehlende Mappings in B05 ermittelt
+3. Fehlende Mappings angelegt und getestet
+4. Jobkette mit W999 unterstützt
