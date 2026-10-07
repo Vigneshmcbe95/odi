@@ -1,29 +1,29 @@
 Tag 23 (4 Punkte) — 02.10.2026
-1. FPL-Kickoff-Protokoll in Confluence dokumentiert
-2. KM-Optionen für PD-Ladung analysiert
-3. Innovator-Datenmodell V2 erkundet
-4. W333-Übernahme B02 nach B05 nachvollzogen
+1. Datenmodell der Förderplattform und offene Punkte in Confluence dokumentiert.
+2. Verfügbare Knowledge-Module für die Ladung aus der PD ins DWH analysiert.
+3. Neues V2-Datenmodell im Innovator inklusive Kernsatellit-Konzept erkundet.
+4. Übernahme des Mappings W333 von B02 nach B05 für den bestehenden UC4-Job nachvollzogen.
 
 Tag 24 (4 Punkte) — 05.10.2026
-1. DWH-Architektur mit Jörn besprochen
-2. Meeting-Aufnahme transkribiert und ausgewertet
-3. Architekturseite in Confluence erstellt
-4. PD-Testladung unter W400 geplant
+1. DWH-Architektur und Datenfluss von der PD in den FST-Core-Layer analysiert.
+2. DWH-Datenflussdiagramm von der Quellanwendung bis zur veröffentlichten Statistik ausgewertet.
+3. Ausführliche Seite zu Architektur und Datenfluss in Confluence erstellt.
+4. PD-Testladung mit eigenen Testtabellen und Mappings unter W400 geplant.
 
 Tag 25 (4 Punkte) — 06.10.2026
-1. PD-Testtabellen in SVS41WH_FST angelegt
-2. ODI-Mappings unter W400 erstellt
-3. PD-Ladung per DB-Link getestet
-4. PD-Ladung per JDBC aufgebaut
+1. Eigene PD-Testtabellen im Schema SVS41WH_FST auf der B05 angelegt.
+2. ODI-Testmappings unter W400 zur Ladung aus der PD-Testview erstellt.
+3. PD-Ladung mit dem LKM über einen temporären DB-Link getestet.
+4. Alternative PD-Ladung mit dem JDBC-basierten LKM über den ODI-Agenten aufgebaut.
 
 Tag 26 (4 Punkte) — 07.10.2026
-1. PD-Test beider LKMs abgeschlossen
-2. 74 Zeilen in Testtabellen verifiziert
-3. Förderplattform-Doku in Confluence ausgewertet
-4. Ablösung der Altquelle analysiert
+1. PD-Ladetest für beide LKM-Varianten, DB-Link und JDBC, abgeschlossen.
+2. Korrekte Ladung aller 74 Zeilen aus der PD-Testview verifiziert.
+3. Förderplattform-Doku in Confluence zu Events, Kafka und Datenmodell ausgewertet.
+4. Ablösung des bestehenden Quellsystems durch Förderplattform und PD analysiert.
 
 Tag 27 (4 Punkte) — 08.10.2026
-1. PD-Test auf B05 vorbereitet
-2. Fehlende Mappings in B05 ermittelt
-3. Fehlende Mappings angelegt und getestet
-4. Jobkette mit W999 unterstützt
+1. PD-Ladetest gegen die echten SVS41-Schemata auf der B05 vorbereitet.
+2. Noch fehlende Mappings für die Jobkette in der B05 ermittelt.
+3. Fehlende Mappings in der B05 angelegt und getestet.
+4. B05-Jobkette unterstützt, inklusive Übernahme des Mappings W999_FST_WERT.
