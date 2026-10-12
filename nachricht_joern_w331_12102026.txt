@@ -1,0 +1,5 @@
+Hallo Jörn,
+
+W331 bricht im Gesamtlauf auf der B05 ab: Das logische Schema LS_SCR_DWH_FST_W300 fehlt im Kontext CT_ESTAT_FST_41. Auf welches physische Schema soll es zeigen, SSC41WH_FST oder ein eigenes? Wenn es nur angelegt werden muss, übernehme ich das gern.
+
+VG Nils
