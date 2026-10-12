@@ -1,14 +1,14 @@
 com.sunopsis.tools.core.exception.SnpsSimpleMessageException: ODI-17517: Fehler während Aufgabeninterpretation.
- Aufgabe: 60
-com.sunopsis.tools.core.exception.SnpsSimpleNLSMessageException: ODI-17810: Fehler bei Auswertung von BeanShell: Sourced file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : Method Invocation odiRef.getObjectName : at Line: 4 : in file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : odiRef .getObjectName ( "L" , "W331_SOZT_OUT" , "LS_SCR_DWH_FST_W300" , "D" ) 
+ Aufgabe: 70
+com.sunopsis.tools.core.exception.SnpsSimpleNLSMessageException: ODI-17810: Fehler bei Auswertung von BeanShell: Sourced file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : Method Invocation odiRef.getObjectName : at Line: 4 : in file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : odiRef .getObjectName ( "L" , "null" , "" , "D" ) 
 
-Target exception: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "W331_SOZT_OUT", "LS_SCR_DWH_FST_W300", "CT_ESTAT_FST_41", "D") : SnpLschema "LS_SCR_DWH_FST_W300" doesnt exist
+Target exception: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "null", "", "CT_ESTAT_FST_41", "D") : SnpLschema "" doesnt exist
  in inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' at line number 4, Vorausführungscode:
 out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ;
-out.print( odiRef.getObjectName("L", "TH_DWH_TEILNAHME_SOT", "LS_THM_DWH_FST", "D") ) ;
-out.print("\n  (\n    SZH_ID ,\n    KTD_ID ,\n    KKZ_ID ,\n    SZH_BEENDIGUNG_DURCH ,\n    SZH_ZIELGRUPPE ,\n    SZH_GUELT_VON_DAT ,\n    SZH_GUELT_BIS_DAT ,\n    SZH_ERSTEL_DAT ,\n    SZH_UPDATE_DAT ,\n    SZH_KORR_DAT \n  ) \nSELECT \n  W331_SOZT_OUT.SZH_ID ,\n  W331_SOZT_OUT.KTD_ID ,\n  W331_SOZT_OUT.KKZ_ID ,\n  W331_SOZT_OUT.SZH_BEENDIGUNG_DURCH ,\n  W331_SOZT_OUT.SZH_ZIELGRUPPE ,\n  W331_SOZT_OUT.SZH_GUELT_VON_DAT ,\n  W331_SOZT_OUT.SZH_GUELT_BIS_DAT ,\n  W331_SOZT_OUT.SZH_ERSTEL_DAT ,\n  W331_SOZT_OUT.SZH_UPDATE_DAT ,\n  W331_SOZT_OUT.SZH_KORR_DAT  \nFROM \n  ") ;
-out.print( odiRef.getObjectName("L", "W331_SOZT_OUT", "LS_SCR_DWH_FST_W300", "D") ) ;
-out.print(" W331_SOZT_OUT  \n      ") ;
+out.print( odiRef.getObjectName("L", "W333_TH_MN_FIM", "LS_SCR_DWH_FST", "D") ) ;
+out.print("\n  (\n    FUM_ID ,\n    KMD_ID ,\n    FUM_GUELT_VON_DAT ,\n    FUM_GUELT_BIS_DAT ,\n    FUM_ERSTEL_DAT ,\n    FUM_UPDATE_DAT ,\n    FUM_KORR_DAT ,\n    FUM_IN ,\n    FUM_ART ,\n    FUM_TRAEGERPAUSCHALE ,\n    FUM_MEHRAUFWAND ,\n    FUM_ANZ_GENEHM_TN_PLATZ ,\n    FUM_SUM_PAUSCHALE ,\n    FUM_SUM_MEHRAUFWAND ,\n    FUM_SUM_ZUS_AUFWAND ,\n    FUM_SUM_GESAMT ,\n    FUM_SUM_NEUEINTRITTE \n  ) \nSELECT \n  TH_DWH_MASSNAHME_FIM.FUM_ID ,\n  TH_DWH_MASSNAHME_FIM.KMD_ID ,\n  TH_DWH_MASSNAHME_FIM.FUM_GUELT_VON_DAT ,\n  TH_DWH_MASSNAHME_FIM.FUM_GUELT_BIS_DAT ,\n  TH_DWH_MASSNAHME_FIM.FUM_ERSTEL_DAT ,\n  TH_DWH_MASSNAHME_FIM.FUM_UPDATE_DAT ,\n  TH_DWH_MASSNAHME_FIM.FUM_KORR_DAT ,\n  TH_DWH_MASSNAHME_FIM.FUM_IN ,\n  TH_DWH_MASSNAHME_FIM.FUM_ART ,\n  TH_DWH_MASSNAHME_FIM.FUM_TRAEGERPAUSCHALE ,\n  TH_DWH_MASSNAHME_FIM.FUM_MEHRAUFWAND ,\n  TH_DWH_MASSNAHME_FIM.FUM_ANZ_GENEHM_TN_PLATZ ,\n  TH_DWH_MASSNAHME_FIM.FUM_SUM_PAUSCHALE ,\n  TH_DWH_MASSNAHME_FIM.FUM_SUM_MEHRAUFWAND ,\n  TH_DWH_MASSNAHME_FIM.FUM_SUM_ZUS_AUFWAND ,\n  TH_DWH_MASSNAHME_FIM.FUM_SUM_GESAMT ,\n  TH_DWH_MASSNAHME_FIM.FUM_SUM_NEUEINTRITTE  \nFROM \n  ") ;
+out.print( odiRef.getObjectName("L", "null", "", "D") ) ;
+out.print(" TH_DWH_MASSNAHME_FIM  \n      ") ;
 
 	at com.sunopsis.dwg.codeinterpretor.SnpCodeInterpretor.transform(SnpCodeInterpretor.java:552)
 	at oracle.odi.runtime.agent.execution.interpreter.SessionTaskCodeInterpreter.codeInterpretation(SessionTaskCodeInterpreter.java:200)
@@ -32,16 +32,16 @@ out.print(" W331_SOZT_OUT  \n      ") ;
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-Caused by: javax.script.ScriptException: Sourced file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : Method Invocation odiRef.getObjectName : at Line: 4 : in file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : odiRef .getObjectName ( "L" , "W331_SOZT_OUT" , "LS_SCR_DWH_FST_W300" , "D" ) 
+Caused by: javax.script.ScriptException: Sourced file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : Method Invocation odiRef.getObjectName : at Line: 4 : in file: inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' : odiRef .getObjectName ( "L" , "null" , "" , "D" ) 
 
-Target exception: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "W331_SOZT_OUT", "LS_SCR_DWH_FST_W300", "CT_ESTAT_FST_41", "D") : SnpLschema "LS_SCR_DWH_FST_W300" doesnt exist
+Target exception: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "null", "", "CT_ESTAT_FST_41", "D") : SnpLschema "" doesnt exist
  in inline evaluation of: ``out.print("\nINSERT \n  /*+  APPEND PARALLEL  */ \n  INTO ") ; out.print( odiRef . . . '' at line number 4
 	at bsh.engine.BshScriptEngine.evalSource(BshScriptEngine.java:87)
 	at bsh.engine.BshScriptEngine.eval(BshScriptEngine.java:46)
 	at javax.script.AbstractScriptEngine.eval(AbstractScriptEngine.java:264)
 	at com.sunopsis.dwg.codeinterpretor.SnpCodeInterpretor.transform(SnpCodeInterpretor.java:547)
 	... 21 more
-Caused by: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "W331_SOZT_OUT", "LS_SCR_DWH_FST_W300", "CT_ESTAT_FST_41", "D") : SnpLschema "LS_SCR_DWH_FST_W300" doesnt exist
+Caused by: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Exception getObjectName("L", "null", "", "CT_ESTAT_FST_41", "D") : SnpLschema "" doesnt exist
 	at com.sunopsis.dwg.snpreference.SnpReference.getObjectName(SnpReference.java:9330)
 	at com.sunopsis.dwg.snpreference.SnpReference.getObjectName(SnpReference.java:9138)
 	at sun.reflect.GeneratedMethodAccessor331.invoke(Unknown Source)
@@ -66,32 +66,46 @@ Caused by: com.sunopsis.tools.core.exception.SnpsSimpleMessageException: Excepti
 Text: 
 INSERT 
   /*+  APPEND PARALLEL  */ 
-  INTO <?= odiRef.getObjectName("L", "TH_DWH_TEILNAHME_SOT", "LS_THM_DWH_FST", "D") ?>
+  INTO <?= odiRef.getObjectName("L", "W333_TH_MN_FIM", "LS_SCR_DWH_FST", "D") ?>
   (
-    SZH_ID ,
-    KTD_ID ,
-    KKZ_ID ,
-    SZH_BEENDIGUNG_DURCH ,
-    SZH_ZIELGRUPPE ,
-    SZH_GUELT_VON_DAT ,
-    SZH_GUELT_BIS_DAT ,
-    SZH_ERSTEL_DAT ,
-    SZH_UPDATE_DAT ,
-    SZH_KORR_DAT 
+    FUM_ID ,
+    KMD_ID ,
+    FUM_GUELT_VON_DAT ,
+    FUM_GUELT_BIS_DAT ,
+    FUM_ERSTEL_DAT ,
+    FUM_UPDATE_DAT ,
+    FUM_KORR_DAT ,
+    FUM_IN ,
+    FUM_ART ,
+    FUM_TRAEGERPAUSCHALE ,
+    FUM_MEHRAUFWAND ,
+    FUM_ANZ_GENEHM_TN_PLATZ ,
+    FUM_SUM_PAUSCHALE ,
+    FUM_SUM_MEHRAUFWAND ,
+    FUM_SUM_ZUS_AUFWAND ,
+    FUM_SUM_GESAMT ,
+    FUM_SUM_NEUEINTRITTE 
   ) 
 SELECT 
-  W331_SOZT_OUT.SZH_ID ,
-  W331_SOZT_OUT.KTD_ID ,
-  W331_SOZT_OUT.KKZ_ID ,
-  W331_SOZT_OUT.SZH_BEENDIGUNG_DURCH ,
-  W331_SOZT_OUT.SZH_ZIELGRUPPE ,
-  W331_SOZT_OUT.SZH_GUELT_VON_DAT ,
-  W331_SOZT_OUT.SZH_GUELT_BIS_DAT ,
-  W331_SOZT_OUT.SZH_ERSTEL_DAT ,
-  W331_SOZT_OUT.SZH_UPDATE_DAT ,
-  W331_SOZT_OUT.SZH_KORR_DAT  
+  TH_DWH_MASSNAHME_FIM.FUM_ID ,
+  TH_DWH_MASSNAHME_FIM.KMD_ID ,
+  TH_DWH_MASSNAHME_FIM.FUM_GUELT_VON_DAT ,
+  TH_DWH_MASSNAHME_FIM.FUM_GUELT_BIS_DAT ,
+  TH_DWH_MASSNAHME_FIM.FUM_ERSTEL_DAT ,
+  TH_DWH_MASSNAHME_FIM.FUM_UPDATE_DAT ,
+  TH_DWH_MASSNAHME_FIM.FUM_KORR_DAT ,
+  TH_DWH_MASSNAHME_FIM.FUM_IN ,
+  TH_DWH_MASSNAHME_FIM.FUM_ART ,
+  TH_DWH_MASSNAHME_FIM.FUM_TRAEGERPAUSCHALE ,
+  TH_DWH_MASSNAHME_FIM.FUM_MEHRAUFWAND ,
+  TH_DWH_MASSNAHME_FIM.FUM_ANZ_GENEHM_TN_PLATZ ,
+  TH_DWH_MASSNAHME_FIM.FUM_SUM_PAUSCHALE ,
+  TH_DWH_MASSNAHME_FIM.FUM_SUM_MEHRAUFWAND ,
+  TH_DWH_MASSNAHME_FIM.FUM_SUM_ZUS_AUFWAND ,
+  TH_DWH_MASSNAHME_FIM.FUM_SUM_GESAMT ,
+  TH_DWH_MASSNAHME_FIM.FUM_SUM_NEUEINTRITTE  
 FROM 
-  <?= odiRef.getObjectName("L", "W331_SOZT_OUT", "LS_SCR_DWH_FST_W300", "D") ?> W331_SOZT_OUT  
+  <?= odiRef.getObjectName("L", "null", "", "D") ?> TH_DWH_MASSNAHME_FIM  
       .
 	at oracle.odi.runtime.agent.execution.interpreter.SessionTaskCodeInterpreter.codeInterpretation(SessionTaskCodeInterpreter.java:223)
 	at oracle.odi.runtime.agent.execution.interpreter.SessionTaskCodeInterpreter.codeInterpretation(SessionTaskCodeInterpreter.java:94)
