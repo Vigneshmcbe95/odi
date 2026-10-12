@@ -13,3 +13,12 @@ ORDER  BY table_name, column_name;
 -- 2. Schnellprüfung der Schlüsselspalten in TL_DWL_BNFA
 SELECT COUNT(*) total, COUNT(KMN_ID) kmn, COUNT(BNF_ID) bnf
 FROM   ANO1_DWL_FST.TL_DWL_BNFA;
+
+-- 3. Statistiken aktualisieren, falls Abfrage 1 keine Zeilen liefert (Rechte erforderlich)
+-- EXEC DBMS_STATS.GATHER_SCHEMA_STATS('ANO1_DWL_FST');
+
+-- 4. KMN_ID je Monat prüfen (Mapping filtert auf META_MON_ID = #GLOBAL.GV_MON_ID)
+SELECT META_MON_ID, COUNT(*) total, COUNT(KMN_ID) kmn
+FROM   ANO1_DWL_FST.TL_DWL_BNFA
+GROUP  BY META_MON_ID
+ORDER  BY META_MON_ID DESC;
