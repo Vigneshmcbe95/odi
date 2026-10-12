@@ -1,0 +1,5 @@
+Tag 28 (4 Punkte) — 12.10.2026
+1. Gesamten DWH-Jobplan auf der B05 gestartet und den Lauf im Operator überwacht.
+2. Fehlgeschlagene Jobs der Gesamtkette analysiert und die Fehlerursachen ermittelt.
+3. Fehlerhafte Jobs nach der Korrektur erneut ausgeführt und getestet.
+4. Ergebnisse der Gesamtkette geprüft und den Teststand dokumentiert.
