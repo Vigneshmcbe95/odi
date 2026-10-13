@@ -43,3 +43,29 @@ SELECT table_name
 FROM   all_tables
 WHERE  owner = 'SVS41LL_FST'
 ORDER  BY 1;
+
+-- 6. Synonyme mit diesen Namen (inkl. PUBLIC und DB-Links); table_owner = zentrales Schema
+SELECT owner, synonym_name, table_owner, table_name, db_link
+FROM   all_synonyms
+WHERE  synonym_name IN ('TT_FST_SZENARIO','TT_FST_REL_SF','TT_FST_FALL',
+                        'TT_FST_ERGEBNIS','TT_FST_AUFTRAG')
+ORDER  BY synonym_name, owner;
+
+-- 7. Die drei Tabellen exakt in allen SVS-Schemata (Tabelle, View oder Synonym)
+SELECT owner, object_name, object_type, status, last_ddl_time
+FROM   all_objects
+WHERE  object_name IN ('TT_FST_SZENARIO','TT_FST_REL_SF','TT_FST_FALL')
+AND    owner LIKE 'SVS%'
+ORDER  BY owner, object_name;
+
+-- 8. Ohne Rechtefilter (nur mit DBA-Rechten)
+SELECT owner, object_name, object_type, status
+FROM   dba_objects
+WHERE  object_name IN ('TT_FST_SZENARIO','TT_FST_REL_SF','TT_FST_FALL')
+ORDER  BY owner, object_name;
+
+-- 9. Vergleich: Objekttyp der funktionierenden Tabellen
+SELECT owner, object_name, object_type
+FROM   all_objects
+WHERE  object_name IN ('TT_FST_ERGEBNIS','TT_FST_AUFTRAG')
+ORDER  BY owner, object_name;
