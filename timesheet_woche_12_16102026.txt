@@ -6,18 +6,18 @@ Tag 28 (4 Punkte) — 12.10.2026
 
 Tag 29 (4 Punkte) — 13.10.2026
 1. Fehler im Job W401 (A199 Testautomat) auf der B05 analysiert und fehlende Katalogtabellen ermittelt.
-2. SQL-Prüfskript für die Testautomat-Tabellen und Synonyme erstellt und mit SVS43 verglichen.
+2. SQL-Prüfskript für die Testautomat-Tabellen und Synonyme erstellt und mit der B02 verglichen.
 3. Job W901 geklont, auf die B05 übernommen und das Szenario neu generiert.
-4. Fehlerliste des Gesamtlaufs B05 aktualisiert und mit Jörn abgestimmt.
+4. Fehlerliste des Gesamtlaufs B05 aktualisiert und die Korrekturen abgestimmt.
 
 Tag 30 (4 Punkte) — 14.10.2026
-1. Übergabemeeting mit Thorsten zum Gesamtlauf B05, DM-Schicht und Förderplattform durchgeführt.
-2. Vorgehen zur Entwicklung neuer Dimensionstabellen (Create/Insert aus Innovator) aufgenommen.
-3. Detaillierte Confluence-Seite zur Dimensionsentwicklung und zum DM-Layer erstellt.
-4. Erneute Ausführung der korrigierten Jobs (W324, W401, W901) geprüft.
+1. Übergabemeeting zur Entwicklung neuer Dimensionstabellen durchgeführt.
+2. Vorgehen zur Erstellung der Dimensionen aus den Innovator-Create- und Insert-Skripten aufgenommen.
+3. Ablauf der DM-Schicht (Kern, Nachverarbeitung, Partitionierung) analysiert.
+4. Detaillierte Confluence-Seite zur Dimensionsentwicklung erstellt.
 
 Tag 31 (4 Punkte) — 15.10.2026
-1. Offene Punkte der B05 zusammengestellt (W321 aus B03, Neustart Gesamtlauf).
-2. Status der RFC „Reduzierung SCR-Tabellen“ (W321) in der B03 geprüft.
-3. Konzept zur Synchronisation der B05 mit Prod/Abnahme (ODI Smart Export, DB-Abgleich) erarbeitet.
-4. Vorschlag zur dauerhaften Lösung an Thorsten und Jörn abgestimmt.
+1. Erneute Ausführung der korrigierten Jobs (W324, W401, W901) auf der B05 geprüft.
+2. Offene Punkte des Gesamtlaufs B05 zusammengestellt (W321, Neustart der Gesamtkette).
+3. Ursachen für wiederkehrende Mapping-Fehler durch Weiterentwicklung in anderen Umgebungen analysiert.
+4. Konzept zur Synchronisation der B05 mit Prod/Abnahme (ODI Smart Export, DB-Abgleich) erarbeitet.
