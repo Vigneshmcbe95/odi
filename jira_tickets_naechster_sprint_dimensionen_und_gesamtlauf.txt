@@ -1,0 +1,55 @@
+Ticket 1
+
+Titel: FST - B05 Neue Dimensionstabellen: Erstellungs- und Ladeprozess etablieren
+Story Points: 13
+
+Beschreibung:
+
+Ziel
+Einen wiederholbaren Prozess schaffen, um neue Dimensionstabellen aus Innovator-Exporten (Create + Insert) korrekt in B05 zu erstellen und zu laden, passend zu den Team-Standards.
+
+Schritte
+- Innovator-Create-Skript nicht direkt verwenden, sondern vorhandenes Create-TD-Template aus SVN kopieren, umbenennen und Spalten einfuegen.
+- Datentypen anpassen: NUMBER(x) -> NUMBER(x,0), VARCHAR2(n) -> VARCHAR2(n CHAR).
+- Tabelle in den erforderlichen Umgebungen erstellen (z. B. THM / Sandbox-Aequivalent).
+- Insert-Skript 1:1 uebernehmen, TRUNCATE TABLE ...; am Anfang und COMMIT; am Ende ergaenzen, manuell laden.
+- Zeilenanzahl gegen Insert-Skript-Kommentar pruefen.
+- In Innovator pruefen, ob die Tabelle am Dimensionsabgleich teilnimmt oder manuell gepflegt werden muss.
+
+Akzeptanzkriterien
+- Mindestens eine neue Dimensionstabelle ueber das angepasste SVN-Template erfolgreich erstellt.
+- Daten ueber Truncate/Insert/Commit geladen, Zeilenanzahl verifiziert.
+- Skripte in SVN beim zugehoerigen Arbeitsauftrag abgelegt.
+- Dimensionsabgleich-Status der Tabelle dokumentiert.
+
+Hinweis
+Betrifft die UEB-DIM-Tabellen (THM_DWH_UEB_DIM), nicht den FST-eigenen Bereich. Wird mit hoher Wahrscheinlichkeit im naechsten Sprint benoetigt, da die Modellierungskollegen bereits neue Dimensionen vorbereiten.
+Referenz: Confluence "14.10.2026 Meeting: Developing Dimension Tables & Handover", Abschnitt 4, Checkliste 4.7.
+
+
+Ticket 2
+
+Titel: FST - B05 Gesamtlauf abschliessen: W321 uebernehmen und Vollstaendigkeit herstellen
+Story Points: 8
+
+Beschreibung:
+
+Ziel
+Letzten offenen Red-Job (W321) im B05-Gesamtlauf klaeren, uebernehmen und einen vollstaendig gruenen Gesamtlauf erzielen.
+
+Schritte
+- RFC-Mapping-Excel pruefen: W321 ("Reduzierung SCR-Tabellen") wurde in B03 entwickelt.
+- In B03 die Aenderungshistorie der Mapping (Overview-Tab) pruefen, um Verantwortlichen zu ermitteln (Kandidaten: Michelle oder Werner).
+- Klaeren, ob Entwicklung abgeschlossen ist, bevor uebernommen wird.
+- W321-Szenario nach B05 uebernehmen.
+- Gesamtlauf auf B05 erneut vollstaendig starten.
+
+Akzeptanzkriterien
+- Verantwortliche(r) fuer W321 identifiziert und Entwicklungsstatus bestaetigt.
+- W321-Szenario nach B05 uebernommen.
+- Gesamtlauf auf B05 laeuft vollstaendig gruen durch ("in einem Rutsch").
+- Screenshot des gruenen Gesamtlaufs als Nachweis dokumentiert.
+
+Hinweis
+Referenz: Confluence "14.10.2026 Meeting: Developing Dimension Tables & Handover", Abschnitt 1, Organisationstabelle Punkt #1.
+Abgrenzung zu UP15-438: UP15-438 deckt das Testen der DM-Ladestrecken/UC4-Einbindung ab. Dieses Ticket ist separat und betrifft den DWH-Gesamtlauf (B05).
