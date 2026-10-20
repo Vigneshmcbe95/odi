@@ -1,4 +1,4 @@
-Hallo Joern,
+Hallo Jörn,
 
 ich habe den Import von W321 (FOLD_W321_FST_ESFLZA.xml) auch versucht -- bei mir kommt derselbe Fehler wie bei dir und Thorsten.
 
@@ -8,15 +8,15 @@ ODI-10244: Cannot import Folder : W321_FST_ESFLZA
 (global id: f785f030-b63c-4114-bf7f-767181afa21f)
 because referenced Project with global id null does not exist.
 
-Das heisst: Die exportierte XML-Datei hat eine leere/null Projekt-Referenz -- die Datei "weiss" also selbst nicht, zu welchem Projekt sie gehoert. Das ist kein Problem auf unserer Seite (nicht Rechte, nicht Import-Methode) -- die Export-Datei selbst ist unvollstaendig. Deshalb schlaegt auch "Import SubFolder" fehl, nicht nur der normale Import.
+Das heißt: Die exportierte XML-Datei hat eine leere/null Projekt-Referenz -- die Datei "weiß" also selbst nicht, zu welchem Projekt sie gehört. Das ist kein Problem auf unserer Seite (nicht Rechte, nicht Import-Methode) -- die Export-Datei selbst ist unvollständig. Deshalb schlägt auch "Import SubFolder" fehl, nicht nur der normale Import.
 
-Zwei moegliche Loesungen:
+Zwei mögliche Lösungen:
 
-1. Sauberer Re-Export (empfohlen): Koennen wir W321 nochmal aus B03 exportieren lassen -- diesmal auf Projekt-Ebene (nicht nur den Folder), mit "Export auch Kindobjekte"? Das sollte die Projekt-Verknuepfung korrekt mitnehmen.
+1. Sauberer Re-Export (empfohlen): Können wir W321 nochmal aus B03 exportieren lassen -- diesmal auf Projekt-Ebene (nicht nur den Folder), mit "Export auch Kindobjekte"? Das sollte die Projekt-Verknüpfung korrekt mitnehmen.
 
-2. Workaround, falls kein neuer Export kurzfristig moeglich ist: Wir legen manuell einen leeren Folder namens W321_FST_ESFLZA im Zielprojekt an und importieren die XML dann im Modus "Import Replace" gegen diesen bestehenden Folder -- das umgeht manchmal das Problem, weil ODI dann ein existierendes Objekt zum Ersetzen findet statt es neu per Referenz anzulegen.
+2. Workaround, falls kein neuer Export kurzfristig möglich ist: Wir legen manuell einen leeren Folder namens W321_FST_ESFLZA im Zielprojekt an und importieren die XML dann im Modus "Import Replace" gegen diesen bestehenden Folder -- das umgeht manchmal das Problem, weil ODI dann ein existierendes Objekt zum Ersetzen findet statt es neu per Referenz anzulegen.
 
-Lass uns kurz klaeren, wer den Re-Export machen kann, bevor wir Workaround 2 versuchen.
+Lass uns kurz klären, wer den Re-Export machen kann, bevor wir Workaround 2 versuchen.
 
-Viele Gruesse
+Viele Grüße
 Vignesh
