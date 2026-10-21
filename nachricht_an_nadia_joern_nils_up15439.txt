@@ -1,0 +1,10 @@
+Hi Nadia, Jörn, Nils,
+
+passt für mich -- dass Jörn und Nils sich bei UP15-439 abstimmen, macht Sinn, da es die anderen Stories blockiert.
+
+Ich habe mir schon die Innovator-Exportordner und den RDE-Prozess für neue Dimensionstabellen angeschaut (Create-Script anpassen, Datentypen fixen, RDE-Deployment, Insert-Ladung mit TRUNCATE/COMMIT). Teile gerne meine Notizen, falls hilfreich.
+
+Sagt Bescheid, falls ich unterstützen kann.
+
+Viele Grüße
+Vignesh
