@@ -1,0 +1,6 @@
+Hallo Michael,
+
+ich arbeite an UP15-439 (Ladeprozess für neue Dimensionstabellen). Ist schon ein Innovator-Export für eine neue Dimension gelandet? Falls ja, welche DMND-Nummer?
+
+Danke
+Vignesh
