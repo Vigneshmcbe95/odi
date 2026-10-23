@@ -63,3 +63,11 @@ User has strong **SSIS background** — explaining ODI concepts via direct SSIS 
 
 ## Flow diagram published
 Artifact showing the full ODI repo → logical schema → Context → physical schema → real Oracle schema resolution path, plus the separate clone+load path: https://claude.ai/code/artifact/f1ff0afb-ce13-46c3-abbe-1e978395df2b
+
+## Update 2026-10-22 (Sprint 10, UP15)
+- **Stories**: UP15-439 (neuer Dimensionstabellen-Prozess, blockiert UP15-440/441), UP15-438 (DM-Ladestrecken B05, Joern), UP15-436 (Innovator-Modell der 3 Dimensionen Foerderart / Verbleib nach Ende der Foerderung / Beendigungsgrund, in Arbeit). Nadia Sakhi koordiniert: Joern + Nils sollen UP15-439 gemeinsam loesen.
+- **Stand 22.10.**: Noch keine Innovator Create/Insert-Dateien in RC_FST (50_Entwicklung_und_Loadfiles leer). Modellierer (Bilal) hat Dimensionen angepasst; Uebergabe erfolgt ueber einen zentralen Dateiordner "Uebergabe FUD an DUD" (DDL, DML, Archiv), nicht SVN. Skripte zusaetzlich ans Jira-Ticket haengen. Dateiname = Tabellenname.
+- **Prozess neue Dimension** (Meeting 14.10.): Create-TD-Template aus SVN kopieren, Typen NUMBER(x,0) / VARCHAR2(n CHAR), Tabelle in allen Umgebungen anlegen (Dimensionsabgleich legt keine Tabellen an), Insert 1:1 mit TRUNCATE am Anfang und COMMIT am Ende, Zeilenanzahl pruefen.
+- **Gesamtlauf B05**: nur W321 offen (RFC Reduzierung SCR-Tabellen, B03). Import-Fehler ODI-10244 = leere Projekt-Referenz in der Export-XML; Loesung Re-Export auf Projektebene oder Import Replace gegen vorab angelegten Folder. Pull-over-Regel RFC-Excel: leer = in Entwicklung, weiss/BZA = Abnahme, orange/gelb = produktiv.
+- **DM-Test B05**: ca. 6 Monatsscheiben kopieren, Partitionen muessen P+YYYYMM heissen; erst FST_DM_KERN, danach FST_DM_NACHVERARBEITUNG_UND_EXPORTS.
+- **Offen/ohne Entscheidung**: Jira-Ticket im Tabellenkommentar, Spaltenkommentare, RELY-Constraints (mit Werner/Thorsten klaeren, Thorsten zurueck ca. 2 Wochen nach 19.10.).

@@ -1,0 +1,29 @@
+Tag 33 (4 Punkte) — 19.10.2026
+1. Offene Punkte des Gesamtlaufs B05 zusammengestellt und die Story fuer den Gesamtlauf (W321) fuer den naechsten Sprint entworfen.
+2. Story zum Erstellungs- und Ladeprozess neuer Dimensionstabellen mit Zielen, Schritten und Akzeptanzkriterien ausgearbeitet.
+3. Import-Fehler von W321 (ODI-10244) auf der B05 reproduziert und die Fehlermeldung gesichert.
+4. Abhaengigkeiten zwischen Dimensionsprozess, Dimensionsentwicklung und Gesamtlauf analysiert.
+
+Tag 34 (4 Punkte) — 20.10.2026
+1. Ursache des Importfehlers ODI-10244 ermittelt (leere Projekt-Referenz in der exportierten Folder-XML).
+2. Loesungsoptionen bewertet (Re-Export auf Projektebene, Import Replace gegen einen vorab angelegten Folder).
+3. Ergebnis und Empfehlung zum W321-Import dokumentiert.
+4. Testvorgehen fuer die DM-Ladestrecken auf B05 vorbereitet.
+
+Tag 35 (4 Punkte) — 21.10.2026
+1. Mit dem Ladeprozess fuer neue Dimensionstabellen begonnen: Innovator-Exportordner und RDE-Ablauf analysiert.
+2. Vorhandene Create-TD-Templates im SVN gesichtet und Datentyp-Regeln festgehalten (NUMBER(x,0), VARCHAR2(n CHAR)).
+3. Abstimmung zur Reihenfolge der abhaengigen Stories vorbereitet.
+4. Arbeitsauftrags-Ordner auf neue Create-/Insert-Exporte geprueft und die zugehoerige Auftragsnummer angefragt.
+
+Tag 36 (4 Punkte) — 22.10.2026
+1. Abhaengigkeit zur Aktualisierung der Innovator-Dimensionen ermittelt (Foerderart, Verbleib, Beendigungsgrund).
+2. Uebergabeprozess fuer DDL/DML-Skripte bewertet und Ordnerstruktur sowie Dateibenennung dokumentiert.
+3. Dimensions-View-DDL und zugehoerige Basistabellen geprueft.
+4. Prozessschritte und Checkliste fuer Tabellenerstellung und Zeilenanzahl-Pruefung ueberarbeitet.
+
+Tag 37 (4 Punkte) — 23.10.2026
+1. Skripte fuer die Dimensionstabellen auf Basis des SVN-Templates weiter vorbereitet.
+2. Pruefung der Dimensionstabellen in der Sandbox (Basistabellen, Views) vorbereitet.
+3. ODI-Projektnotizen und Projektdokumentation aktualisiert.
+4. Naechste Schritte fuer den Gesamtlauf und die DM-Ladestrecken zusammengestellt.
