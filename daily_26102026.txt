@@ -5,6 +5,6 @@ Letzte Woche:
 - Bilal hat die ersten 4 Dimensionen geliefert (beg, foa, fot, vb_fpl), am 23.10 kamen 6 weitere dazu.
 
 Heute:
-- Die DDLs liegen jetzt im Ordner von Thorsten. Ich fange mit dem Deployment auf der B05 an (UP15-439): Tabellen per SVN-Template anlegen, Daten per Truncate/Insert/Commit laden und die Zeilenanzahl prüfen.
+- Ich fange mit dem Deployment auf der B05 an (UP15-439): Tabellen per SVN-Template anlegen, Daten per Truncate/Insert/Commit laden und die Zeilenanzahl prüfen.
 
 Offen: Review der 6 weiteren Dimensionen mit Bilal.
