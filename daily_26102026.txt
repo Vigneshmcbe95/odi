@@ -1,0 +1,10 @@
+Letzte Woche:
+- Meeting am 22.10 mit Jörn, Bilal (Modellierung), Michael und Daniel (Linie) zum Übergabeprozess FUD → DUD.
+- Ergebnis: Die Modellierer legen die von Innovator generierten DDL/DML-Skripte in einem zentralen Übergabeordner auf dem Share ab und hängen sie zusätzlich an die Jira-Story. Neue Skripte werden im Daily angekündigt.
+- Tabellen- und Spaltenkommentare sowie RELY-Constraints wurden besprochen, aber noch nicht entschieden. Das klären wir mit Werner und Thorsten.
+- Bilal hat die ersten 4 Dimensionen geliefert (beg, foa, fot, vb_fpl), am 23.10 kamen 6 weitere dazu.
+
+Heute:
+- Die DDLs liegen jetzt im Ordner von Thorsten. Ich fange mit dem Deployment auf der B05 an (UP15-439): Tabellen per SVN-Template anlegen, Daten per Truncate/Insert/Commit laden und die Zeilenanzahl prüfen.
+
+Offen: Review der 6 weiteren Dimensionen mit Bilal.
