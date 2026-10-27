@@ -1,3 +1,4 @@
 - Das Deployment der DDL/DML-Skripte ist pausiert, weil Bilal noch auf Feedback von Daniel wartet.
 - Ich habe die DDL/DML-Skripte geprüft und nachvollzogen, wie die Metadaten (Codes → Bezeichnungen) gemappt werden.
+- Außerdem habe ich mir die bestehende DWH-Struktur angesehen (Kern-Satellit-Konzept, ähnlich Data Vault) und untersucht, wie die neue Quelle FPL in ODI angebunden werden kann (PD-Views → Lookups auf die Dimensionen → bestehende DWH-Tabellen).
 - Heute: Data-Mart-Tests auf der B05.
