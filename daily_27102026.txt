@@ -1,0 +1,3 @@
+- Das Deployment der DDL/DML-Skripte ist pausiert, weil Bilal noch auf Feedback von Daniel wartet.
+- Ich habe die DDL/DML-Skripte geprüft und nachvollzogen, wie die Metadaten (Codes → Bezeichnungen) gemappt werden.
+- Heute: Data-Mart-Tests auf der B05.
