@@ -1,0 +1,3 @@
+Hi Jörn, wir haben es nicht, also können wir es absagen.
+Ich hätte gern eine Klärung zum ODI-Mapping für die neue Quelle (FPL), aktuell testen wir noch mit der alten Quelle.
+Welche Schritte sind im Detail nötig? Falls du das weißt, kannst du es mit mir teilen?
