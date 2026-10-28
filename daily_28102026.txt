@@ -1,1 +1,7 @@
-Ich habe mit UP15-440 begonnen und prüfe die DDL/DML-Skripte der Dimensionen Förderart, Verbleib nach Ende der Förderung und Beendigungsgrund gegen die Modellierung im Innovator.
+Ich prüfe für UP15-440 die Dimensionsskripte (Förderart, Verbleib nach Ende der Förderung, Beendigungsgrund) in vier Schritten:
+1. Skripte lesen: Zeilenzahl, Spalten, Datentypen, Textlängen, Umlaute, Leerzeichen, COMMIT.
+2. Abgleich mit Innovator: Tabellenname, Spalten, Pflichtfelder, Primärschlüssel und Werteliste.
+3. Testlauf auf B05 (nach Freigabe durch Daniel).
+4. Prüfung per SQL: Anzahl, Dubletten, leere Pflichtfelder, Fremdschlüssel (z. B. Fördertyp).
+
+Auffälligkeiten kläre ich mit Bilal.
