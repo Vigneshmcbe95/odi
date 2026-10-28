@@ -1,0 +1,1 @@
+Ich habe mit UP15-440 begonnen und prüfe die DDL/DML-Skripte der Dimensionen Förderart, Verbleib nach Ende der Förderung und Beendigungsgrund gegen die Modellierung im Innovator.
