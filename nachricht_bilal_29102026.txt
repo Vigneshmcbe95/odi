@@ -1,0 +1,11 @@
+Hallo Bilal,
+
+ich habe mir die DDL und DML für Beendigungsgrund vollständig angeschaut. Insgesamt sieht es gut aus. 👍 Zwei Kleinigkeiten sind mir aufgefallen:
+
+1. ID 7 (Schlüssel 50): Die Langbezeichnung lautet „Maßnahme-/ Förderziel nicht erreicht und z. B. Wechsel in andere Maßnahme", die Kurzbezeichnung aber „Berufsvorbereitung (z.B. EQ, BvB, AsA)". Das passt inhaltlich nicht zusammen. Kann es sein, dass die Kurzbezeichnung versehentlich aus einer anderen Zeile übernommen wurde? Magst du das bitte kurz prüfen?
+
+2. Schreibweise der Sonderzeilen: Bei Beendigungsgrund und den meisten anderen Dimensionen sind die Sonderzeilen großgeschrieben („Trifft nicht zu", „Keine Angabe", „Keine Zuordnung möglich"). Bei Verbleib nach Förderung und Förderart sind sie dagegen kleingeschrieben („trifft nicht zu", „keine Angabe", „keine Zuordnung möglich"). Wollen wir das einheitlich machen, z. B. überall großgeschrieben?
+
+Danke dir!
+Viele Grüße
+Nils
