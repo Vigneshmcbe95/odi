@@ -1,0 +1,3 @@
+- Gestern: Ich habe die DDL/DML für Beendigungsgrund vollständig geprüft. Zwei Punkte (Kurzbezeichnung bei ID 7, Schreibweise der Sonderzeilen) habe ich an Bilal geschickt.
+- Förderart warte ich noch ab, bis Bilal die Umbenennung in Förderinstrument fertig hat.
+- Heute: Ich prüfe Verbleib nach Förderung (Spaltennamen, Werteliste, Leerzeichen, Sonderzeilen) und gleiche die Werte mit dem Innovator ab. Auffälligkeiten schicke ich anschließend an Bilal.
