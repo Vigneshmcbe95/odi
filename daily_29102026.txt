@@ -1,5 +1,12 @@
+Gestern:
+- Teilnahme am Termin „UP15 – Austausch DWH FST": Förderart wird in Förderinstrument umbenannt, es kommt eine neue Dimension „Förderart des Förderfalls", der Förderfall wird eine Stammentität ohne Historie.
+- Ergebnisse auf unserer Confluence-Seite dokumentiert.
+- DDL/DML für Beendigungsgrund vollständig geprüft.
+  Ergebnis: Skripte sind insgesamt in Ordnung. Zwei Anmerkungen (Kurzbezeichnung bei ID 7, Schreibweise der Sonderzeilen) habe ich an Bilal geschickt.
+
+Heute:
 - Ich arbeite an Verbleib nach Förderung (td_dwh_fpl_verbleib_nach_foerderung):
   - DDL/DML prüfen: Spaltennamen, Datentypen, Leerzeichen und Schreibweise der Sonderzeilen.
   - Werteliste (32 Zeilen) mit der Dimensionsbeschreibung im Innovator abgleichen.
   - Auffälligkeiten kläre ich anschließend mit Bilal.
-- Beendigungsgrund ist geprüft, Förderart wartet auf die Umbenennung in Förderinstrument.
+- Förderart wartet auf die Umbenennung in Förderinstrument durch Bilal.
