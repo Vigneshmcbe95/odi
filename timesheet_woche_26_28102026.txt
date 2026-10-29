@@ -1,5 +1,5 @@
 Tag 38 (4 Punkte) — 26.10.2026
-1. Deployment der neuen Dimensionstabellen auf der B05 vorbereitet (UP15-439).
+1. Deployment der neuen Dimensionstabellen auf der B05 vorbereitet (UP15-439), Ausführung wartet auf Freigabe.
 2. Ladevorgehen festgelegt: Anlage per SVN-Template, Laden per Truncate/Insert/Commit, Prüfung der Zeilenanzahl.
 3. Gelieferte DDL/DML-Skripte der 10 FPL-Dimensionen gesichtet.
 4. Datentypen der Innovator-Create-Skripte mit dem Team-Standard abgeglichen (NUMBER(x,0), VARCHAR2(n CHAR)).
