@@ -1,1 +1,5 @@
-- Ich arbeite an Verbleib nach Förderung: DDL/DML prüfen und die Werte mit dem Innovator abgleichen. Auffälligkeiten kläre ich mit Bilal.
+- Ich arbeite an Verbleib nach Förderung (td_dwh_fpl_verbleib_nach_foerderung):
+  - DDL/DML prüfen: Spaltennamen, Datentypen, Leerzeichen und Schreibweise der Sonderzeilen.
+  - Werteliste (32 Zeilen) mit der Dimensionsbeschreibung im Innovator abgleichen.
+  - Auffälligkeiten kläre ich anschließend mit Bilal.
+- Beendigungsgrund ist geprüft, Förderart wartet auf die Umbenennung in Förderinstrument.
