@@ -2,7 +2,7 @@ Tag 38 (4 Punkte) — 26.10.2026
 1. Deployment der neuen Dimensionstabellen auf der B05 vorbereitet (UP15-439).
 2. Ladevorgehen festgelegt: Anlage per SVN-Template, Laden per Truncate/Insert/Commit, Prüfung der Zeilenanzahl.
 3. Gelieferte DDL/DML-Skripte der 10 FPL-Dimensionen gesichtet.
-4. Leistungsnachweis für die Woche 19.–23.10.2026 erstellt.
+4. Datentypen der Innovator-Create-Skripte mit dem Team-Standard abgeglichen (NUMBER(x,0), VARCHAR2(n CHAR)).
 
 Tag 39 (4 Punkte) — 27.10.2026
 1. DDL/DML-Skripte der FPL-Dimensionen geprüft und das Mapping Code → Bezeichnung nachvollzogen.
