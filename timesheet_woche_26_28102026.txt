@@ -1,17 +1,17 @@
 Tag 38 (4 Punkte) — 26.10.2026
-1. Deployment der neuen Dimensionstabellen auf der B05 vorbereitet (UP15-439), Ausführung wartet auf Freigabe.
-2. Ladevorgehen festgelegt: Anlage per SVN-Template, Laden per Truncate/Insert/Commit, Prüfung der Zeilenanzahl.
-3. Gelieferte DDL/DML-Skripte der 10 FPL-Dimensionen gesichtet.
-4. Datentypen der Innovator-Create-Skripte mit dem Team-Standard abgeglichen (NUMBER(x,0), VARCHAR2(n CHAR)).
+1. DDL-Skripte der neuen FPL-Dimensionen geprüft (Tabellennamen, Spalten, Datentypen, Primärschlüssel).
+2. Datentypen der Innovator-Create-Skripte mit dem Team-Standard abgeglichen (NUMBER(x,0), VARCHAR2(n CHAR)).
+3. DML-Skripte geprüft (Zeilenanzahl, Pflichtfelder, Sonderzeilen 9996–9999).
+4. Mapping Code → Bezeichnung in den Dimensionen nachvollzogen.
 
 Tag 39 (4 Punkte) — 27.10.2026
-1. DDL/DML-Skripte der FPL-Dimensionen geprüft und das Mapping Code → Bezeichnung nachvollzogen.
-2. Bestehende DWH-Struktur (Kern-/Satellitenkonzept) analysiert.
-3. Anbindung der neuen Quelle FPL in ODI ausgearbeitet (PD-Views → Dimensions-Lookups → DWH-Schicht FPL).
-4. Zielarchitektur und aktuellen Projektstand in Confluence dokumentiert, Architekturdiagramm erstellt.
+1. Data-Mart-Tests auf der B05 durchgeführt.
+2. Ladeergebnisse der DM-Ladestrecken geprüft (Zeilenanzahl, Vollständigkeit).
+3. Abweichungen in den DM-Tabellen analysiert.
+4. Testergebnisse dokumentiert.
 
 Tag 40 (4 Punkte) — 28.10.2026
-1. Prüfvorgehen für UP15-440 festgelegt: Skriptprüfung, Abgleich mit Innovator, Testlauf B05, SQL-Prüfungen.
-2. Fachliche Änderungen am FPL-Datenmodell ausgewertet (Förderart → Förderinstrument, neue Dimension Förderart des Förderfalls, Stammentität Förderfall).
-3. Änderungen am Datenmodell in Confluence dokumentiert.
-4. Auswirkungen auf UP15-440 bewertet, Förderart-Skript bis zur Umbenennung zurückgestellt.
+1. DDL/DML-Skripte für UP15-440 geprüft (Förderart, Verbleib nach Förderung, Beendigungsgrund).
+2. Spaltennamen und Präfixe der FPL-Dimensionen auf Einheitlichkeit geprüft.
+3. Texte auf Leerzeichen, Sonderzeichen und Umlaute geprüft.
+4. Auffälligkeiten in den Skripten dokumentiert.
