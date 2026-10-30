@@ -1,0 +1,11 @@
+Tag 41 (4 Punkte) — 29.10.2026
+1. DDL/DML Beendigungsgrund geprüft (Spalten, Datentypen, Werteliste, Sonderzeilen).
+2. DDL/DML Verbleib nach Förderung geprüft (Spaltennamen, Leerzeichen, Schreibweise).
+3. Alle FPL-Dimensionsskripte auf Einheitlichkeit geprüft (Präfixe, Sonderzeilen, Encoding).
+4. Prüfergebnisse dokumentiert und Korrekturbedarf abgestimmt.
+
+Tag 42 (4 Punkte) — 30.10.2026
+1. Fachkonzept FPL ausgewertet (Stammentitäten, Historien, Satellit EZ-AG).
+2. Ladereihenfolge der FPL-Strecke erarbeitet (Dimensionen → Stammentitäten → Historien).
+3. ODI-Mappingmuster für FPL ausgearbeitet (Dimensions-Lookups, Sonderzeilen, Historisierung).
+4. COSACH-Ladestrecke als technische Vorlage für FPL analysiert.
